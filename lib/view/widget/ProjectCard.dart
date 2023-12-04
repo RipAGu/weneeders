@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ProjectData {
   final String image;
-  final String title;
+  late String title;
   final String writer;
   final String date;
   final String location;
@@ -42,6 +42,7 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+        behavior: HitTestBehavior.translucent, // 비어있는 공간에도 ontap이 작동하도록 하는 설정
         onTap: onPressed,
         child: Row(children: [
           SizedBox(

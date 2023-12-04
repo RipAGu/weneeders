@@ -4,11 +4,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 class BigGrayBtn extends StatelessWidget {
   final String image;
   final String text;
+  //textcolor
+  final Color? textColor;
+  final double fontSize;
   final VoidCallback? onPressed;
 
   const BigGrayBtn({
     Key? key,
     required this.text,
+    required this.textColor,
+    required this.fontSize,
     required this.image,
     required this.onPressed,
   }) : super(key: key);
@@ -39,9 +44,9 @@ class BigGrayBtn extends StatelessWidget {
                 const Padding(padding: EdgeInsets.only(left: 10)),
                 Text(
                   text,
-                  style: const TextStyle(
-                      color: Color(0xff878787),
-                      fontSize: 20,
+                  style: TextStyle(
+                      color: textColor,
+                      fontSize: fontSize,
                       fontFamily: 'Source_Sans_Pro'),
                 )
               ],

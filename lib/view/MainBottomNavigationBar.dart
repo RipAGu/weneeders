@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:winit/view/Main/MainPage.dart';
 import 'package:winit/view/account/find/ChangePasswordPage.dart';
-import 'package:winit/view/account/find/FindAccountPage.dart';
-import 'package:winit/view/account/find/FindPasswordPage.dart';
 import 'package:winit/view/account/register/CustomerRegisterPage.dart';
 import 'package:winit/view/account/register/ExpertRegisterPage.dart';
 import 'package:winit/view/account/SignInPage.dart';
@@ -37,14 +36,25 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
       tabBar: CupertinoTabBar(
         backgroundColor: Colors.white,
         height: 70,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.home),
+            icon: SvgPicture.asset(
+              "assets/icons/home.svg",
+              colorFilter: currentPageIndex == 0
+                  ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
+                  : const ColorFilter.mode(Color(0xff7D8791), BlendMode.srcIn),
+            ),
             label: '홈',
           ),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.search), label: '검색'
-              // activeIcon: Icon(Icons.home),
-              ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "assets/icons/home.svg",
+              colorFilter: currentPageIndex == 1
+                  ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
+                  : const ColorFilter.mode(Color(0xff7D8791), BlendMode.srcIn),
+            ),
+            label: '홈',
+          ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.chat_bubble),
             label: '채팅',

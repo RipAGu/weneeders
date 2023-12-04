@@ -81,7 +81,7 @@ class ChatCard extends StatelessWidget {
               //radius
               borderRadius: BorderRadius.all(Radius.circular(10)),
               color: Color(0xFFF2F6F8)),
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 8),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(

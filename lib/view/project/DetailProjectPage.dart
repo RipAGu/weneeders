@@ -133,7 +133,6 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                         backgroundImage: AssetImage("assets/images/img.png"),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 16),
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: const CupertinoTextField(
                           style: TextStyle(

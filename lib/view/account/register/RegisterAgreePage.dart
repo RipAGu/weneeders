@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:winit/view/account/register/RegisterViewModel.dart';
 import 'package:winit/view/widget/CustomCheckBoxBlack.dart';
 import 'package:winit/view/widget/CustomCheckBoxGray.dart';
 import 'package:winit/view/widget/CustomConfirmBtn.dart';
@@ -13,222 +14,221 @@ class RegisterAgreePage extends StatefulWidget {
 }
 
 class _RegisterAgreePageState extends State<RegisterAgreePage> {
-  bool _isCheck = false;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => null,
-      child: CupertinoPageScaffold(
-          child: SafeArea(
-        child: SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Column(children: [
-                Stack(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      child: const Align(
-                        alignment: Alignment.centerLeft,
-                        child: IconButton(
-                            onPressed: null,
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.black,
-                            )),
+      create: (_) => RegisterViewModel(),
+      child: const CupertinoPageScaffold(child: RegisterAgreePageBody()),
+    );
+  }
+}
+
+class RegisterAgreePageBody extends StatelessWidget {
+  const RegisterAgreePageBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = Provider.of<RegisterViewModel>(context);
+    return SafeArea(
+      child: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Column(children: [
+              Stack(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: const Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                          onPressed: null,
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.black,
+                          )),
+                    ),
+                  ),
+                  const Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 15),
+                      child: Text(
+                        "회원가입 동의",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                            fontSize: 16),
                       ),
                     ),
-                    const Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 15),
-                        child: Text(
-                          "회원가입 동의",
+                  )
+                ],
+              ),
+              const Padding(padding: EdgeInsets.only(top: 10)),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                //구분선
+                height: 1,
+                color: Colors.grey[300],
+              ),
+              const Padding(padding: EdgeInsets.only(top: 23)),
+              const Text(
+                "서비스 시작 및 가입을 위하여 먼저\n가입 및 정보 제공에 동의해 주세요.",
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF36393B),
+                    height: 1.5,
+                    fontSize: 12),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 28)),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 26),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: CustomCheckBoxBlack(
+                              isChecked: viewModel.isTotalCheck,
+                              onChanged: (value) {
+                                viewModel.setTotalCheck(value);
+                              }),
+                        ),
+                        const Padding(padding: EdgeInsets.only(left: 5)),
+                        const Text(
+                          "전체동의",
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
-                              color: Colors.black,
-                              fontSize: 16),
+                              color: Color(0xFF36393B),
+                              fontSize: 14),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-                const Padding(padding: EdgeInsets.only(top: 10)),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  //구분선
-                  height: 1,
-                  color: Colors.grey[300],
-                ),
-                const Padding(padding: EdgeInsets.only(top: 23)),
-                const Text(
-                  "서비스 시작 및 가입을 위하여 먼저\n가입 및 정보 제공에 동의해 주세요.",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF36393B),
-                      height: 1.5,
-                      fontSize: 12),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 28)),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 26),
-                  child: Column(
-                    children: [
-                      Row(
+                      ],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 14),
+                      //구분선
+                      height: 1,
+                      color: Colors.grey[300],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 14),
+                      child: Row(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.only(top: 3),
-                            child: CustomCheckBoxBlack(
-                                isChecked: _isCheck,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _isCheck = value;
-                                  });
-                                }),
-                          ),
+                          CustomCheckBoxGray(
+                              isChecked: viewModel.isServiceCheck,
+                              onChanged: (value) {
+                                viewModel.setServiceCheck(value);
+                              }),
                           const Padding(padding: EdgeInsets.only(left: 5)),
                           const Text(
-                            "전체동의",
+                            "서비스 이용 약관",
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF36393B),
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF7D8690),
                                 fontSize: 14),
+                          ),
+                          const Spacer(),
+                          SvgPicture.asset(
+                            'assets/icons/arrow_right.svg',
                           ),
                         ],
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 14),
-                        //구분선
-                        height: 1,
-                        color: Colors.grey[300],
+                    ),
+                    //구분선
+                    Container(
+                      margin: const EdgeInsets.only(top: 14),
+                      height: 1,
+                      color: Colors.grey[300],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 14),
+                      child: Row(
+                        children: [
+                          CustomCheckBoxGray(
+                              isChecked: viewModel.isPrivacyCheck,
+                              onChanged: (value) {
+                                viewModel.setPrivacyCheck(value);
+                              }),
+                          const Padding(padding: EdgeInsets.only(left: 5)),
+                          const Text(
+                            "개인정보 수집 및 이용 동의",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF7D8690),
+                                fontSize: 14),
+                          ),
+                          const Spacer(),
+                          SvgPicture.asset(
+                            'assets/icons/arrow_right.svg',
+                          ),
+                        ],
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 14),
-                        child: Row(
-                          children: [
-                            CustomCheckBoxGray(
-                                isChecked: _isCheck,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _isCheck = value;
-                                  });
-                                }),
-                            const Padding(padding: EdgeInsets.only(left: 5)),
-                            const Text(
-                              "서비스 이용 약관",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFF7D8690),
-                                  fontSize: 14),
-                            ),
-                            const Spacer(),
-                            SvgPicture.asset(
-                              'assets/icons/arrow_right.svg',
-                            ),
-                          ],
-                        ),
+                    ),
+                    //구분선
+                    Container(
+                      margin: const EdgeInsets.only(top: 14),
+                      height: 1,
+                      color: Colors.grey[300],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 14),
+                      child: Row(
+                        children: [
+                          CustomCheckBoxGray(
+                              isChecked: viewModel.isMarketingCheck,
+                              onChanged: (value) {
+                                viewModel.setMarketingCheck(value);
+                              }),
+                          const Padding(padding: EdgeInsets.only(left: 5)),
+                          const Text(
+                            "개인정보 제3자 제공 동의",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF7D8690),
+                                fontSize: 14),
+                          ),
+                          const Spacer(),
+                          SvgPicture.asset(
+                            'assets/icons/arrow_right.svg',
+                          ),
+                        ],
                       ),
-                      //구분선
-                      Container(
-                        margin: const EdgeInsets.only(top: 14),
-                        height: 1,
-                        color: Colors.grey[300],
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 14),
-                        child: Row(
-                          children: [
-                            CustomCheckBoxGray(
-                                isChecked: _isCheck,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _isCheck = value;
-                                  });
-                                }),
-                            const Padding(padding: EdgeInsets.only(left: 5)),
-                            const Text(
-                              "개인정보 수집 및 이용 동의",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFF7D8690),
-                                  fontSize: 14),
-                            ),
-                            const Spacer(),
-                            SvgPicture.asset(
-                              'assets/icons/arrow_right.svg',
-                            ),
-                          ],
-                        ),
-                      ),
-                      //구분선
-                      Container(
-                        margin: const EdgeInsets.only(top: 14),
-                        height: 1,
-                        color: Colors.grey[300],
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 14),
-                        child: Row(
-                          children: [
-                            CustomCheckBoxGray(
-                                isChecked: _isCheck,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _isCheck = value;
-                                  });
-                                }),
-                            const Padding(padding: EdgeInsets.only(left: 5)),
-                            const Text(
-                              "개인정보 제3자 제공 동의",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFF7D8690),
-                                  fontSize: 14),
-                            ),
-                            const Spacer(),
-                            SvgPicture.asset(
-                              'assets/icons/arrow_right.svg',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const Spacer(),
-                Container(
-                  margin:
-                      const EdgeInsets.only(bottom: 20, left: 26, right: 26),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          height: MediaQuery.of(context).size.height * 0.06,
-                          child: CustomConfirmBtn(
-                              text: "취소",
-                              onPressed: () {},
-                              backgroundColor: const Color(0xFF7D8690),
-                              textSize: 12,
-                              textColor: Colors.white),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          height: MediaQuery.of(context).size.height * 0.06,
-                          child: CustomConfirmBtn(
-                              text: "다음",
-                              textSize: 12,
-                              onPressed: () {},
-                              backgroundColor: const Color(0xFF2D8CF4),
-                              textColor: Colors.white),
-                        ),
-                      ]),
-                ),
-              ]),
-            )),
-      )),
+              ),
+              const Spacer(),
+              Container(
+                margin: const EdgeInsets.only(bottom: 20, left: 26, right: 26),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        child: CustomConfirmBtn(
+                            text: "취소",
+                            onPressed: () {},
+                            backgroundColor: const Color(0xFF7D8690),
+                            textSize: 12,
+                            textColor: Colors.white),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        child: CustomConfirmBtn(
+                            text: "다음",
+                            textSize: 12,
+                            onPressed: () {},
+                            backgroundColor: const Color(0xFF2D8CF4),
+                            textColor: Colors.white),
+                      ),
+                    ]),
+              ),
+            ]),
+          )),
     );
   }
 }

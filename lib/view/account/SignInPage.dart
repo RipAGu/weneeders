@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:winit/view/MainBottomNavigationBar.dart';
 import 'package:winit/view/widget/CustomTextField.dart';
 
 class SignInPage extends StatefulWidget {
@@ -104,7 +105,13 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   const Spacer(),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const MainBottomNavigationBar()));
+                    },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF2D8CF4),
                         elevation: 0,

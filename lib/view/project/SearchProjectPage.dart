@@ -24,17 +24,29 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
           title: "프로젝트 검색",
         ),
         floatingActionButton: FloatingActionButton(
+          splashColor: Colors.transparent,
+          highlightElevation: 0,
           onPressed: () {
             Provider.of<SearchProjectViewModel>(context, listen: false)
                 .updateData();
           },
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
-          backgroundColor: Color(0xFF52C0FF),
+          // shape:
+          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+          backgroundColor: Colors.transparent,
           elevation: 0,
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
+          child: Container(
+            width: 60,
+            height: 60,
+            decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                    begin: Alignment(-0.59, 0.81),
+                    end: Alignment(0.59, -0.81),
+                    colors: [Color(0xFF3F9AFE), Color(0xFF52C0FF)])),
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
           ),
         ),
         body: SizedBox(

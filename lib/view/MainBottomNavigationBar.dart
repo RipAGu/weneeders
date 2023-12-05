@@ -8,7 +8,9 @@ import 'package:winit/view/account/register/ExpertRegisterPage.dart';
 import 'package:winit/view/account/SignInPage.dart';
 import 'package:winit/view/account/register/RegisterAgreePage.dart';
 import 'package:winit/view/account/register/RegisterSuccessPage.dart';
+import 'package:winit/view/chat/ChatListPage.dart';
 import 'package:winit/view/project/DetailProjectPage.dart';
+import 'package:winit/view/project/SearchProjectPage.dart';
 
 class MainBottomNavigationBar extends StatefulWidget {
   const MainBottomNavigationBar({Key? key}) : super(key: key);
@@ -22,12 +24,12 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
   int currentPageIndex = 0;
 
   final List<Widget> _pages = [
-    MainPage(),
-    DetailProjectPage(),
-    RegisterAgreePage(),
-    CustomerRegisterPage(),
-    ExpertRegisterPage(),
-    ChangePasswordPage()
+    const MainPage(),
+    const SearchProjectPage(),
+    const RegisterAgreePage(),
+    const CustomerRegisterPage(),
+    const ExpertRegisterPage(),
+    const ChatListPage()
   ];
 
   @override
@@ -44,28 +46,53 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
                   ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
                   : const ColorFilter.mode(Color(0xff7D8791), BlendMode.srcIn),
             ),
-            label: '홈',
+            label: '홈 ',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              "assets/icons/home.svg",
+              "assets/icons/search_project_gray.svg",
               colorFilter: currentPageIndex == 1
                   ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
                   : const ColorFilter.mode(Color(0xff7D8791), BlendMode.srcIn),
             ),
-            label: '홈',
+            label: '프로젝트 검색',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.chat_bubble),
-            label: '채팅',
+            icon: SvgPicture.asset(
+              "assets/icons/partner_search.svg",
+              colorFilter: currentPageIndex == 2
+                  ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
+                  : const ColorFilter.mode(Color(0xff7D8791), BlendMode.srcIn),
+            ),
+            label: '파트너 검색',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.settings),
-            label: '설정',
+            icon: SvgPicture.asset(
+              "assets/icons/partner_register.svg",
+              colorFilter: currentPageIndex == 3
+                  ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
+                  : const ColorFilter.mode(Color(0xff7D8791), BlendMode.srcIn),
+            ),
+            label: '파트너 등록',
           ),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.add), label: '추가'),
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.person), label: '내정보'),
+            icon: SvgPicture.asset(
+              "assets/icons/project_register.svg",
+              colorFilter: currentPageIndex == 4
+                  ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
+                  : const ColorFilter.mode(Color(0xff7D8791), BlendMode.srcIn),
+            ),
+            label: '프로젝트 등록',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "assets/icons/chat.svg",
+              colorFilter: currentPageIndex == 5
+                  ? const ColorFilter.mode(Colors.blue, BlendMode.srcIn)
+                  : const ColorFilter.mode(Color(0xff7D8791), BlendMode.srcIn),
+            ),
+            label: '채팅 ',
+          ),
         ],
         currentIndex: currentPageIndex,
         onTap: (int index) {

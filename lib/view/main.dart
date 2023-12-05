@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:winit/view/Main/MainPage.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
 import 'package:winit/view/account/SignInPage.dart';
+import 'package:winit/view/account/register/RegisterAgreePage.dart';
+import 'package:winit/view/account/register/RegisterViewModel.dart';
 import 'package:winit/view/chat/ChatListPage.dart';
 import 'package:winit/view/chat/ChatViewModel.dart';
 import 'package:winit/view/project/AddFeedPage.dart';
@@ -24,14 +26,15 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => SearchProjectViewModel()),
-        ChangeNotifierProvider(create: (context) => ChatViewModel())
+        ChangeNotifierProvider(create: (context) => ChatViewModel()),
+        ChangeNotifierProvider(create: (context) => RegisterViewModel()),
       ],
       child: const CupertinoApp(
         theme: CupertinoThemeData(
           brightness: Brightness.light,
         ),
         title: 'Flutter Demo',
-        home: ChatListPage(),
+        home: SignInPage(),
       ),
     );
   }

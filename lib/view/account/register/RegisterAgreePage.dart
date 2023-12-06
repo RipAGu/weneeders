@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:winit/view/account/register/CustomerRegisterPage.dart';
+import 'package:winit/view/account/register/ExpertRegisterPage.dart';
 import 'package:winit/view/account/register/RegisterViewModel.dart';
 import 'package:winit/view/widget/CustomCheckBoxBlack.dart';
 import 'package:winit/view/widget/CustomCheckBoxGray.dart';
@@ -209,8 +211,16 @@ class RegisterAgreePageBody extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.4,
                         height: MediaQuery.of(context).size.height * 0.06,
                         child: CustomConfirmBtn(
-                            text: "취소",
-                            onPressed: () {},
+                            text: "고객 회원가입",
+                            onPressed: () {
+                              viewModel.isAllChecked
+                                  ? Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const CustomerRegisterPage()))
+                                  : null;
+                            },
                             backgroundColor: const Color(0xFF7D8690),
                             textSize: 12,
                             textColor: Colors.white),
@@ -219,9 +229,17 @@ class RegisterAgreePageBody extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.4,
                         height: MediaQuery.of(context).size.height * 0.06,
                         child: CustomConfirmBtn(
-                            text: "다음",
+                            text: "전문가 회원가입",
                             textSize: 12,
-                            onPressed: () {},
+                            onPressed: () {
+                              viewModel.isAllChecked
+                                  ? Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ExpertRegisterPage()))
+                                  : null;
+                            },
                             backgroundColor: const Color(0xFF2D8CF4),
                             textColor: Colors.white),
                       ),

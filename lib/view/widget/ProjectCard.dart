@@ -107,7 +107,6 @@ class ProjectCard extends StatelessWidget {
                   ]),
                   overflow: TextOverflow.ellipsis,
                 ),
-                const Padding(padding: EdgeInsets.only(top: 5)),
                 Text(
                   date,
                   style: const TextStyle(

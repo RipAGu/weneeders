@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
+import 'package:winit/view/account/register/RegisterAgreePage.dart';
 import 'package:winit/view/widget/CustomTextField.dart';
 
 class SignInPage extends StatefulWidget {
@@ -92,7 +93,13 @@ class _SignInPageState extends State<SignInPage> {
                               color: Colors.black,
                               fontSize: 12)),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const RegisterAgreePage()));
+                        },
                         child: const Text(
                           "회원가입",
                           style: TextStyle(

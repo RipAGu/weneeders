@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 class RegisterViewModel extends ChangeNotifier {
+  bool _isAllChecked = false;
+  bool get isAllChecked => _isAllChecked;
+
   bool _isTotalCheck = false;
   bool get isTotalCheck => _isTotalCheck;
 
@@ -18,32 +21,34 @@ class RegisterViewModel extends ChangeNotifier {
     _isServiceCheck = value;
     _isPrivacyCheck = value;
     _isMarketingCheck = value;
+    isAllCheckedValue();
     notifyListeners();
   }
 
   void setServiceCheck(bool value) {
     _isServiceCheck = value;
+    isAllCheckedValue();
     notifyListeners();
   }
 
   void setPrivacyCheck(bool value) {
     _isPrivacyCheck = value;
+    isAllCheckedValue();
     notifyListeners();
   }
 
   void setMarketingCheck(bool value) {
     _isMarketingCheck = value;
+    isAllCheckedValue();
     notifyListeners();
   }
 
-  bool isAllCheckedValue() {
-    if (_isTotalCheck &&
-        _isServiceCheck &&
-        _isPrivacyCheck &&
-        _isMarketingCheck) {
-      return true;
+  void isAllCheckedValue() {
+    if (_isServiceCheck && _isPrivacyCheck && _isMarketingCheck) {
+      _isAllChecked = true;
     } else {
-      return false;
+      _isAllChecked = false;
     }
+    notifyListeners();
   }
 }

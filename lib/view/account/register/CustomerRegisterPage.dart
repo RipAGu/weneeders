@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:winit/view/account/register/RegisterSuccessPage.dart';
 import 'package:winit/view/widget/CustomConfirmBtn.dart';
 import 'package:winit/view/widget/CustomConfirmBtnBorder.dart';
 import 'package:winit/view/widget/CustomTextField.dart';
@@ -235,7 +236,13 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                       height: MediaQuery.of(context).size.height * 0.06,
                       child: CustomConfirmBtn(
                           text: "회원가입",
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RegisterSuccessPage()));
+                          },
                           backgroundColor: const Color(0xFF2D8CF4),
                           textColor: Colors.white,
                           textSize: 12),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:winit/view/MainBottomNavigationBar.dart';
 import 'package:winit/view/widget/CustomConfirmBtn.dart';
 
 class RegisterSuccessPage extends StatelessWidget {
@@ -76,7 +77,16 @@ class RegisterSuccessPage extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.06,
                     child: CustomConfirmBtn(
                         text: '완료',
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const MainBottomNavigationBar()), // 새로 이동할 페이지
+                            (Route<dynamic> route) =>
+                                false, // false를 반환하여 모든 이전 라우트들을 제거
+                          );
+                        },
                         backgroundColor: const Color(0xff2d8cf4),
                         textColor: Colors.white,
                         textSize: 12),

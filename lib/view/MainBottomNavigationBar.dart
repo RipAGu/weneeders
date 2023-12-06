@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:winit/view/Main/MainPage.dart';
+import 'package:winit/view/Main/MainViewModel.dart';
 import 'package:winit/view/account/find/ChangePasswordPage.dart';
 import 'package:winit/view/account/register/CustomerRegisterPage.dart';
 import 'package:winit/view/account/register/ExpertRegisterPage.dart';
@@ -10,7 +12,10 @@ import 'package:winit/view/account/register/RegisterAgreePage.dart';
 import 'package:winit/view/account/register/RegisterSuccessPage.dart';
 import 'package:winit/view/chat/ChatListPage.dart';
 import 'package:winit/view/project/DetailProjectPage.dart';
+import 'package:winit/view/project/RegisterPartnerPage.dart';
 import 'package:winit/view/project/SearchProjectPage.dart';
+
+GlobalKey<_MainBottomNavigationBarState> bottomNavBarKey = GlobalKey();
 
 class MainBottomNavigationBar extends StatefulWidget {
   const MainBottomNavigationBar({Key? key}) : super(key: key);
@@ -23,11 +28,17 @@ class MainBottomNavigationBar extends StatefulWidget {
 class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
   int currentPageIndex = 0;
 
+  void changeTab(int index) {
+    setState(() {
+      currentPageIndex = index;
+    });
+  }
+
   final List<Widget> _pages = [
     const MainPage(),
     const SearchProjectPage(),
     const RegisterAgreePage(),
-    const CustomerRegisterPage(),
+    const RegisterPartnerPage(),
     const ExpertRegisterPage(),
     const ChatListPage()
   ];
@@ -36,6 +47,7 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
+        key: bottomNavBarKey,
         backgroundColor: Colors.white,
         height: 70,
         items: <BottomNavigationBarItem>[
@@ -102,7 +114,7 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
         },
       ),
       tabBuilder: (BuildContext context, int index) {
-        return SafeArea(child: _pages[index]);
+        return Scaffold(body: _pages[index]);
       },
     );
   }

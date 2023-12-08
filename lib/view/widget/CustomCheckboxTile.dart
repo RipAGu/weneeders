@@ -11,17 +11,16 @@ class CustomCheckboxTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+        behavior: HitTestBehavior.translucent,
         onTap: onTap,
         child: Row(
           children: [
             SvgPicture.asset(
               item.isChecked
-                  ? 'assets/resources/circle_checked.svg'
-                  : 'assets/resources/circle_unchecked.svg',
-              width: 16,
-              height: 16,
+                  ? 'assets/icons/checked_gray.svg'
+                  : 'assets/icons/unchecked_gray.svg',
             ),
-            const Padding(padding: EdgeInsets.only(left: 10)),
+            const Padding(padding: EdgeInsets.only(left: 5)),
             Text(
               item.title,
               style: const TextStyle(

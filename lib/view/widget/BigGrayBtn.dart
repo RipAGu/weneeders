@@ -38,8 +38,11 @@ class BigGrayBtn extends StatelessWidget {
                 ]),
             child: Row(
               children: [
+                const Padding(padding: EdgeInsets.only(left: 10)),
                 SvgPicture.asset(
                   image,
+                  colorFilter: const ColorFilter.mode(
+                      Color(0xff2D8DF4), BlendMode.srcIn),
                 ),
                 const Padding(padding: EdgeInsets.only(left: 10)),
                 Text(

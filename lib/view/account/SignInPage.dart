@@ -94,7 +94,7 @@ class _SignInPageState extends State<SignInPage> {
                               fontSize: 12)),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>

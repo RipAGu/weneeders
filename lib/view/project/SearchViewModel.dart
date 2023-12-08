@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/widget/ProjectCard.dart';
 
-class SearchProjectViewModel with ChangeNotifier {
+class SearchViewModel with ChangeNotifier {
   final List<ProjectData> _project = [
     ProjectData(
         image: "assets/images/img.png",

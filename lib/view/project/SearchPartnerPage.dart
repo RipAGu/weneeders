@@ -6,14 +6,14 @@ import 'package:winit/view/widget/SearchAppBar.dart';
 
 import '../widget/ProjectCard.dart';
 
-class SearchProjectPage extends StatefulWidget {
-  const SearchProjectPage({Key? key}) : super(key: key);
+class SearchPartnerPage extends StatefulWidget {
+  const SearchPartnerPage({Key? key}) : super(key: key);
 
   @override
-  State<SearchProjectPage> createState() => _SearchProjectPageState();
+  State<SearchPartnerPage> createState() => _SearchPartnerPageState();
 }
 
-class _SearchProjectPageState extends State<SearchProjectPage> {
+class _SearchPartnerPageState extends State<SearchPartnerPage> {
   @override
   Widget build(BuildContext context) {
     // final viewModel = Provider.of<SearchProjectViewModel>(context);
@@ -21,7 +21,7 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: const SearchAppBar(
-          title: "프로젝트 검색",
+          title: "파트너 검색",
         ),
         floatingActionButton: FloatingActionButton(
           splashColor: Colors.transparent,

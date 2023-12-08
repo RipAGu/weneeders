@@ -51,30 +51,34 @@ class _MainPageState extends State<MainPage> {
                         text: '프로젝트 검색',
                         image: "assets/icons/project_search.svg",
                         onPressed: () {
-                          CupertinoTabBar navigationBar =
-                              bottomNavBarKey.currentWidget as CupertinoTabBar;
+                          BottomNavigationBar navigationBar = bottomNavBarKey
+                              .currentWidget as BottomNavigationBar;
                           navigationBar.onTap!(1);
                         },
                         textColor: Colors.black,
                         fontSize: 12,
                       ),
                       BigGrayBtn(
-                        text: '프로젝트 검색',
-                        image: "assets/icons/project_search.svg",
+                        text: '파트너 검색',
+                        image: "assets/icons/partner_search.svg",
+                        onPressed: () {
+                          BottomNavigationBar navigationBar = bottomNavBarKey
+                              .currentWidget as BottomNavigationBar;
+                          navigationBar.onTap!(2);
+                        },
+                        textColor: Colors.black,
+                        fontSize: 12,
+                      ),
+                      BigGrayBtn(
+                        text: '파트너 등록',
+                        image: "assets/icons/partner_register.svg",
                         onPressed: () {},
                         textColor: Colors.black,
                         fontSize: 12,
                       ),
                       BigGrayBtn(
-                        text: '프로젝트 검색',
-                        image: "assets/icons/project_search.svg",
-                        onPressed: () {},
-                        textColor: Colors.black,
-                        fontSize: 12,
-                      ),
-                      BigGrayBtn(
-                        text: '프로젝트 검색',
-                        image: "assets/icons/project_search.svg",
+                        text: '프로젝트 등록',
+                        image: "assets/icons/project_register.svg",
                         onPressed: () {},
                         textColor: Colors.black,
                         fontSize: 12,

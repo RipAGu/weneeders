@@ -178,18 +178,16 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset(
-                            "assets/icons/trash.svg",
-                            height: 50,
-                          )),
-                      IconButton(
-                          onPressed: () {},
-                          icon: SvgPicture.asset(
-                            "assets/icons/edit.svg",
-                            height: 50,
-                          )),
+                      Column(
+                        children: [
+                          IconButton(
+                              onPressed: () {},
+                              icon: SvgPicture.asset(
+                                "assets/icons/trash.svg",
+                                height: 50,
+                              )),
+                        ],
+                      ),
                       IconButton(
                           onPressed: () {},
                           icon: SvgPicture.asset(

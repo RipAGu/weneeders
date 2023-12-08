@@ -229,7 +229,7 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                             )),
                       ]),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Container(
                       margin: const EdgeInsets.only(bottom: 20),
                       width: MediaQuery.of(context).size.width * 0.85,

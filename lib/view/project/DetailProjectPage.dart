@@ -191,6 +191,12 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                       IconButton(
                           onPressed: () {},
                           icon: SvgPicture.asset(
+                            "assets/icons/edit.svg",
+                            height: 50,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: SvgPicture.asset(
                             "assets/icons/backarrow.svg",
                             height: 50,
                           )),

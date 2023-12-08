@@ -43,6 +43,11 @@ class AddViewModel extends ChangeNotifier {
     RegionData(title: "종로/대학로/동묘앞/신설동", isChecked: false),
   ];
 
+  List<Item> methodList = [
+    Item(title: "기간제", isChecked: false),
+    Item(title: "도급제", isChecked: false),
+  ];
+
   List<ImageData> testImg = [
     ImageData(image: null),
   ];
@@ -78,6 +83,18 @@ class AddViewModel extends ChangeNotifier {
         regionList[i].isChecked = false;
       } else {
         regionList[i].isChecked = true;
+      }
+    }
+    notifyListeners();
+  }
+
+  void toggleMethodBtn(int index) {
+    //다른값들은 모두 false로 변경
+    for (int i = 0; i < methodList.length; i++) {
+      if (i != index) {
+        methodList[i].isChecked = false;
+      } else {
+        methodList[i].isChecked = true;
       }
     }
     notifyListeners();

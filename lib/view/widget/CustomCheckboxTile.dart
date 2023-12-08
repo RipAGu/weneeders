@@ -17,7 +17,7 @@ class CustomCheckboxTile extends StatelessWidget {
           children: [
             SvgPicture.asset(
               item.isChecked
-                  ? 'assets/icons/checked_gray.svg'
+                  ? 'assets/icons/checked_blue.svg'
                   : 'assets/icons/unchecked_gray.svg',
             ),
             const Padding(padding: EdgeInsets.only(left: 5)),

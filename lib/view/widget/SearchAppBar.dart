@@ -25,11 +25,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: Colors.transparent,
       titleSpacing: 0,
       leadingWidth: 70,
-      leading: Padding(
-          padding: EdgeInsets.only(left: 10),
-          child: IconButton(
-              onPressed: null,
-              icon: SvgPicture.asset("assets/icons/arrow_left.svg"))),
+      leading: Padding(padding: EdgeInsets.only(left: 10), child: Container()),
       title: Center(
           child: Text(title,
               style: const TextStyle(

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:winit/view/project/DetailProjectPage.dart';
+import 'package:winit/view/project/RegisterProjectPage.dart';
 import 'package:winit/view/project/SearchViewModel.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
 
@@ -16,6 +18,7 @@ class SearchProjectPage extends StatefulWidget {
 class _SearchProjectPageState extends State<SearchProjectPage> {
   @override
   Widget build(BuildContext context) {
+    final mainContext = context;
     // final viewModel = Provider.of<SearchProjectViewModel>(context);
     return MaterialApp(
       home: Scaffold(
@@ -27,7 +30,10 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
           splashColor: Colors.transparent,
           highlightElevation: 0,
           onPressed: () {
-            Provider.of<SearchViewModel>(context, listen: false).updateData();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const RegisterProjectPage()));
           },
           // shape:
           //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
@@ -70,7 +76,11 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
                           location: viewModel.project[index].location,
                           content: viewModel.project[index].content,
                           onPressed: () {
-                            print(viewModel.project[index].title);
+                            Navigator.push(
+                                mainContext,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DetailProjectPage()));
                           },
                         ),
                       );

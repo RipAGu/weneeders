@@ -17,18 +17,13 @@ class ExpertRegisterPage extends StatefulWidget {
 
 class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
   final TextEditingController _userEmail = TextEditingController();
-  List<Item> testList = [
-    Item(title: "전문분야1", isChecked: false),
-    Item(title: "전문분야2", isChecked: true),
-    Item(title: "전문분야3", isChecked: false),
-    Item(title: "전문분야4", isChecked: false),
-    Item(title: "전문분야5", isChecked: false),
-    Item(title: "전문분야6", isChecked: false),
-    Item(title: "전문분야7", isChecked: false),
-    Item(title: "전문분야8", isChecked: false),
-    Item(title: "전문분야9", isChecked: false),
-    Item(title: "전문분야10", isChecked: false),
-  ];
+  final TextEditingController _userPassword = TextEditingController();
+  final TextEditingController _userPasswordCheck = TextEditingController();
+  final TextEditingController _userName = TextEditingController();
+  final TextEditingController _userNickname = TextEditingController();
+  final TextEditingController _userPhone = TextEditingController();
+  final TextEditingController _startTime = TextEditingController();
+  final TextEditingController _endTime = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +96,7 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                             child: CustomTextField(
                                 hintText: "비밀번호",
                                 obscureText: true,
-                                controller: _userEmail,
+                                controller: _userPassword,
                                 keyboardType: TextInputType.visiblePassword),
                           ),
                           Container(
@@ -110,7 +105,7 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                             child: CustomTextField(
                                 hintText: "비밀번호 확인",
                                 obscureText: true,
-                                controller: _userEmail,
+                                controller: _userPasswordCheck,
                                 keyboardType: TextInputType.visiblePassword),
                           ),
                           Container(
@@ -126,7 +121,7 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                     child: CustomTextField(
                                         hintText: "이름",
                                         obscureText: false,
-                                        controller: _userEmail,
+                                        controller: _userName,
                                         keyboardType: TextInputType.name),
                                   ),
                                   SizedBox(
@@ -167,7 +162,38 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                     width: MediaQuery.of(context).size.width *
                                         0.63,
                                     child: CustomTextField(
-                                        hintText: "이름",
+                                        hintText: "닉네임",
+                                        obscureText: false,
+                                        controller: _userNickname,
+                                        keyboardType: TextInputType.name),
+                                  ),
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.2,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.05,
+                                      child: CustomConfirmBtnBorder(
+                                        text: "중복확인",
+                                        onPressed: () {},
+                                        backgroundColor: Colors.white,
+                                        textColor: Colors.black,
+                                        textSize: 12,
+                                      ))
+                                ],
+                              )),
+                          Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              height: MediaQuery.of(context).size.height * 0.05,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.63,
+                                    child: CustomTextField(
+                                        hintText: "이메일",
                                         obscureText: false,
                                         controller: _userEmail,
                                         keyboardType: TextInputType.name),
@@ -198,40 +224,9 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                     width: MediaQuery.of(context).size.width *
                                         0.63,
                                     child: CustomTextField(
-                                        hintText: "이름",
+                                        hintText: "연락처",
                                         obscureText: false,
-                                        controller: _userEmail,
-                                        keyboardType: TextInputType.name),
-                                  ),
-                                  SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.2,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.05,
-                                      child: CustomConfirmBtnBorder(
-                                        text: "중복확인",
-                                        onPressed: () {},
-                                        backgroundColor: Colors.white,
-                                        textColor: Colors.black,
-                                        textSize: 12,
-                                      ))
-                                ],
-                              )),
-                          Container(
-                              margin: const EdgeInsets.only(top: 10),
-                              height: MediaQuery.of(context).size.height * 0.05,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.63,
-                                    child: CustomTextField(
-                                        hintText: "이름",
-                                        obscureText: false,
-                                        controller: _userEmail,
+                                        controller: _userPhone,
                                         keyboardType: TextInputType.name),
                                   ),
                                   SizedBox(
@@ -264,7 +259,7 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                               child: CustomTextField(
                                   hintText: "",
                                   obscureText: false,
-                                  controller: _userEmail,
+                                  controller: _startTime,
                                   keyboardType: TextInputType.text),
                             ),
                             Container(
@@ -282,7 +277,7 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                               child: CustomTextField(
                                   hintText: "",
                                   obscureText: false,
-                                  controller: _userEmail,
+                                  controller: _endTime,
                                   keyboardType: TextInputType.text),
                             ),
                           ])

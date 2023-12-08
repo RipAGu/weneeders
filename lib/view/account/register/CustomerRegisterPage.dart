@@ -16,6 +16,12 @@ class CustomerRegisterPage extends StatefulWidget {
 
 class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
   final TextEditingController _userEmail = TextEditingController();
+  final TextEditingController _userPassword = TextEditingController();
+  final TextEditingController _userPasswordCheck = TextEditingController();
+  final TextEditingController _userName = TextEditingController();
+  final TextEditingController _userNickname = TextEditingController();
+  final TextEditingController _userPhone = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -87,7 +93,7 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                           child: CustomTextField(
                               hintText: "비밀번호",
                               obscureText: true,
-                              controller: _userEmail,
+                              controller: _userPassword,
                               keyboardType: TextInputType.visiblePassword),
                         ),
                         Container(
@@ -96,7 +102,7 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                           child: CustomTextField(
                               hintText: "비밀번호 확인",
                               obscureText: true,
-                              controller: _userEmail,
+                              controller: _userPasswordCheck,
                               keyboardType: TextInputType.visiblePassword),
                         ),
                         Container(
@@ -111,7 +117,7 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                                   child: CustomTextField(
                                       hintText: "이름",
                                       obscureText: false,
-                                      controller: _userEmail,
+                                      controller: _userName,
                                       keyboardType: TextInputType.name),
                                 ),
                                 SizedBox(
@@ -150,7 +156,36 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.63,
                                   child: CustomTextField(
-                                      hintText: "이름",
+                                      hintText: "닉네임",
+                                      obscureText: false,
+                                      controller: _userNickname,
+                                      keyboardType: TextInputType.name),
+                                ),
+                                SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    child: CustomConfirmBtnBorder(
+                                      text: "중복확인",
+                                      onPressed: () {},
+                                      backgroundColor: Colors.white,
+                                      textColor: Colors.black,
+                                      textSize: 12,
+                                    ))
+                              ],
+                            )),
+                        Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.63,
+                                  child: CustomTextField(
+                                      hintText: "이메일",
                                       obscureText: false,
                                       controller: _userEmail,
                                       keyboardType: TextInputType.name),
@@ -179,38 +214,9 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.63,
                                   child: CustomTextField(
-                                      hintText: "이름",
+                                      hintText: "연락처",
                                       obscureText: false,
-                                      controller: _userEmail,
-                                      keyboardType: TextInputType.name),
-                                ),
-                                SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.05,
-                                    child: CustomConfirmBtnBorder(
-                                      text: "중복확인",
-                                      onPressed: () {},
-                                      backgroundColor: Colors.white,
-                                      textColor: Colors.black,
-                                      textSize: 12,
-                                    ))
-                              ],
-                            )),
-                        Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            height: MediaQuery.of(context).size.height * 0.05,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.63,
-                                  child: CustomTextField(
-                                      hintText: "이름",
-                                      obscureText: false,
-                                      controller: _userEmail,
+                                      controller: _userPhone,
                                       keyboardType: TextInputType.name),
                                 ),
                                 SizedBox(

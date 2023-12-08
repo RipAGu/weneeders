@@ -11,14 +11,14 @@ import 'package:winit/view/widget/SearchAppBar.dart';
 import '../widget/CustomCheckboxTile.dart';
 import 'AddViewModel.dart';
 
-class RegisterPartnerPage extends StatefulWidget {
-  const RegisterPartnerPage({Key? key}) : super(key: key);
+class RegisterProjectPage extends StatefulWidget {
+  const RegisterProjectPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPartnerPage> createState() => _RegisterPartnerPageState();
+  State<RegisterProjectPage> createState() => _RegisterProjectPageState();
 }
 
-class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
+class _RegisterProjectPageState extends State<RegisterProjectPage> {
   final TextEditingController _careerController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
         builder: (context, viewModel, child) => MaterialApp(
           home: Scaffold(
             backgroundColor: Colors.white,
-            appBar: const SearchAppBar(title: "파트너 등록"),
+            appBar: const SearchAppBar(title: "프로젝트 등록"),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Container(
@@ -38,7 +38,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                       const Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "경력",
+                          "작업기간",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -65,7 +65,41 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                       const Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "전문분야",
+                          "방식",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        //구분선
+                        margin: const EdgeInsets.only(top: 13),
+                        height: 1,
+                        color: const Color(0xffECECEC),
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 13)),
+                      GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: viewModel.methodList.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 5 / 1,
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 10),
+                          itemBuilder: (BuildContext context, int index) {
+                            return SizedBox(
+                              child: CustomCheckboxTile(
+                                item: viewModel.methodList[index],
+                                onTap: () => viewModel.toggleMethodBtn(index),
+                              ),
+                            );
+                          }),
+                      const Padding(padding: EdgeInsets.only(top: 20)),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "파트너 분야",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -96,8 +130,8 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                               ),
                             );
                           }),
-                      const Padding(padding: EdgeInsets.only(top: 20)),
                       Container(
+                        margin: const EdgeInsets.only(top: 13),
                         height: 40,
                         child: CustomTextFieldGray(
                             hintText: "직접입력",
@@ -106,75 +140,8 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                             keyboardType: TextInputType.text,
                             textFontSize: 12),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 33)),
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "사용기술",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        //구분선
-                        margin: const EdgeInsets.only(top: 13),
-                        height: 1,
-                        color: const Color(0xffECECEC),
-                      ),
-                      Padding(padding: const EdgeInsets.only(top: 13)),
-                      GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: viewModel.testList2.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 6 / 1,
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 5),
-                          itemBuilder: (BuildContext context, int index) {
-                            return CustomCheckboxTile(
-                              item: viewModel.testList2[index],
-                              onTap: () => viewModel.toggleTechCheckbox(index),
-                            );
-                          }),
                       const Padding(padding: EdgeInsets.only(top: 20)),
-                      Container(
-                        height: 40,
-                        child: CustomTextFieldGray(
-                            hintText: "직접입력",
-                            obscureText: false,
-                            controller: _careerController,
-                            keyboardType: TextInputType.text,
-                            textFontSize: 12),
-                      ),
-                      const Padding(padding: EdgeInsets.only(top: 33)),
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "업무방식",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        //구분선
-                        margin: const EdgeInsets.only(top: 13),
-                        height: 1,
-                        color: const Color(0xffECECEC),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 13),
-                        height: 80,
-                        child: CustomTextFieldGray(
-                            hintText: "업무방식을 입력해주세요.",
-                            obscureText: false,
-                            controller: _careerController,
-                            keyboardType: TextInputType.text,
-                            textFontSize: 12),
-                      ),
-                      const Padding(padding: EdgeInsets.only(top: 33)),
+                      const Padding(padding: const EdgeInsets.only(top: 13)),
                       const Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -190,7 +157,6 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                         height: 1,
                         color: const Color(0xffECECEC),
                       ),
-                      const Padding(padding: const EdgeInsets.only(top: 13)),
                       Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -243,7 +209,85 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                       const Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "포트폴리오 등록",
+                          "업무방식",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        //구분선
+                        margin: const EdgeInsets.only(top: 13),
+                        height: 1,
+                        color: const Color(0xffECECEC),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 13),
+                        height: 80,
+                        child: CustomTextFieldGray(
+                            hintText: "업무방식을 입력해주세요.",
+                            obscureText: false,
+                            controller: _careerController,
+                            keyboardType: TextInputType.text,
+                            textFontSize: 12),
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 33)),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "요구기능",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        //구분선
+                        margin: const EdgeInsets.only(top: 13),
+                        height: 1,
+                        color: const Color(0xffECECEC),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 13),
+                        height: 80,
+                        child: CustomTextFieldGray(
+                            hintText: "업무방식을 입력해주세요.",
+                            obscureText: false,
+                            controller: _careerController,
+                            keyboardType: TextInputType.text,
+                            textFontSize: 12),
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 33)),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "공사금액",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        //구분선
+                        margin: const EdgeInsets.only(top: 13),
+                        height: 1,
+                        color: const Color(0xffECECEC),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 13),
+                        height: 80,
+                        child: CustomTextFieldGray(
+                            hintText: "업무방식을 입력해주세요.",
+                            obscureText: false,
+                            controller: _careerController,
+                            keyboardType: TextInputType.text,
+                            textFontSize: 12),
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 33)),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "사진 등록",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),

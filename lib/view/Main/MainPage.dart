@@ -25,6 +25,7 @@ class _MainPageState extends State<MainPage> {
   final String menu = "assets/icons/menu.svg";
   final String searchImage = "assets/images/search.svg";
   final String whiteLogo = "assets/icons/white_logo.svg";
+  final String searchIcon = "assets/icons/project_search.svg";
   @override
   Widget build(BuildContext context) {
     final mainContext = context;
@@ -53,7 +54,7 @@ class _MainPageState extends State<MainPage> {
                   //클릭시 로그 출력
                   BigGrayBtn(
                     text: '프로젝트 검색',
-                    image: "assets/icons/project_search.svg",
+                    image: searchIcon,
                     onPressed: () {
                       BottomNavigationBar navigationBar =
                           bottomNavBarKey.currentWidget as BottomNavigationBar;

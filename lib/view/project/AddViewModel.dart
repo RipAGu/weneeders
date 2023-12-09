@@ -52,6 +52,9 @@ class AddViewModel extends ChangeNotifier {
     ImageData(image: null),
   ];
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
   void toggleFieldCheckbox(int index) {
     testList[index].isChecked = !testList[index].isChecked;
     print(testList[index].isChecked);
@@ -105,12 +108,17 @@ class AddViewModel extends ChangeNotifier {
   }
 
   Future<void> _pickImg() async {
+    _isLoading = true;
+    notifyListeners();
     final pickedFile = ImagePicker();
     final List<XFile> images = await pickedFile.pickMultiImage();
     for (int i = 0; i < images.length; i++) {
       testImg.add(ImageData(image: images[i].path));
     }
-    print(testImg);
+    notifyListeners();
+    //1초 기다림
+    await Future.delayed(Duration(seconds: 1));
+    _isLoading = false;
     notifyListeners();
   }
 }

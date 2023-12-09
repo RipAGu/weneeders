@@ -57,11 +57,12 @@ class _SignInPageState extends State<SignInPage> {
                           obscureText: true,
                           controller: _userPassword,
                           keyboardType: TextInputType.visiblePassword)),
+                  const Padding(padding: EdgeInsets.only(top: 16)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextButton(
-                        onPressed: () {},
+                      GestureDetector(
+                        onTap: () {},
                         child: const Text(
                           "아이디 찾기",
                           style: TextStyle(
@@ -70,15 +71,18 @@ class _SignInPageState extends State<SignInPage> {
                               fontSize: 12),
                         ),
                       ),
-                      const Text(
-                        " | ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                            fontSize: 12),
+                      Container(
+                        margin: const EdgeInsets.only(left: 5, right: 5),
+                        child: const Text(
+                          " | ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontSize: 12),
+                        ),
                       ),
-                      TextButton(
-                        onPressed: () {},
+                      GestureDetector(
+                        onTap: () {},
                         child: const Text(
                           "비밀번호 찾기",
                           style: TextStyle(
@@ -87,13 +91,16 @@ class _SignInPageState extends State<SignInPage> {
                               fontSize: 12),
                         ),
                       ),
-                      const Text(" | ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                              fontSize: 12)),
-                      TextButton(
-                        onPressed: () {
+                      Container(
+                        margin: const EdgeInsets.only(left: 5, right: 5),
+                        child: const Text(" | ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                                fontSize: 12)),
+                      ),
+                      GestureDetector(
+                        onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(

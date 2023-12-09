@@ -46,11 +46,13 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                         children: [
                           Container(
                             margin: const EdgeInsets.only(left: 10),
-                            child: const Align(
+                            child: Align(
                               alignment: Alignment.centerLeft,
                               child: IconButton(
-                                  onPressed: null,
-                                  icon: Icon(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(
                                     Icons.arrow_back_ios,
                                     color: Colors.black,
                                   )),

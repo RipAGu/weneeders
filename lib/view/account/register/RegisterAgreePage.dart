@@ -42,10 +42,12 @@ class RegisterAgreePageBody extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(left: 10),
-                    child: const Align(
+                    child: Align(
                       alignment: Alignment.centerLeft,
                       child: IconButton(
-                          onPressed: null,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           icon: Icon(
                             Icons.arrow_back_ios,
                             color: Colors.black,

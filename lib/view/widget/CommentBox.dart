@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CommentBox extends StatelessWidget {
@@ -32,26 +31,26 @@ class CommentBox extends StatelessWidget {
             : SizedBox(
                 width: MediaQuery.of(context).size.width * 0.07,
                 height: MediaQuery.of(context).size.width * 0.07,
-                child: CircleAvatar(
+                child: const CircleAvatar(
                   radius: 20,
                   backgroundImage: AssetImage('assets/images/img.png'),
                 ),
               ),
-        Padding(padding: EdgeInsets.only(left: 10)),
+        const Padding(padding: EdgeInsets.only(left: 10)),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
             children: [
               Text(
                 name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Padding(padding: EdgeInsets.only(left: 5)),
+              const Padding(padding: EdgeInsets.only(left: 5)),
               Text(
                 date,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                   color: Color(0xFF7D8690),
                 ),
@@ -60,7 +59,7 @@ class CommentBox extends StatelessWidget {
           ),
           Text(
             comment,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               color: Color(0xFF7D8690),
             ),

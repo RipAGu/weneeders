@@ -108,6 +108,7 @@ class AddViewModel extends ChangeNotifier {
   }
 
   Future<void> _pickImg() async {
+    //이미지 선택 함수
     _isLoading = true;
     notifyListeners();
     final pickedFile = ImagePicker();
@@ -117,7 +118,7 @@ class AddViewModel extends ChangeNotifier {
     }
     notifyListeners();
     //1초 기다림
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     _isLoading = false;
     notifyListeners();
   }

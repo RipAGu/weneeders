@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/widget/CustomLocalSelectBtn.dart';
 import 'package:winit/view/widget/CustomRegionSelectBtn.dart';
-import 'package:winit/view/widget/CustomTextField.dart';
 import 'package:winit/view/widget/CustomTextFieldGray.dart';
 import 'package:winit/view/widget/UploadImageBox.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';

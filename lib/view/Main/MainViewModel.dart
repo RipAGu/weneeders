@@ -38,11 +38,6 @@ class MainViewModel extends ChangeNotifier {
     _currentIndex = index;
     notifyListeners();
   }
-
-  void TestResetData() {
-    _mainDataList.clear();
-    notifyListeners();
-  }
 }
 
 class TestMainData {

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
+import 'package:winit/view/account/find/FindAccountPage.dart';
+import 'package:winit/view/account/find/FindPasswordPage.dart';
 import 'package:winit/view/account/register/RegisterAgreePage.dart';
 import 'package:winit/view/widget/CustomTextField.dart';
 
@@ -62,7 +64,13 @@ class _SignInPageState extends State<SignInPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const FindAccountPage()));
+                        },
                         child: const Text(
                           "아이디 찾기",
                           style: TextStyle(
@@ -82,7 +90,13 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const FindPasswordPage()));
+                        },
                         child: const Text(
                           "비밀번호 찾기",
                           style: TextStyle(

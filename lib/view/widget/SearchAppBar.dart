@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -25,7 +24,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: Colors.transparent,
       titleSpacing: 0,
       leadingWidth: 70,
-      leading: Padding(padding: EdgeInsets.only(left: 10), child: Container()),
+      leading: Padding(padding: const EdgeInsets.only(left: 10), child: Container()),
       title: Center(
           child: Text(title,
               style: const TextStyle(

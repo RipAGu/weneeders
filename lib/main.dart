@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
       ],
       child: const CupertinoApp(
         theme: CupertinoThemeData(
+          textTheme: CupertinoTextThemeData(
+              textStyle: TextStyle(fontFamily: 'Roboto', color: Colors.black)),
           brightness: Brightness.light,
           primaryColor: Colors.black,
         ),

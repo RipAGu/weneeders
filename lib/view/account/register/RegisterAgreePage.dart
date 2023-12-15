@@ -213,7 +213,7 @@ class RegisterAgreePageBody extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.4,
                         height: MediaQuery.of(context).size.height * 0.06,
                         child: CustomConfirmBtn(
-                            text: "고객 회원가입",
+                            text: "업체 회원가입",
                             onPressed: () {
                               viewModel.isAllChecked
                                   ? Navigator.push(
@@ -231,7 +231,7 @@ class RegisterAgreePageBody extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.4,
                         height: MediaQuery.of(context).size.height * 0.06,
                         child: CustomConfirmBtn(
-                            text: "전문가 회원가입",
+                            text: "파트너 회원가입",
                             textSize: 12,
                             onPressed: () {
                               viewModel.isAllChecked

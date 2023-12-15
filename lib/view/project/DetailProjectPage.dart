@@ -25,7 +25,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
         builder: (context, viewModel, child) => MaterialApp(
           home: Scaffold(
             backgroundColor: Colors.white,
-            appBar: MainAppBar(),
+            appBar: const MainAppBar(),
             body: SafeArea(
               child: Stack(children: [
                 SingleChildScrollView(
@@ -136,7 +136,8 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                               );
                             },
                           ),
-                        )
+                        ),
+                        const Padding(padding: EdgeInsets.only(bottom: 45)),
                       ],
                     ),
                   ),
@@ -188,6 +189,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
               ]),
             ),
             bottomNavigationBar: BottomAppBar(
+              //하단 바
               padding: const EdgeInsets.all(0),
               color: const Color(0x00000000),
               child: Container(

@@ -49,7 +49,7 @@ class _FindAccountPageState extends State<FindAccountPage> {
                         child: Padding(
                           padding: EdgeInsets.only(top: 15),
                           child: Text(
-                            "아이디 찾기",
+                            "이메일 찾기",
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black,
@@ -128,13 +128,13 @@ class _FindAccountPageState extends State<FindAccountPage> {
                           )),
                     ]),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Container(
                     margin: const EdgeInsets.only(bottom: 20),
                     width: MediaQuery.of(context).size.width * 0.85,
                     height: MediaQuery.of(context).size.height * 0.06,
                     child: CustomConfirmBtn(
-                        text: "아이디 찾기",
+                        text: "이메일 찾기",
                         onPressed: () {},
                         backgroundColor: const Color(0xFF2D8CF4),
                         textColor: Colors.white,

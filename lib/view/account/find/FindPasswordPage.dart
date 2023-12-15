@@ -81,35 +81,6 @@ class _FindPasswordPageState extends State<FindPasswordPage> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.63,
                                   child: CustomTextField(
-                                      hintText: "이메일",
-                                      obscureText: false,
-                                      controller: _userEmail,
-                                      keyboardType: TextInputType.name),
-                                ),
-                                SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.05,
-                                    child: CustomConfirmBtn(
-                                      text: "인증요청",
-                                      onPressed: () {},
-                                      backgroundColor: const Color(0xFF2D8CF4),
-                                      textColor: Colors.white,
-                                      textSize: 12,
-                                    )),
-                              ],
-                            )),
-                        Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            height: MediaQuery.of(context).size.height * 0.05,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.63,
-                                  child: CustomTextField(
                                       hintText: "연락처",
                                       obscureText: false,
                                       controller: _userPhone,

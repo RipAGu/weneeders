@@ -81,14 +81,35 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                       margin: const EdgeInsets.only(top: 16),
                       padding: const EdgeInsets.symmetric(horizontal: 26),
                       child: Column(children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          child: CustomTextField(
-                              hintText: "이메일",
-                              obscureText: false,
-                              controller: _userEmail,
-                              keyboardType: TextInputType.emailAddress),
-                        ),
+                        Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.63,
+                                  child: CustomTextField(
+                                      hintText: "이메일",
+                                      obscureText: false,
+                                      controller: _userEmail,
+                                      keyboardType: TextInputType.name),
+                                ),
+                                SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    child: CustomConfirmBtnBorder(
+                                      text: "중복확인",
+                                      onPressed: () {},
+                                      backgroundColor: Colors.white,
+                                      textColor: Colors.black,
+                                      textSize: 12,
+                                    ))
+                              ],
+                            )),
                         Container(
                           margin: const EdgeInsets.only(top: 10),
                           height: MediaQuery.of(context).size.height * 0.05,
@@ -108,46 +129,14 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                               keyboardType: TextInputType.visiblePassword),
                         ),
                         Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            height: MediaQuery.of(context).size.height * 0.05,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.63,
-                                  child: CustomTextField(
-                                      hintText: "이름",
-                                      obscureText: false,
-                                      controller: _userName,
-                                      keyboardType: TextInputType.name),
-                                ),
-                                SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.05,
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10),
-                                      decoration: const ShapeDecoration(
-                                        color: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                              width: 1.0,
-                                              style: BorderStyle.solid,
-                                              color: Color(0xffa9b0b8)),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(3.0)),
-                                        ),
-                                      ),
-                                      child: SvgPicture.asset(
-                                          "assets/icons/profile_trans.svg",
-                                          colorFilter: const ColorFilter.mode(
-                                              Colors.black, BlendMode.srcIn)),
-                                    ))
-                              ],
-                            )),
+                          margin: const EdgeInsets.only(top: 10),
+                          height: MediaQuery.of(context).size.height * 0.05,
+                          child: CustomTextField(
+                              hintText: "이름",
+                              obscureText: true,
+                              controller: _userPasswordCheck,
+                              keyboardType: TextInputType.visiblePassword),
+                        ),
                         Container(
                             margin: const EdgeInsets.only(top: 10),
                             height: MediaQuery.of(context).size.height * 0.05,
@@ -161,35 +150,6 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                                       hintText: "닉네임",
                                       obscureText: false,
                                       controller: _userNickname,
-                                      keyboardType: TextInputType.name),
-                                ),
-                                SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.05,
-                                    child: CustomConfirmBtnBorder(
-                                      text: "중복확인",
-                                      onPressed: () {},
-                                      backgroundColor: Colors.white,
-                                      textColor: Colors.black,
-                                      textSize: 12,
-                                    ))
-                              ],
-                            )),
-                        Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            height: MediaQuery.of(context).size.height * 0.05,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.63,
-                                  child: CustomTextField(
-                                      hintText: "이메일",
-                                      obscureText: false,
-                                      controller: _userEmail,
                                       keyboardType: TextInputType.name),
                                 ),
                                 SizedBox(

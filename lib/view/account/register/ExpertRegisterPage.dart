@@ -62,7 +62,7 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                             child: Padding(
                               padding: EdgeInsets.only(top: 15),
                               child: Text(
-                                "전문가 회원가입",
+                                "파트너 회원가입",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     color: Colors.black,
@@ -246,42 +246,6 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                       ))
                                 ],
                               )),
-                          const Padding(padding: EdgeInsets.only(top: 10)),
-                          Row(children: [
-                            const Text("연락 가능한 시간",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                            const Spacer(),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
-                              height: MediaQuery.of(context).size.height * 0.05,
-                              child: CustomTextField(
-                                  hintText: "",
-                                  obscureText: false,
-                                  controller: _startTime,
-                                  keyboardType: TextInputType.text),
-                            ),
-                            Container(
-                              margin:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: const Text("~",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black)),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
-                              height: MediaQuery.of(context).size.height * 0.05,
-                              child: CustomTextField(
-                                  hintText: "",
-                                  obscureText: false,
-                                  controller: _endTime,
-                                  keyboardType: TextInputType.text),
-                            ),
-                          ])
                         ]),
                       ),
                       const Spacer(),

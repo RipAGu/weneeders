@@ -56,16 +56,109 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                             height: 1,
                             color: const Color(0xffECECEC),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 13),
-                            height: 40,
-                            child: CustomTextFieldGray(
-                              hintText: "작업기간을 입력해주세요.",
-                              controller: _periodController,
-                              textFontSize: 12,
-                              keyboardType: TextInputType.text,
-                              obscureText: false,
-                            ),
+                          const Padding(padding: EdgeInsets.only(top: 22)),
+                          Row(
+                            children: [
+                              Padding(padding: const EdgeInsets.only(left: 10)),
+                              Text(
+                                "시작일",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.1),
+                                width: MediaQuery.of(context).size.width * 0.27,
+                                height: 40,
+                                child: CustomTextFieldGray(
+                                    hintText: "년",
+                                    obscureText: false,
+                                    controller: _periodController,
+                                    keyboardType: TextInputType.number,
+                                    textFontSize: 12),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.02),
+                                width: MediaQuery.of(context).size.width * 0.18,
+                                height: 40,
+                                child: CustomTextFieldGray(
+                                    hintText: "월",
+                                    obscureText: false,
+                                    controller: _periodController,
+                                    keyboardType: TextInputType.number,
+                                    textFontSize: 12),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.02),
+                                width: MediaQuery.of(context).size.width * 0.18,
+                                height: 40,
+                                child: CustomTextFieldGray(
+                                    hintText: "일",
+                                    obscureText: false,
+                                    controller: _periodController,
+                                    keyboardType: TextInputType.number,
+                                    textFontSize: 12),
+                              ),
+                            ],
+                          ),
+                          const Padding(padding: EdgeInsets.only(top: 10)),
+                          Row(
+                            children: [
+                              Padding(padding: const EdgeInsets.only(left: 10)),
+                              Text(
+                                "종료일",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.1),
+                                width: MediaQuery.of(context).size.width * 0.27,
+                                height: 40,
+                                child: CustomTextFieldGray(
+                                    hintText: "년",
+                                    obscureText: false,
+                                    controller: _periodController,
+                                    keyboardType: TextInputType.number,
+                                    textFontSize: 12),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.02),
+                                width: MediaQuery.of(context).size.width * 0.18,
+                                height: 40,
+                                child: CustomTextFieldGray(
+                                    hintText: "월",
+                                    obscureText: false,
+                                    controller: _periodController,
+                                    keyboardType: TextInputType.number,
+                                    textFontSize: 12),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.02),
+                                width: MediaQuery.of(context).size.width * 0.18,
+                                height: 40,
+                                child: CustomTextFieldGray(
+                                    hintText: "일",
+                                    obscureText: false,
+                                    controller: _periodController,
+                                    keyboardType: TextInputType.number,
+                                    textFontSize: 12),
+                              ),
+                            ],
                           ),
                           const Padding(padding: EdgeInsets.only(top: 33)),
                           const Align(

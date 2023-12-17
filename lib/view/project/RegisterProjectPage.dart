@@ -137,19 +137,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                   ),
                                 );
                               }),
-                          Container(
-                            margin: const EdgeInsets.only(top: 13),
-                            height: 40,
-                            child: CustomTextFieldGray(
-                                hintText: "직접입력",
-                                obscureText: false,
-                                controller: _partnerAreaController,
-                                keyboardType: TextInputType.text,
-                                textFontSize: 12),
-                          ),
                           const Padding(padding: EdgeInsets.only(top: 20)),
-                          const Padding(
-                              padding: const EdgeInsets.only(top: 13)),
                           const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(

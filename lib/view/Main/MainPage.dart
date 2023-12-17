@@ -99,6 +99,32 @@ class _MainPageState extends State<MainPage> {
                     textColor: Colors.black,
                     fontSize: 12,
                   ),
+                  BigGrayBtn(
+                    text: '프로젝트 등록',
+                    image: "assets/icons/project_register.svg",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const RegisterProjectPage()));
+                    },
+                    textColor: Colors.black,
+                    fontSize: 12,
+                  ),
+                  BigGrayBtn(
+                    text: '프로젝트 등록',
+                    image: "assets/icons/project_register.svg",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const RegisterProjectPage()));
+                    },
+                    textColor: Colors.black,
+                    fontSize: 12,
+                  ),
                 ],
               ),
               const Padding(padding: EdgeInsets.only(top: 30)),
@@ -158,7 +184,14 @@ class _MainPageState extends State<MainPage> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SvgPicture.asset("assets/icons/add_and_text.svg"),
+                GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      BottomNavigationBar navigationBar =
+                          bottomNavBarKey.currentWidget as BottomNavigationBar;
+                      navigationBar.onTap!(2);
+                    },
+                    child: SvgPicture.asset("assets/icons/add_and_text.svg")),
               ]),
               Container(
                 margin: const EdgeInsets.only(top: 10),
@@ -219,69 +252,15 @@ class _MainPageState extends State<MainPage> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SvgPicture.asset("assets/icons/add_and_text.svg"),
-                    ]),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                height: 1,
-                color: Colors.grey[300],
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: Provider.of<MainViewModel>(context)
-                          .mainDataList
-                          .length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.only(top: 10),
-                          height: MediaQuery.of(context).size.height * 0.13,
-                          child: ProjectCard(
-                            image: Provider.of<MainViewModel>(context)
-                                .mainDataList[index]
-                                .image,
-                            title: Provider.of<MainViewModel>(context)
-                                .mainDataList[index]
-                                .title,
-                            content: Provider.of<MainViewModel>(context)
-                                .mainDataList[index]
-                                .content,
-                            writer: Provider.of<MainViewModel>(context)
-                                .mainDataList[index]
-                                .writer,
-                            location: Provider.of<MainViewModel>(context)
-                                .mainDataList[index]
-                                .location,
-                            date: Provider.of<MainViewModel>(context)
-                                .mainDataList[index]
-                                .date,
-                            onPressed: () {
-                              Navigator.push(
-                                  mainContext,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const DetailProjectPage()));
-                            },
-                          ),
-                        );
-                      })),
-              Container(
-                margin: const EdgeInsets.only(top: 30),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "최신글",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SvgPicture.asset("assets/icons/add_and_text.svg"),
+                      GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () {
+                            BottomNavigationBar navigationBar = bottomNavBarKey
+                                .currentWidget as BottomNavigationBar;
+                            navigationBar.onTap!(1);
+                          },
+                          child: SvgPicture.asset(
+                              "assets/icons/add_and_text.svg")),
                     ]),
               ),
               Container(

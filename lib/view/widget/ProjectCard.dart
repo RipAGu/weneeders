@@ -62,24 +62,6 @@ class ProjectCard extends StatelessWidget {
                 Text.rich(
                   TextSpan(children: [
                     const TextSpan(
-                        text: "제목: ",
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Color(0xff000000),
-                        )),
-                    TextSpan(
-                        text: title,
-                        style: const TextStyle(
-                            color: Color(0xff000000),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700))
-                  ]),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const Padding(padding: EdgeInsets.only(top: 2)),
-                Text.rich(
-                  TextSpan(children: [
-                    const TextSpan(
                         text: "작성자: ",
                         style: TextStyle(
                           fontSize: 10,

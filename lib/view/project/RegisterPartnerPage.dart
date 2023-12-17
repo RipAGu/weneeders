@@ -100,16 +100,6 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                                   ),
                                 );
                               }),
-                          const Padding(padding: EdgeInsets.only(top: 20)),
-                          Container(
-                            height: 40,
-                            child: CustomTextFieldGray(
-                                hintText: "직접입력",
-                                obscureText: false,
-                                controller: _areaController,
-                                keyboardType: TextInputType.text,
-                                textFontSize: 12),
-                          ),
                           const Padding(padding: EdgeInsets.only(top: 33)),
                           const Align(
                             alignment: Alignment.centerLeft,
@@ -143,16 +133,6 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                                       viewModel.toggleTechCheckbox(index),
                                 );
                               }),
-                          const Padding(padding: EdgeInsets.only(top: 20)),
-                          Container(
-                            height: 40,
-                            child: CustomTextFieldGray(
-                                hintText: "직접입력",
-                                obscureText: false,
-                                controller: _techController,
-                                keyboardType: TextInputType.text,
-                                textFontSize: 12),
-                          ),
                           const Padding(padding: EdgeInsets.only(top: 33)),
                           const Align(
                             alignment: Alignment.centerLeft,

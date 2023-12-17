@@ -39,20 +39,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                               top: 10, left: 20, right: 20),
                           child: Row(
                             children: [
-                              RichText(
-                                  text: const TextSpan(
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 12),
-                                      children: <TextSpan>[
-                                    TextSpan(text: "제목: "),
-                                    TextSpan(
-                                        text: "인테리어 일상",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12)),
-                                  ])),
                               Container(
-                                margin: const EdgeInsets.only(left: 5),
                                 child: RichText(
                                     text: const TextSpan(
                                         style: TextStyle(
@@ -125,14 +112,18 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: viewModel.testCommentList.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                margin: const EdgeInsets.only(top: 10),
-                                height: 50,
-                                child: CommentBox(
+                              return FittedBox(
+                                fit: BoxFit.fitHeight,
+                                child: Container(
+                                  margin: const EdgeInsets.only(top: 10),
+                                  child: CommentBox(
                                     name: viewModel.testCommentList[index].name,
                                     date: viewModel.testCommentList[index].date,
                                     comment: viewModel
-                                        .testCommentList[index].comment),
+                                        .testCommentList[index].comment,
+                                    repleData: viewModel.testRepleData[index],
+                                  ),
+                                ),
                               );
                             },
                           ),

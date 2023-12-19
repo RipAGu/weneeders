@@ -36,7 +36,7 @@ dependencies:
   image_picker: ^1.0.4
   fluttertoast: ^8.2.4
   flutter_native_splash: ^2.3.8
-
+  dio: ^5.4.0
 
 
   # The following adds the Cupertino Icons font to your application.

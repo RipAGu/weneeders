@@ -59,8 +59,8 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                           const Padding(padding: EdgeInsets.only(top: 22)),
                           Row(
                             children: [
-                              Padding(padding: const EdgeInsets.only(left: 10)),
-                              Text(
+                              const Padding(padding: EdgeInsets.only(left: 10)),
+                              const Text(
                                 "시작일",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w400,

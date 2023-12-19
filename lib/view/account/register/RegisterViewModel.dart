@@ -1,23 +1,35 @@
 import 'package:flutter/cupertino.dart';
+import 'package:winit/network/ApiService.dart';
+import 'package:winit/network/model/TestModel.dart';
 
 class RegisterViewModel extends ChangeNotifier {
   bool _isAllChecked = false;
+
   bool get isAllChecked => _isAllChecked;
 
   bool _isTotalCheck = false;
+
   bool get isTotalCheck => _isTotalCheck;
 
   bool _isServiceCheck = false;
+
   bool get isServiceCheck => _isServiceCheck;
 
   bool _isPrivacyCheck = false;
+
   bool get isPrivacyCheck => _isPrivacyCheck;
 
   bool _isMarketingCheck = false;
+
   bool get isMarketingCheck => _isMarketingCheck;
 
   bool? _nickNameCheck;
+
   bool? get nickNameCheck => _nickNameCheck;
+
+  final ApiService apiService = ApiService();
+
+  TestModel? _testModel;
 
   void setTotalCheck(bool value) {
     _isTotalCheck = value;
@@ -60,5 +72,15 @@ class RegisterViewModel extends ChangeNotifier {
   void changeNickNameCheck() {
     _nickNameCheck = true;
     notifyListeners();
+  }
+
+  Future<void> getTest() async {
+    try {
+      _testModel = await apiService.getTest();
+      print("testModel: ${_testModel!.body}");
+    } catch (e) {
+      print(e);
+      throw e;
+    }
   }
 }

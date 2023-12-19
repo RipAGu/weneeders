@@ -196,7 +196,9 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                                 0.05,
                                             child: CustomConfirmBtnBorder(
                                               text: "중복확인",
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                viewModel.getTest();
+                                              },
                                               backgroundColor: Colors.white,
                                               textColor: Colors.black,
                                               textSize: 12,

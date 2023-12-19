@@ -41,7 +41,7 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        behavior: HitTestBehavior.translucent, // 비어있는 공간에도 ontap이 작동하도록 하는 설정
+        behavior: HitTestBehavior.translucent, // 이벤트가 발생하는 영역을 확장
         onTap: onPressed,
         child: Row(children: [
           SizedBox(

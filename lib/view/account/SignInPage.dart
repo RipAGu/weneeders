@@ -22,140 +22,133 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         child: SizedBox(
-            width: double.infinity,
-            height: double.infinity,
             child: Padding(
-              padding: const EdgeInsets.only(top: 110),
-              child: Column(
-                children: [
-                  SvgPicture.asset(
-                    logo,
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    semanticsLabel: "logo",
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: 50)),
-                  const Text(
-                    "Login",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black,
-                        fontSize: 20),
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: 16)),
-                  SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      child: CustomTextField(
-                          hintText: "이메일",
-                          obscureText: false,
-                          controller: _userEmail,
-                          keyboardType: TextInputType.emailAddress)),
-                  const Padding(padding: EdgeInsets.only(top: 10)),
-                  SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      child: CustomTextField(
-                          hintText: "비밀번호",
-                          obscureText: true,
-                          controller: _userPassword,
-                          keyboardType: TextInputType.visiblePassword)),
-                  const Padding(padding: EdgeInsets.only(top: 16)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const FindAccountPage()));
-                        },
-                        child: const Text(
-                          "아이디 찾기",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                              fontSize: 12),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 5, right: 5),
-                        child: const Text(
-                          " | ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                              fontSize: 12),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const FindPasswordPage()));
-                        },
-                        child: const Text(
-                          "비밀번호 찾기",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                              fontSize: 12),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 5, right: 5),
-                        child: const Text(" | ",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                                fontSize: 12)),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RegisterAgreePage()));
-                        },
-                        child: const Text(
-                          "회원가입",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                              fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const MainBottomNavigationBar()));
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF2D8CF4),
-                        elevation: 0,
-                        minimumSize: Size(
-                            MediaQuery.of(context).size.width * 0.85,
-                            MediaQuery.of(context).size.height * 0.06),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5))),
-                    child: const Text(
-                      "로그인",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(bottom: 26))
-                ],
+      padding: const EdgeInsets.only(top: 110),
+      child: Column(
+        children: [
+          SvgPicture.asset(
+            logo,
+            width: MediaQuery.of(context).size.width * 0.2,
+            semanticsLabel: "logo",
+          ),
+          const Padding(padding: EdgeInsets.only(top: 50)),
+          const Text(
+            "Login",
+            style: TextStyle(
+                fontWeight: FontWeight.w700, color: Colors.black, fontSize: 20),
+          ),
+          const Padding(padding: EdgeInsets.only(top: 16)),
+          SizedBox(
+              width: MediaQuery.of(context).size.width * 0.85,
+              height: MediaQuery.of(context).size.height * 0.06,
+              child: CustomTextField(
+                  hintText: "이메일",
+                  obscureText: false,
+                  controller: _userEmail,
+                  keyboardType: TextInputType.emailAddress,
+                  textFontSize: 12)),
+          const Padding(padding: EdgeInsets.only(top: 10)),
+          SizedBox(
+              width: MediaQuery.of(context).size.width * 0.85,
+              height: MediaQuery.of(context).size.height * 0.06,
+              child: CustomTextField(
+                  hintText: "비밀번호",
+                  obscureText: true,
+                  controller: _userPassword,
+                  keyboardType: TextInputType.visiblePassword,
+                  textFontSize: 12)),
+          const Padding(padding: EdgeInsets.only(top: 16)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FindAccountPage()));
+                },
+                child: const Text(
+                  "아이디 찾기",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                      fontSize: 12),
+                ),
               ),
-            )));
+              Container(
+                margin: const EdgeInsets.only(left: 5, right: 5),
+                child: const Text(
+                  " | ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                      fontSize: 12),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FindPasswordPage()));
+                },
+                child: const Text(
+                  "비밀번호 찾기",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                      fontSize: 12),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 5, right: 5),
+                child: const Text(" | ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                        fontSize: 12)),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RegisterAgreePage()));
+                },
+                child: const Text(
+                  "회원가입",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                      fontSize: 12),
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MainBottomNavigationBar()));
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF2D8CF4),
+                elevation: 0,
+                minimumSize: Size(MediaQuery.of(context).size.width * 0.85,
+                    MediaQuery.of(context).size.height * 0.06),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5))),
+            child: const Text(
+              "로그인",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          const Padding(padding: EdgeInsets.only(bottom: 26))
+        ],
+      ),
+    )));
   }
 }

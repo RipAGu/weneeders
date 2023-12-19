@@ -21,18 +21,11 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => SearchViewModel()),
         ChangeNotifierProvider(create: (context) => ChatViewModel()),
-        ChangeNotifierProvider(create: (context) => RegisterViewModel()),
         ChangeNotifierProvider(create: (context) => MainViewModel()),
       ],
-      child: const CupertinoApp(
-        theme: CupertinoThemeData(
-          textTheme: CupertinoTextThemeData(
-              textStyle: TextStyle(fontFamily: 'Roboto', color: Colors.black)),
-          brightness: Brightness.light,
-          primaryColor: Colors.black,
-        ),
+      child: const MaterialApp(
         title: 'Flutter Demo',
-        home: SignInPage(),
+        home: Scaffold(body: SignInPage()),
       ),
     );
   }

@@ -16,6 +16,9 @@ class RegisterViewModel extends ChangeNotifier {
   bool _isMarketingCheck = false;
   bool get isMarketingCheck => _isMarketingCheck;
 
+  bool? _nickNameCheck;
+  bool? get nickNameCheck => _nickNameCheck;
+
   void setTotalCheck(bool value) {
     _isTotalCheck = value;
     _isServiceCheck = value;
@@ -51,6 +54,11 @@ class RegisterViewModel extends ChangeNotifier {
       _isAllChecked = false;
       _isTotalCheck = false;
     }
+    notifyListeners();
+  }
+
+  void changeNickNameCheck() {
+    _nickNameCheck = true;
     notifyListeners();
   }
 }

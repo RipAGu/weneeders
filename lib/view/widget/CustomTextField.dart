@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType keyboardType;
   final bool? isEditable;
+  final double textFontSize;
 
   const CustomTextField({
     Key? key,
@@ -14,11 +15,15 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     required this.keyboardType,
     this.isEditable,
+    required this.textFontSize,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
+      style: TextStyle(
+        fontSize: textFontSize,
+      ),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       placeholder: hintText,
       obscureText: obscureText,

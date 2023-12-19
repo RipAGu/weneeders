@@ -84,7 +84,8 @@ class _FindPasswordPageState extends State<FindPasswordPage> {
                                       hintText: "연락처",
                                       obscureText: false,
                                       controller: _userPhone,
-                                      keyboardType: TextInputType.name),
+                                      keyboardType: TextInputType.name,
+                                      textFontSize: 12),
                                 ),
                                 SizedBox(
                                     width:
@@ -113,7 +114,8 @@ class _FindPasswordPageState extends State<FindPasswordPage> {
                                       hintText: "인증번호",
                                       obscureText: false,
                                       controller: _verifyCode,
-                                      keyboardType: TextInputType.name),
+                                      keyboardType: TextInputType.name,
+                                      textFontSize: 12),
                                 ),
                                 SizedBox(
                                     width:

@@ -82,7 +82,8 @@ class _FindAccountPageState extends State<FindAccountPage> {
                                     hintText: "이름",
                                     obscureText: false,
                                     controller: _userPhone,
-                                    keyboardType: TextInputType.name),
+                                    keyboardType: TextInputType.name,
+                                    textFontSize: 12),
                               ),
                               SizedBox(
                                   width:
@@ -107,10 +108,12 @@ class _FindAccountPageState extends State<FindAccountPage> {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.63,
                                 child: CustomTextField(
-                                    hintText: "이름",
-                                    obscureText: false,
-                                    controller: _verifyCode,
-                                    keyboardType: TextInputType.name),
+                                  hintText: "이름",
+                                  obscureText: false,
+                                  controller: _verifyCode,
+                                  keyboardType: TextInputType.name,
+                                  textFontSize: 12,
+                                ),
                               ),
                               SizedBox(
                                   width:

@@ -45,9 +45,11 @@ class RegisterViewModel extends ChangeNotifier {
 
   void isAllCheckedValue() {
     if (_isServiceCheck && _isPrivacyCheck && _isMarketingCheck) {
+      _isTotalCheck = true;
       _isAllChecked = true;
     } else {
       _isAllChecked = false;
+      _isTotalCheck = false;
     }
     notifyListeners();
   }

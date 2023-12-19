@@ -5,6 +5,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final TextEditingController controller;
   final TextInputType keyboardType;
+  final bool? isEditable;
 
   const CustomTextField({
     Key? key,
@@ -12,6 +13,7 @@ class CustomTextField extends StatelessWidget {
     required this.obscureText,
     required this.controller,
     required this.keyboardType,
+    this.isEditable,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText,
       controller: controller,
       keyboardType: keyboardType,
+      enabled: isEditable != null ? false : true,
       placeholderStyle: const TextStyle(fontSize: 12, color: Color(0xFFA8B0B8)),
       decoration: BoxDecoration(
         color: const Color(0x00ffffff),

@@ -8,6 +8,7 @@ import 'package:winit/view/account/register/RegisterViewModel.dart';
 import 'package:winit/view/widget/CustomCheckBoxBlack.dart';
 import 'package:winit/view/widget/CustomCheckBoxGray.dart';
 import 'package:winit/view/widget/CustomConfirmBtn.dart';
+import 'package:winit/view/widget/CustomDialogInform.dart';
 
 class RegisterAgreePage extends StatefulWidget {
   const RegisterAgreePage({Key? key}) : super(key: key);
@@ -20,7 +21,12 @@ class _RegisterAgreePageState extends State<RegisterAgreePage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => RegisterViewModel(),
-      child: const CupertinoPageScaffold(child: RegisterAgreePageBody()),
+      child: const CupertinoPageScaffold(
+          child: MaterialApp(
+              home: Scaffold(
+        body: RegisterAgreePageBody(),
+        backgroundColor: Colors.white,
+      ))),
     );
   }
 }
@@ -48,7 +54,7 @@ class RegisterAgreePageBody extends StatelessWidget {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_back_ios,
                             color: Colors.black,
                           )),
@@ -134,8 +140,36 @@ class RegisterAgreePageBody extends StatelessWidget {
                                 fontSize: 14),
                           ),
                           const Spacer(),
-                          SvgPicture.asset(
-                            'assets/icons/arrow_right.svg',
+                          GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+                                      backgroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.8,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.4,
+                                          child: CustomDialogInform(
+                                            title: "서비스 이용 약관",
+                                            content: "서비스 이용 약관입니다.",
+                                          )),
+                                    );
+                                  });
+                            },
+                            child: SvgPicture.asset(
+                              'assets/icons/arrow_right.svg',
+                            ),
                           ),
                         ],
                       ),

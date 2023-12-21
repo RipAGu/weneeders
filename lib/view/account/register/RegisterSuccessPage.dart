@@ -12,8 +12,8 @@ class RegisterSuccessPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => null,
-      child: CupertinoPageScaffold(
-        child: SafeArea(
+      child: Scaffold(
+        body: SafeArea(
           child: SizedBox(
             width: double.infinity,
             height: double.infinity,

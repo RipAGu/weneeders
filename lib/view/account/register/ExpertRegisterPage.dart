@@ -24,6 +24,7 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
   final TextEditingController _userPhone = TextEditingController();
   final TextEditingController _startTime = TextEditingController();
   final TextEditingController _endTime = TextEditingController();
+  final TextEditingController _verifyCode = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,7 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                 const Align(
                                   alignment: Alignment.center,
                                   child: Padding(
-                                    padding: EdgeInsets.only(top: 15),
+                                    padding: EdgeInsets.only(top: 10),
                                     child: Text(
                                       "파트너 회원가입",
                                       style: TextStyle(
@@ -100,9 +101,13 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                                   .size
                                                   .width *
                                               0.63,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.05,
                                           child: CustomTextField(
                                               isEditable:
-                                                  viewModel.nickNameCheck,
+                                                  !viewModel.isEmailCheck,
                                               hintText: "이메일",
                                               obscureText: false,
                                               controller: _userEmail,
@@ -120,8 +125,24 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                                 0.05,
                                             child: CustomConfirmBtnBorder(
                                               text: "중복확인",
-                                              onPressed: () {
-                                                viewModel.changeNickNameCheck();
+                                              onPressed: () async {
+                                                if (viewModel.emailRegexCheck(
+                                                    _userEmail.text)) {
+                                                  await viewModel
+                                                      .emailDupleCheck(
+                                                          _userEmail.text);
+                                                  if (!mounted) return;
+                                                  if (viewModel.isEmailCheck) {
+                                                    showSnackBar(context,
+                                                        "사용가능한 이메일입니다.");
+                                                  } else {
+                                                    showSnackBar(context,
+                                                        "이미 사용중인 이메일입니다.");
+                                                  }
+                                                } else {
+                                                  showSnackBar(context,
+                                                      "이메일 형식이 올바르지 않습니다.");
+                                                }
                                               },
                                               backgroundColor: Colors.white,
                                               textColor: Colors.black,
@@ -183,6 +204,8 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                               obscureText: false,
                                               controller: _userNickname,
                                               keyboardType: TextInputType.name,
+                                              isEditable:
+                                                  !viewModel.nickNameCheck,
                                               textFontSize: 12),
                                         ),
                                         SizedBox(
@@ -196,47 +219,19 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                                 0.05,
                                             child: CustomConfirmBtnBorder(
                                               text: "중복확인",
-                                              onPressed: () {
-                                                viewModel.getTest();
+                                              onPressed: () async {
+                                                await viewModel
+                                                    .nickNameDupleCheck(
+                                                        _userNickname.text);
+                                                if (!mounted) return;
+                                                if (viewModel.nickNameCheck) {
+                                                  showSnackBar(
+                                                      context, "사용가능한 닉네임입니다.");
+                                                } else {
+                                                  showSnackBar(context,
+                                                      "이미 사용중인 닉네임입니다.");
+                                                }
                                               },
-                                              backgroundColor: Colors.white,
-                                              textColor: Colors.black,
-                                              textSize: 12,
-                                            ))
-                                      ],
-                                    )),
-                                Container(
-                                    margin: const EdgeInsets.only(top: 10),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.05,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.63,
-                                          child: CustomTextField(
-                                              hintText: "이메일",
-                                              obscureText: false,
-                                              controller: _userEmail,
-                                              keyboardType: TextInputType.name,
-                                              textFontSize: 12),
-                                        ),
-                                        SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.2,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.05,
-                                            child: CustomConfirmBtnBorder(
-                                              text: "중복확인",
-                                              onPressed: () {},
                                               backgroundColor: Colors.white,
                                               textColor: Colors.black,
                                               textSize: 12,
@@ -260,7 +255,10 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                               hintText: "연락처",
                                               obscureText: false,
                                               controller: _userPhone,
-                                              keyboardType: TextInputType.name,
+                                              isEditable:
+                                                  !viewModel.isSendPhone,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               textFontSize: 12),
                                         ),
                                         SizedBox(
@@ -274,14 +272,65 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                                 0.05,
                                             child: CustomConfirmBtn(
                                               text: "인증요청",
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                viewModel.isSendPhone
+                                                    ? null
+                                                    : viewModel.phoneVerify(
+                                                        _userPhone.text);
+                                              },
                                               backgroundColor:
-                                                  const Color(0xFF2D8CF4),
+                                                  viewModel.isSendPhone
+                                                      ? const Color(0xffA9B0B8)
+                                                      : const Color(0xFF2D8CF4),
                                               textColor: Colors.white,
                                               textSize: 12,
                                             ))
                                       ],
                                     )),
+                                Visibility(
+                                  visible: viewModel.isSendPhone,
+                                  child: Container(
+                                      margin: const EdgeInsets.only(top: 10),
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.05,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.63,
+                                            child: CustomTextField(
+                                                hintText: "인증번호",
+                                                obscureText: false,
+                                                controller: _verifyCode,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                textFontSize: 12),
+                                          ),
+                                          SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.2,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.05,
+                                              child: CustomConfirmBtn(
+                                                text: "인증확인",
+                                                onPressed: () {},
+                                                backgroundColor:
+                                                    const Color(0xFF2D8CF4),
+                                                textColor: Colors.white,
+                                                textSize: 12,
+                                              ))
+                                        ],
+                                      )),
+                                ),
                               ]),
                             ),
                             const Spacer(),
@@ -312,5 +361,13 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
             )),
       ),
     );
+  }
+
+  //snackBar
+  void showSnackBar(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(text),
+      duration: const Duration(milliseconds: 1000),
+    ));
   }
 }

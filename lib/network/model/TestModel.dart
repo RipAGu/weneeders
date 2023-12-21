@@ -1,22 +1,16 @@
 class TestModel {
-  final int userId;
-  final int id;
+  final int idx;
   final String title;
-  final String body;
 
   TestModel({
-    required this.userId,
-    required this.id,
+    required this.idx,
     required this.title,
-    required this.body,
   });
 
   factory TestModel.fromJson(Map<String, dynamic> json) {
     return TestModel(
-      userId: json['userId'],
-      id: json['id'],
+      idx: json['idx'],
       title: json['title'],
-      body: json['body'],
     );
   }
 }

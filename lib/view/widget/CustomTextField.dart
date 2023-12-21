@@ -29,7 +29,7 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText,
       controller: controller,
       keyboardType: keyboardType,
-      enabled: isEditable != null ? false : true,
+      enabled: isEditable ?? true,
       placeholderStyle: const TextStyle(fontSize: 12, color: Color(0xFFA8B0B8)),
       decoration: BoxDecoration(
         color: const Color(0x00ffffff),

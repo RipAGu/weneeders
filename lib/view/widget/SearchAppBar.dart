@@ -24,7 +24,8 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: Colors.transparent,
       titleSpacing: 0,
       leadingWidth: 70,
-      leading: Padding(padding: const EdgeInsets.only(left: 10), child: Container()),
+      leading:
+          Padding(padding: const EdgeInsets.only(left: 10), child: Container()),
       title: Center(
           child: Text(title,
               style: const TextStyle(
@@ -36,7 +37,9 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
             padding: const EdgeInsets.only(right: 16),
             child: IconButton(
-                onPressed: null,
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
                 icon: SvgPicture.asset("assets/icons/menu.svg")))
       ],
     );

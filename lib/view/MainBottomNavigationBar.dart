@@ -6,8 +6,8 @@ import 'package:winit/view/chat/ChatListPage.dart';
 import 'package:winit/view/project/DetailProjectPage.dart';
 import 'package:winit/view/project/RegisterPartnerPage.dart';
 import 'package:winit/view/project/RegisterProjectPage.dart';
-import 'package:winit/view/project/SearchPartnerPage.dart';
-import 'package:winit/view/project/SearchProjectPage.dart';
+import 'package:winit/view/project/Search/SearchPartnerPage.dart';
+import 'package:winit/view/project/Search/SearchProjectPage.dart';
 
 GlobalKey<_MainBottomNavigationBarState> bottomNavBarKey = GlobalKey();
 

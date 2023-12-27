@@ -2,29 +2,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/project/DetailProjectPage.dart';
-import 'package:winit/view/project/RegisterPartnerPage.dart';
-import 'package:winit/view/project/SearchViewModel.dart';
+import 'package:winit/view/project/RegisterProjectPage.dart';
+import 'package:winit/view/project/Search/SearchViewModel.dart';
+import 'package:winit/view/widget/CustomDrawer.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
 
-import '../widget/ProjectCard.dart';
+import '../../widget/ProjectCard.dart';
 
-class SearchPartnerPage extends StatefulWidget {
-  const SearchPartnerPage({Key? key}) : super(key: key);
+class SearchProjectPage extends StatefulWidget {
+  const SearchProjectPage({Key? key}) : super(key: key);
 
   @override
-  State<SearchPartnerPage> createState() => _SearchPartnerPageState();
+  State<SearchProjectPage> createState() => _SearchProjectPageState();
 }
 
-class _SearchPartnerPageState extends State<SearchPartnerPage> {
+class _SearchProjectPageState extends State<SearchProjectPage> {
   @override
   Widget build(BuildContext context) {
     final mainContext = context;
     // final viewModel = Provider.of<SearchProjectViewModel>(context);
     return MaterialApp(
       home: Scaffold(
+        endDrawer: const CustomDrawer(),
         backgroundColor: Colors.white,
         appBar: const SearchAppBar(
-          title: "파트너 검색",
+          title: "프로젝트 검색",
         ),
         floatingActionButton: FloatingActionButton(
           splashColor: Colors.transparent,
@@ -33,7 +35,7 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const RegisterPartnerPage()));
+                    builder: (context) => const RegisterProjectPage()));
           },
           // shape:
           //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
@@ -77,11 +79,10 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
                           content: viewModel.project[index].content,
                           onPressed: () {
                             Navigator.push(
-                              mainContext,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const DetailProjectPage()),
-                            );
+                                mainContext,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DetailProjectPage()));
                           },
                         ),
                       );

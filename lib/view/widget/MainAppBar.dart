@@ -39,7 +39,9 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
             padding: const EdgeInsets.only(right: 16),
             child: IconButton(
-                onPressed: null,
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
                 icon: SvgPicture.asset("assets/icons/menu.svg")))
       ],
     );

@@ -126,23 +126,24 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                             child: CustomConfirmBtnBorder(
                                               text: "중복확인",
                                               onPressed: () async {
-                                                if (viewModel.emailRegexCheck(
-                                                    _userEmail.text)) {
-                                                  await viewModel
-                                                      .emailDupleCheck(
-                                                          _userEmail.text);
-                                                  if (!mounted) return;
-                                                  if (viewModel.isEmailCheck) {
-                                                    showSnackBar(context,
-                                                        "사용가능한 이메일입니다.");
-                                                  } else {
-                                                    showSnackBar(context,
-                                                        "이미 사용중인 이메일입니다.");
-                                                  }
-                                                } else {
-                                                  showSnackBar(context,
-                                                      "이메일 형식이 올바르지 않습니다.");
-                                                }
+                                                viewModel.login();
+                                                // if (viewModel.emailRegexCheck(
+                                                //     _userEmail.text)) {
+                                                //   await viewModel
+                                                //       .emailDupleCheck(
+                                                //           _userEmail.text);
+                                                //   if (!mounted) return;
+                                                //   if (viewModel.isEmailCheck) {
+                                                //     showSnackBar(context,
+                                                //         "사용가능한 이메일입니다.");
+                                                //   } else {
+                                                //     showSnackBar(context,
+                                                //         "이미 사용중인 이메일입니다.");
+                                                //   }
+                                                // } else {
+                                                //   showSnackBar(context,
+                                                //       "이메일 형식이 올바르지 않습니다.");
+                                                // }
                                               },
                                               backgroundColor: Colors.white,
                                               textColor: Colors.black,
@@ -180,8 +181,8 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                       MediaQuery.of(context).size.height * 0.05,
                                   child: CustomTextField(
                                       hintText: "이름",
-                                      obscureText: true,
-                                      controller: _userPasswordCheck,
+                                      obscureText: false,
+                                      controller: _userName,
                                       keyboardType:
                                           TextInputType.visiblePassword,
                                       textFontSize: 12),
@@ -322,9 +323,27 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                                   0.05,
                                               child: CustomConfirmBtn(
                                                 text: "인증확인",
-                                                onPressed: () {},
-                                                backgroundColor:
-                                                    const Color(0xFF2D8CF4),
+                                                onPressed: () async {
+                                                  viewModel.isPhoneCheck
+                                                      ? null
+                                                      : await viewModel
+                                                          .phoneVerifyCheck(
+                                                              _userPhone.text,
+                                                              _verifyCode.text);
+                                                  if (!mounted) return;
+                                                  print(viewModel.isPhoneCheck);
+                                                  if (viewModel.isPhoneCheck) {
+                                                    showSnackBar(
+                                                        context, "인증되었습니다.");
+                                                  } else {
+                                                    showSnackBar(context,
+                                                        "인증번호가 일치하지 않습니다.");
+                                                  }
+                                                },
+                                                backgroundColor: viewModel
+                                                        .isPhoneCheck
+                                                    ? const Color(0xffA9B0B8)
+                                                    : const Color(0xFF2D8CF4),
                                                 textColor: Colors.white,
                                                 textSize: 12,
                                               ))
@@ -340,12 +359,50 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                               height: MediaQuery.of(context).size.height * 0.06,
                               child: CustomConfirmBtn(
                                   text: "회원가입",
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const RegisterSuccessPage()));
+                                  onPressed: () async {
+                                    if (!viewModel.dupleCheck()) {
+                                      showSnackBar(context, "중복확인을 해주세요.");
+                                    } else if (_userPassword.text !=
+                                        _userPasswordCheck.text) {
+                                      showSnackBar(context, "비밀번호가 일치하지 않습니다.");
+                                    } else if (!viewModel.passwordRegexCheck(
+                                        _userPassword.text)) {
+                                      showSnackBar(context,
+                                          "비밀번호는 8자리 이상, 영문, 숫자, 특수문자를 포함해야 합니다.");
+                                    } else if (!viewModel.isPhoneCheck) {
+                                      showSnackBar(context, "휴대폰 인증을 해주세요.");
+                                    } else if (_userEmail.text == '' ||
+                                        _userPassword.text == '' ||
+                                        _userPasswordCheck.text == '' ||
+                                        _userName.text == '' ||
+                                        _userNickname.text == '' ||
+                                        _userPhone.text == '' ||
+                                        _verifyCode.text == '') {
+                                      showSnackBar(context, "빈칸을 모두 채워주세요.");
+                                    } else {
+                                      await viewModel.register(
+                                          _userEmail.text,
+                                          _userPassword.text,
+                                          _userName.text,
+                                          _userNickname.text,
+                                          2);
+                                      if (!mounted) return;
+                                      if (viewModel.isRegisterSuccess) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const RegisterSuccessPage()));
+                                      } else {
+                                        showSnackBar(context, "회원가입에 실패하였습니다.");
+                                      }
+                                    }
+
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             const RegisterSuccessPage()));
                                   },
                                   backgroundColor: const Color(0xFF2D8CF4),
                                   textColor: Colors.white,

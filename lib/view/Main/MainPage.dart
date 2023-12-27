@@ -7,6 +7,7 @@ import 'package:winit/view/project/DetailProjectPage.dart';
 import 'package:winit/view/project/RegisterPartnerPage.dart';
 import 'package:winit/view/project/RegisterProjectPage.dart';
 import 'package:winit/view/widget/BigGrayBtn.dart';
+import 'package:winit/view/widget/CustomDrawer.dart';
 import 'package:winit/view/widget/MainAppBar.dart';
 import 'package:winit/view/widget/ProjectCard.dart';
 
@@ -30,6 +31,7 @@ class _MainPageState extends State<MainPage> {
     final mainContext = context;
     return MaterialApp(
         home: Scaffold(
+      endDrawer: const CustomDrawer(),
       backgroundColor: Colors.white,
       appBar: const MainAppBar(),
       body: Padding(

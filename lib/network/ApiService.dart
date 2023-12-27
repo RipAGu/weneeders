@@ -68,4 +68,47 @@ class ApiService {
       rethrow;
     }
   }
+
+  Future<Response> phoneVerifyCheck(
+      String phoneNumber, String code, int type) async {
+    final Map<String, dynamic> body = {
+      "phoneNumber": phoneNumber,
+      "code": code,
+      "type": type
+    };
+    print(body);
+    try {
+      return await dio.post('$baseUrl/auth/phone/verification/check',
+          data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> register(String email, String phoneToken, String password,
+      String nickName, String name, int userType) {
+    print(userType);
+    final Map<String, dynamic> body = {
+      "email": email,
+      "phoneToken": phoneToken,
+      "pw": password,
+      "name": name,
+      "nickname": nickName,
+      "userType": userType
+    };
+    try {
+      return dio.post('$baseUrl/user', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> login(String email, String pw) {
+    final Map<String, dynamic> body = {"email": email, "pw": pw};
+    try {
+      return dio.post('$baseUrl/auth', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
 }

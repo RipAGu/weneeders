@@ -31,6 +31,11 @@ class RegisterViewModel extends ChangeNotifier {
   bool _isPhoneCheck = false;
   bool get isPhoneCheck => _isPhoneCheck;
 
+  bool _isRegisterSuccess = false;
+  bool get isRegisterSuccess => _isRegisterSuccess;
+
+  late final String phoneToken;
+
   final ApiService apiService = ApiService();
 
   late List<TestModel?> _testModel;
@@ -131,6 +136,7 @@ class RegisterViewModel extends ChangeNotifier {
       final response = await apiService.phoneVerify(phoneNumber, 1);
       if (response.statusCode == 201) {
         _isSendPhone = true;
+        print("phoneVerify: ${response.data}");
         notifyListeners();
       } else {
         _isPhoneCheck = false;
@@ -144,6 +150,88 @@ class RegisterViewModel extends ChangeNotifier {
         print("phoneVerify: $severMessage");
       }
       throw e;
+    }
+  }
+
+  Future<void> phoneVerifyCheck(String phoneNumber, String code) async {
+    try {
+      final response = await apiService.phoneVerifyCheck(phoneNumber, code, 1);
+      if (response.statusCode == 200) {
+        phoneToken = response.data['token'];
+        print("phoneToken : $phoneToken");
+
+        _isPhoneCheck = true;
+        notifyListeners();
+      } else {
+        _isPhoneCheck = false;
+        print("phoneVerifyCheck: ${response.statusCode}");
+        notifyListeners();
+      }
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 400) {
+        _isPhoneCheck = false;
+        var severMessage = e.response!.data['message'];
+      } else if (e.response!.statusCode == 401) {
+        _isPhoneCheck = false;
+      } else {
+        _isPhoneCheck = false;
+      }
+    }
+  }
+
+  bool passwordCheck(String password, String passwordCheck) {
+    if (password == passwordCheck) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool dupleCheck() {
+    if (_isEmailCheck && _nickNameCheck && _isPhoneCheck) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> register(String email, String password, String nickName,
+      String name, int userType) async {
+    try {
+      final response = await apiService.register(
+          email, phoneToken, password, nickName, name, userType);
+      if (response.statusCode == 200) {
+        _isRegisterSuccess = true;
+        print("register: ${response.data}");
+      } else {
+        print("register: ${response.statusCode}");
+        _isRegisterSuccess = false;
+      }
+    } on DioException catch (e) {
+      print(e.response!.data);
+      _isRegisterSuccess = false;
+    }
+  }
+
+  bool passwordRegexCheck(String password) {
+    // /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]/
+    RegExp regex =
+        RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]');
+    return regex.hasMatch(password);
+  }
+
+  Future<void> login() async {
+    try {
+      final response =
+          await apiService.login("dudgus907@naver.com", "dudgus6341@");
+      if (response.statusCode == 200) {
+        print("login: ${response.statusCode}");
+      } else {
+        print("login: ${response.statusCode}");
+      }
+    } on DioException catch (e) {
+      print(e.response!.statusCode);
+      print(e.response!.data);
     }
   }
 }

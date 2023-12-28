@@ -7,22 +7,30 @@ import 'package:winit/view/widget/CustomRegionSelectBtn.dart';
 import 'package:winit/view/widget/CustomTextFieldGray.dart';
 import 'package:winit/view/widget/UploadImageBox.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
-import '../widget/CustomCheckboxTile.dart';
+import '../../widget/CustomCheckboxTile.dart';
 import 'AddViewModel.dart';
 
-class RegisterProjectPage extends StatefulWidget {
-  const RegisterProjectPage({Key? key}) : super(key: key);
+class RegisterPartnerPage extends StatefulWidget {
+  const RegisterPartnerPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterProjectPage> createState() => _RegisterProjectPageState();
+  State<RegisterPartnerPage> createState() => _RegisterPartnerPageState();
 }
 
-class _RegisterProjectPageState extends State<RegisterProjectPage> {
-  final TextEditingController _periodController = TextEditingController();
-  final TextEditingController _partnerAreaController = TextEditingController();
+class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
+  final TextEditingController _careerController = TextEditingController();
+  final TextEditingController _areaController = TextEditingController();
+  final TextEditingController _techController = TextEditingController();
   final TextEditingController _workController = TextEditingController();
-  final TextEditingController _functionController = TextEditingController();
-  final TextEditingController _amountController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Provider.of<AddViewModel>(context, listen: false).getProjectField();
+      Provider.of<AddViewModel>(context, listen: false).getArea1();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +42,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
             MaterialApp(
               home: Scaffold(
                 backgroundColor: Colors.white,
-                appBar: const SearchAppBar(title: "프로젝트 등록"),
+                appBar: const SearchAppBar(title: "파트너 등록"),
                 body: SafeArea(
                   child: SingleChildScrollView(
                     child: Container(
@@ -44,7 +52,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                           const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "작업기간",
+                              "경력",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -56,150 +64,22 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                             height: 1,
                             color: const Color(0xffECECEC),
                           ),
-                          const Padding(padding: EdgeInsets.only(top: 22)),
-                          Row(
-                            children: [
-                              const Padding(padding: EdgeInsets.only(left: 10)),
-                              const Text(
-                                "시작일",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.1),
-                                width: MediaQuery.of(context).size.width * 0.27,
-                                height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "년",
-                                    obscureText: false,
-                                    controller: _periodController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.02),
-                                width: MediaQuery.of(context).size.width * 0.18,
-                                height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "월",
-                                    obscureText: false,
-                                    controller: _periodController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.02),
-                                width: MediaQuery.of(context).size.width * 0.18,
-                                height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "일",
-                                    obscureText: false,
-                                    controller: _periodController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
-                              ),
-                            ],
-                          ),
-                          const Padding(padding: EdgeInsets.only(top: 10)),
-                          Row(
-                            children: [
-                              Padding(padding: const EdgeInsets.only(left: 10)),
-                              Text(
-                                "종료일",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.1),
-                                width: MediaQuery.of(context).size.width * 0.27,
-                                height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "년",
-                                    obscureText: false,
-                                    controller: _periodController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.02),
-                                width: MediaQuery.of(context).size.width * 0.18,
-                                height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "월",
-                                    obscureText: false,
-                                    controller: _periodController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.02),
-                                width: MediaQuery.of(context).size.width * 0.18,
-                                height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "일",
-                                    obscureText: false,
-                                    controller: _periodController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
-                              ),
-                            ],
+                          Container(
+                            margin: const EdgeInsets.only(top: 13),
+                            height: 40,
+                            child: CustomTextFieldGray(
+                              hintText: "경력을 입력해주세요.",
+                              controller: _careerController,
+                              textFontSize: 12,
+                              keyboardType: TextInputType.text,
+                              obscureText: false,
+                            ),
                           ),
                           const Padding(padding: EdgeInsets.only(top: 33)),
                           const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "방식",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            //구분선
-                            margin: const EdgeInsets.only(top: 13),
-                            height: 1,
-                            color: const Color(0xffECECEC),
-                          ),
-                          const Padding(padding: EdgeInsets.only(top: 13)),
-                          GridView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel.methodList.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      childAspectRatio: 5 / 1,
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: 10),
-                              itemBuilder: (BuildContext context, int index) {
-                                return SizedBox(
-                                  child: CustomCheckboxTile(
-                                    item: viewModel.methodList[index],
-                                    onTap: () =>
-                                        viewModel.toggleMethodBtn(index),
-                                  ),
-                                );
-                              }),
-                          const Padding(padding: EdgeInsets.only(top: 20)),
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "파트너 분야",
+                              "전문분야",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -230,7 +110,66 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                   ),
                                 );
                               }),
-                          const Padding(padding: EdgeInsets.only(top: 20)),
+                          const Padding(padding: EdgeInsets.only(top: 33)),
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "사용기술",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            //구분선
+                            margin: const EdgeInsets.only(top: 13),
+                            height: 1,
+                            color: const Color(0xffECECEC),
+                          ),
+                          Padding(padding: const EdgeInsets.only(top: 13)),
+                          GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: viewModel.testList2.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      childAspectRatio: 6 / 1,
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 5),
+                              itemBuilder: (BuildContext context, int index) {
+                                return CustomCheckboxTile(
+                                  item: viewModel.testList2[index],
+                                  onTap: () =>
+                                      viewModel.toggleTechCheckbox(index),
+                                );
+                              }),
+                          const Padding(padding: EdgeInsets.only(top: 33)),
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "업무방식",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            //구분선
+                            margin: const EdgeInsets.only(top: 13),
+                            height: 1,
+                            color: const Color(0xffECECEC),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 13),
+                            height: 80,
+                            child: CustomTextFieldGray(
+                                hintText: "업무방식을 입력해주세요.",
+                                obscureText: false,
+                                controller: _workController,
+                                keyboardType: TextInputType.text,
+                                textFontSize: 12),
+                          ),
+                          const Padding(padding: EdgeInsets.only(top: 33)),
                           const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -246,6 +185,8 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                             height: 1,
                             color: const Color(0xffECECEC),
                           ),
+                          const Padding(
+                              padding: const EdgeInsets.only(top: 13)),
                           Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -304,85 +245,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                           const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "업무방식",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            //구분선
-                            margin: const EdgeInsets.only(top: 13),
-                            height: 1,
-                            color: const Color(0xffECECEC),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 13),
-                            height: 80,
-                            child: CustomTextFieldGray(
-                                hintText: "업무방식을 입력해주세요.",
-                                obscureText: false,
-                                controller: _workController,
-                                keyboardType: TextInputType.text,
-                                textFontSize: 12),
-                          ),
-                          const Padding(padding: EdgeInsets.only(top: 33)),
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "요구기능",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            //구분선
-                            margin: const EdgeInsets.only(top: 13),
-                            height: 1,
-                            color: const Color(0xffECECEC),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 13),
-                            height: 80,
-                            child: CustomTextFieldGray(
-                                hintText: "요구기능을 입력해주세요.",
-                                obscureText: false,
-                                controller: _functionController,
-                                keyboardType: TextInputType.text,
-                                textFontSize: 12),
-                          ),
-                          const Padding(padding: EdgeInsets.only(top: 33)),
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "공사금액",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            //구분선
-                            margin: const EdgeInsets.only(top: 13),
-                            height: 1,
-                            color: const Color(0xffECECEC),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 13),
-                            height: 80,
-                            child: CustomTextFieldGray(
-                                hintText: "공사금액 입력해주세요.",
-                                obscureText: false,
-                                controller: _amountController,
-                                keyboardType: TextInputType.text,
-                                textFontSize: 12),
-                          ),
-                          const Padding(padding: EdgeInsets.only(top: 33)),
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "사진 등록",
+                              "포트폴리오 등록",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),

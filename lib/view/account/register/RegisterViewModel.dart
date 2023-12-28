@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:winit/network/ApiService.dart';
 import 'package:winit/network/model/TestModel.dart';
 
@@ -37,6 +38,7 @@ class RegisterViewModel extends ChangeNotifier {
   late final String phoneToken;
 
   final ApiService apiService = ApiService();
+  static const storage = FlutterSecureStorage();
 
   late List<TestModel?> _testModel;
 
@@ -81,7 +83,7 @@ class RegisterViewModel extends ChangeNotifier {
   Future<void> getTest() async {
     try {
       _testModel = await apiService.getTest();
-      print("testModel: ${_testModel[0]!.title}");
+      print(_testModel);
     } catch (e) {
       print(e);
       throw e;
@@ -202,9 +204,9 @@ class RegisterViewModel extends ChangeNotifier {
           email, phoneToken, password, nickName, name, userType);
       if (response.statusCode == 200) {
         _isRegisterSuccess = true;
-        print("register: ${response.data}");
+        String token = response.data['token'];
+        await storage.write(key: "token", value: token);
       } else {
-        print("register: ${response.statusCode}");
         _isRegisterSuccess = false;
       }
     } on DioException catch (e) {
@@ -218,20 +220,5 @@ class RegisterViewModel extends ChangeNotifier {
     RegExp regex =
         RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]');
     return regex.hasMatch(password);
-  }
-
-  Future<void> login() async {
-    try {
-      final response =
-          await apiService.login("dudgus907@naver.com", "dudgus6341@");
-      if (response.statusCode == 200) {
-        print("login: ${response.statusCode}");
-      } else {
-        print("login: ${response.statusCode}");
-      }
-    } on DioException catch (e) {
-      print(e.response!.statusCode);
-      print(e.response!.data);
-    }
   }
 }

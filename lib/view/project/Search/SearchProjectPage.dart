@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/project/DetailProjectPage.dart';
-import 'package:winit/view/project/RegisterProjectPage.dart';
+import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
 
+import '../../account/SignInPage.dart';
 import '../../widget/ProjectCard.dart';
 
 class SearchProjectPage extends StatefulWidget {
@@ -23,7 +24,12 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
     // final viewModel = Provider.of<SearchProjectViewModel>(context);
     return MaterialApp(
       home: Scaffold(
-        endDrawer: const CustomDrawer(),
+        endDrawer: CustomDrawer(
+          onLogout: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const SignInPage()));
+          },
+        ),
         backgroundColor: Colors.white,
         appBar: const SearchAppBar(
           title: "프로젝트 검색",

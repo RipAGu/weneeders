@@ -4,9 +4,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/Main/MainPage.dart';
 import 'package:winit/view/Main/MainViewModel.dart';
+import 'package:winit/view/MainBottomNavigationBar.dart';
 import 'package:winit/view/account/SignInPage.dart';
 import 'package:winit/view/account/register/RegisterViewModel.dart';
 import 'package:winit/view/chat/ChatViewModel.dart';
+import 'package:winit/view/project/Register/AddViewModel.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
 
 void main() async {
@@ -15,7 +17,8 @@ void main() async {
   String? token = await storage.read(key: "token");
 
   runApp(MyApp(
-    startPage: token == null ? const SignInPage() : const MainPage(),
+    startPage:
+        token == null ? const SignInPage() : const MainBottomNavigationBar(),
   ));
 }
 
@@ -31,6 +34,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SearchViewModel()),
         ChangeNotifierProvider(create: (context) => ChatViewModel()),
         ChangeNotifierProvider(create: (context) => MainViewModel()),
+        ChangeNotifierProvider(create: (context) => AddViewModel()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:winit/view/project/AddViewModel.dart';
+import 'package:winit/view/project/Register/AddViewModel.dart';
 
 class CustomRegionSelectBtn extends StatelessWidget {
   final RegionData region;

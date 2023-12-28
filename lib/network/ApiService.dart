@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:winit/network/model/TestModel.dart';
 
 class ApiService {
@@ -12,11 +13,19 @@ class ApiService {
   //baseUrl 설정
   final String baseUrl = 'http://13.125.70.49:80';
 
+  final FlutterSecureStorage secureStorage = FlutterSecureStorage();
+
   ApiService() {
     dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) {
+        onRequest: (options, handler) async {
+          String? token = await secureStorage.read(key: "token");
+
+          if (token != null) {
+            options.headers["Authorization"] = "Bearer $token";
+          }
           // Do something before request is sent
+
           return handler.next(options); //continue
         },
       ),
@@ -107,6 +116,22 @@ class ApiService {
     final Map<String, dynamic> body = {"email": email, "pw": pw};
     try {
       return dio.post('$baseUrl/auth', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getProjectField() {
+    try {
+      return dio.get('$baseUrl/field/project/all');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getArea1() {
+    try {
+      return dio.get('$baseUrl/area/depth-1/all');
     } on DioException catch (e) {
       rethrow;
     }

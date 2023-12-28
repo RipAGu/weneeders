@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:winit/view/project/AddViewModel.dart';
+import 'package:winit/view/project/Register/AddViewModel.dart';
 
 class CustomLocalSelectBtn extends StatelessWidget {
   final LocalData local;

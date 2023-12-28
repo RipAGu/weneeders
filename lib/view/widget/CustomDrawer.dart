@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:winit/view/account/SignInPage.dart';
 
 class CustomDrawer extends StatelessWidget {
+  final Function onLogout;
   final storage = const FlutterSecureStorage();
-  const CustomDrawer({super.key});
+  const CustomDrawer({super.key, required this.onLogout});
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -73,12 +73,7 @@ class CustomDrawer extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 )),
             onTap: () async {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const SignInPage()), // 새로 이동할 페이지
-                (Route<dynamic> route) => false, // false를 반환하여 모든 이전 라우트들을 제거
-              );
+              onLogout();
               await storage.delete(key: "token");
             },
           ),

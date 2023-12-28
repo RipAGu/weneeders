@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:winit/network/ApiService.dart';
 
-import '../widget/CustomCheckboxTile.dart';
+import '../../widget/CustomCheckboxTile.dart';
 
 class AddViewModel extends ChangeNotifier {
   List<Item> testList = [
@@ -54,6 +55,8 @@ class AddViewModel extends ChangeNotifier {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+  final ApiService apiService = ApiService();
 
   void toggleFieldCheckbox(int index) {
     testList[index].isChecked = !testList[index].isChecked;
@@ -121,6 +124,28 @@ class AddViewModel extends ChangeNotifier {
     await Future.delayed(const Duration(seconds: 1));
     _isLoading = false;
     notifyListeners();
+  }
+
+  Future<void> getProjectField() async {
+    try {
+      final response = await apiService.getProjectField();
+      print(response.data);
+      print(response.statusCode);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  Future<void> getArea1() async {
+    try {
+      final response = await apiService.getArea1();
+      print(response.data);
+      print(response.statusCode);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
   }
 }
 

@@ -126,24 +126,23 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                             child: CustomConfirmBtnBorder(
                                               text: "중복확인",
                                               onPressed: () async {
-                                                viewModel.login();
-                                                // if (viewModel.emailRegexCheck(
-                                                //     _userEmail.text)) {
-                                                //   await viewModel
-                                                //       .emailDupleCheck(
-                                                //           _userEmail.text);
-                                                //   if (!mounted) return;
-                                                //   if (viewModel.isEmailCheck) {
-                                                //     showSnackBar(context,
-                                                //         "사용가능한 이메일입니다.");
-                                                //   } else {
-                                                //     showSnackBar(context,
-                                                //         "이미 사용중인 이메일입니다.");
-                                                //   }
-                                                // } else {
-                                                //   showSnackBar(context,
-                                                //       "이메일 형식이 올바르지 않습니다.");
-                                                // }
+                                                if (viewModel.emailRegexCheck(
+                                                    _userEmail.text)) {
+                                                  await viewModel
+                                                      .emailDupleCheck(
+                                                          _userEmail.text);
+                                                  if (!mounted) return;
+                                                  if (viewModel.isEmailCheck) {
+                                                    showSnackBar(context,
+                                                        "사용가능한 이메일입니다.");
+                                                  } else {
+                                                    showSnackBar(context,
+                                                        "이미 사용중인 이메일입니다.");
+                                                  }
+                                                } else {
+                                                  showSnackBar(context,
+                                                      "이메일 형식이 올바르지 않습니다.");
+                                                }
                                               },
                                               backgroundColor: Colors.white,
                                               textColor: Colors.black,

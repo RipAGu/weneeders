@@ -4,13 +4,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
 import 'package:winit/view/project/DetailProjectPage.dart';
-import 'package:winit/view/project/RegisterPartnerPage.dart';
-import 'package:winit/view/project/RegisterProjectPage.dart';
+import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
+import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/widget/BigGrayBtn.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
 import 'package:winit/view/widget/MainAppBar.dart';
 import 'package:winit/view/widget/ProjectCard.dart';
 
+import '../account/SignInPage.dart';
 import 'MainViewModel.dart';
 
 class MainPage extends StatefulWidget {
@@ -31,7 +32,12 @@ class _MainPageState extends State<MainPage> {
     final mainContext = context;
     return MaterialApp(
         home: Scaffold(
-      endDrawer: const CustomDrawer(),
+      endDrawer: CustomDrawer(
+        onLogout: () {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const SignInPage()));
+        },
+      ),
       backgroundColor: Colors.white,
       appBar: const MainAppBar(),
       body: Padding(

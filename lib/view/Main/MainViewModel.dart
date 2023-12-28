@@ -1,6 +1,13 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:winit/network/model/ProjectListModel.dart';
+import 'package:winit/network/model/ProjectRegisterModel.dart';
+
+import '../../network/ApiService.dart';
 
 class MainViewModel extends ChangeNotifier {
+  final ApiService apiService = ApiService();
+
   final List<TestMainData> _mainDataList = [
     TestMainData(
         image: "assets/images/img.png",
@@ -37,6 +44,57 @@ class MainViewModel extends ChangeNotifier {
   void changeTab(int index) {
     _currentIndex = index;
     notifyListeners();
+  }
+
+  Future<void> getProjectList() async {
+    try {
+      List<ProjectListModel> projectList = [];
+      final response = await apiService.getProjectList();
+      for (var item in response.data) {
+        projectList.add(ProjectListModel.fromJson(item));
+      }
+      print(projectList);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> postProject() async {
+    final Map<String, dynamic> body = {
+      "startDate": "2021-10-10",
+      "endDate": "2021-10-10",
+      "methodType": 1,
+      "fieldIdxList": [1, 2, 3],
+      "depth2Idx": 1,
+      "method": "1",
+      "demandSkill": "1",
+      "amount": "1",
+      "imagePathList": null,
+    };
+    try {
+      final response = await apiService.postProject(body);
+      print(response.statusCode);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> postPartner() async {
+    final Map<String, dynamic> body = {
+      "career": "1",
+      "fieldIdxList": [1, 2, 3],
+      "skillIdxList": [1, 2, 3],
+      "method": "test",
+      "depth2Idx": 1,
+      "imgPathList": ["test"],
+    };
+    try {
+      final response = await apiService.postPartner(body);
+      print(response.statusCode);
+    } on DioException catch (e) {
+      print(e.response!.statusCode);
+      print(e.response!.data['message']);
+    }
   }
 }
 

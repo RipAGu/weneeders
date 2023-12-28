@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:winit/network/model/AreaModel.dart';
 import 'package:winit/view/project/Register/AddViewModel.dart';
 
 class CustomLocalSelectBtn extends StatelessWidget {
-  final LocalData local;
+  final AreaModel local;
   final VoidCallback onTap;
 
   const CustomLocalSelectBtn({
@@ -26,7 +27,7 @@ class CustomLocalSelectBtn extends StatelessWidget {
           child: Align(
             alignment: Alignment.center,
             child: Text(
-              local.title,
+              local.name,
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,

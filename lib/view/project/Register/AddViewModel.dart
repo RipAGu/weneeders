@@ -1,56 +1,29 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:winit/network/ApiService.dart';
-
+import 'package:winit/network/model/AreaModel.dart';
+import '../../../network/model/FieldModel.dart';
 import '../../widget/CustomCheckboxTile.dart';
 
 class AddViewModel extends ChangeNotifier {
-  List<Item> testList = [
-    Item(title: "전문분야1", isChecked: false),
-    Item(title: "전문분야2", isChecked: true),
-    Item(title: "전문분야3", isChecked: false),
-    Item(title: "전문분야4", isChecked: false),
-    Item(title: "전문분야5", isChecked: false),
-    Item(title: "전문분야6", isChecked: false),
-    Item(title: "전문분야7", isChecked: false),
-    Item(title: "전문분야8", isChecked: false),
-    Item(title: "전문분야9", isChecked: false),
-    Item(title: "전문분야10", isChecked: false),
-  ];
+  List<AreaModel> area1List = [];
+  List<AreaModel> area2List = [];
+  List<FieldModel> partnerFieldList = [];
+  List<FieldModel> partnerSkillList = [];
+  List<String?> imgList = [null];
+  List<String> imgPathList = [];
 
-  List<Item> testList2 = [
-    Item(title: "엑셀", isChecked: false),
-    Item(title: "파워포인트", isChecked: true),
-    Item(title: "포토샵", isChecked: false),
-    Item(title: "일러스트", isChecked: false),
-    Item(title: "프리미어", isChecked: false),
-    Item(title: "애프터이펙트", isChecked: false),
-  ];
-
-  List<LocalData> localList = [
-    LocalData(title: "서울", isChecked: false),
-    LocalData(title: "경기", isChecked: false),
-    LocalData(title: "인천", isChecked: false),
-    LocalData(title: "강원", isChecked: false),
-  ];
-
-  List<RegionData> regionList = [
-    RegionData(title: "강남/역삼/삼성/논현", isChecked: false),
-    RegionData(title: "서초/신사/방배", isChecked: false),
-    RegionData(title: "잠실/신천/송파/강동", isChecked: false),
-    RegionData(title: "건대/군자/구의/성수", isChecked: false),
-    RegionData(title: "왕십리/행당/성동/금호", isChecked: false),
-    RegionData(title: "동대문/신설/용두/이문", isChecked: false),
-    RegionData(title: "종로/대학로/동묘앞/신설동", isChecked: false),
-  ];
+  AddViewModel() {
+    getArea1();
+    getPartnerField();
+    getPartnerSkill();
+  }
 
   List<Item> methodList = [
     Item(title: "기간제", isChecked: false),
     Item(title: "도급제", isChecked: false),
-  ];
-
-  List<ImageData> testImg = [
-    ImageData(image: null),
   ];
 
   bool _isLoading = false;
@@ -59,24 +32,25 @@ class AddViewModel extends ChangeNotifier {
   final ApiService apiService = ApiService();
 
   void toggleFieldCheckbox(int index) {
-    testList[index].isChecked = !testList[index].isChecked;
-    print(testList[index].isChecked);
+    partnerFieldList[index].isChecked = !partnerFieldList[index].isChecked;
+    print(partnerFieldList[index].isChecked);
     notifyListeners();
   }
 
   void toggleTechCheckbox(int index) {
-    testList2[index].isChecked = !testList2[index].isChecked;
-    print(testList2[index].isChecked);
+    partnerSkillList[index].isChecked = !partnerSkillList[index].isChecked;
+    print(partnerSkillList[index].isChecked);
     notifyListeners();
   }
 
   void toggleLocalBtn(int index) {
     //다른값들은 모두 false로 변경
-    for (int i = 0; i < localList.length; i++) {
+    for (int i = 0; i < area1List.length; i++) {
       if (i != index) {
-        localList[i].isChecked = false;
+        area1List[i].isChecked = false;
       } else {
-        localList[i].isChecked = true;
+        area1List[i].isChecked = true;
+        getArea2(area1List[i].idx);
       }
     }
     notifyListeners();
@@ -84,11 +58,11 @@ class AddViewModel extends ChangeNotifier {
 
   void toggleRegionBtn(int index) {
     //다른값들은 모두 false로 변경
-    for (int i = 0; i < regionList.length; i++) {
+    for (int i = 0; i < area2List.length; i++) {
       if (i != index) {
-        regionList[i].isChecked = false;
+        area2List[i].isChecked = false;
       } else {
-        regionList[i].isChecked = true;
+        area2List[i].isChecked = true;
       }
     }
     notifyListeners();
@@ -117,11 +91,16 @@ class AddViewModel extends ChangeNotifier {
     final pickedFile = ImagePicker();
     final List<XFile> images = await pickedFile.pickMultiImage();
     for (int i = 0; i < images.length; i++) {
-      testImg.add(ImageData(image: images[i].path));
+      imgList.add(images[i].path);
+    }
+
+    for (var image in images) {
+      var multipartFile = await MultipartFile.fromFile(image.path,
+          contentType: MediaType('image', 'jpg'));
+      await uploadImg(multipartFile);
     }
     notifyListeners();
     //1초 기다림
-    await Future.delayed(const Duration(seconds: 1));
     _isLoading = false;
     notifyListeners();
   }
@@ -137,30 +116,134 @@ class AddViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> getArea1() async {
+  Future<void> getPartnerField() async {
     try {
-      final response = await apiService.getArea1();
-      print(response.data);
-      print(response.statusCode);
+      final response = await apiService.getPartnerField();
+      partnerFieldList = (response.data as List)
+          .map((item) => FieldModel.fromJson(item))
+          .toList();
+      notifyListeners();
     } catch (e) {
       print(e);
       throw e;
     }
   }
-}
 
-class LocalData {
-  final String title;
-  bool isChecked;
+  Future<void> getPartnerSkill() async {
+    try {
+      final response = await apiService.getPartnerSkill();
+      partnerSkillList = (response.data as List)
+          .map((item) => FieldModel.fromJson(item))
+          .toList();
+      notifyListeners();
+      print(response.data);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
 
-  LocalData({required this.title, required this.isChecked});
-}
+  Future<void> getArea1() async {
+    try {
+      final response = await apiService.getArea1();
+      area1List = (response.data as List)
+          .map((item) => AreaModel.fromJson(item))
+          .toList();
+      //idx 순으로 리스트정렬
+      area1List.sort((a, b) => a.idx.compareTo(b.idx));
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
 
-class RegionData {
-  final String title;
-  bool isChecked;
+  Future<void> getArea2(int area1Idx) async {
+    try {
+      final response = await apiService.getArea2(area1Idx);
+      area2List = (response.data as List)
+          .map((item) => AreaModel.fromJson(item))
+          .toList();
+      notifyListeners();
+    } on DioException catch (e) {
+      print(e.response!.data);
+    }
+  }
 
-  RegionData({required this.title, required this.isChecked});
+  Future<void> registerPartner(String career, String method) async {
+    final Map<String, dynamic> body = {
+      "career": career,
+      "fieldIdxList": getSelectedField(),
+      "skillIdxList": getSelectedSkill(),
+      "method": method,
+      "depth2Idx": getSelectedArea(),
+      //imglist의 0번째 인덱스 제외하고 전송
+      "imgPathList": "",
+    };
+    try {
+      final response = await apiService.postPartner(body);
+      print(response.statusCode);
+    } on DioException catch (e) {
+      print(e.response!.data);
+    }
+  }
+
+  List<int> getSelectedField() {
+    List<int> selectedField = [];
+    for (int i = 0; i < partnerFieldList.length; i++) {
+      if (partnerFieldList[i].isChecked) {
+        selectedField.add((partnerFieldList[i].idx));
+      }
+    }
+    return selectedField;
+  }
+
+  Future<void> uploadImg(MultipartFile img) async {
+    try {
+      final response = await apiService.uploadImg(img);
+      imgPathList.add(response.data['path']);
+      print(imgPathList);
+    } on DioException catch (e) {
+      print(e.response!.statusCode);
+      print(e.response!.data);
+    }
+  }
+
+  List<int> getSelectedSkill() {
+    List<int> selectedSkill = [];
+    for (int i = 0; i < partnerSkillList.length; i++) {
+      if (partnerSkillList[i].isChecked) {
+        selectedSkill.add((partnerSkillList[i].idx));
+      }
+    }
+    return selectedSkill;
+  }
+
+  int? getSelectedArea() {
+    int? selectedArea;
+    for (int i = 0; i < area2List.length; i++) {
+      if (area2List[i].isChecked) {
+        selectedArea = area2List[i].idx;
+      }
+    }
+    return selectedArea;
+  }
+
+  void removeImg(int index) {
+    imgList.removeAt(index);
+    imgPathList.removeAt(index - 1);
+    notifyListeners();
+  }
+
+  void clearData() {
+    area1List.clear();
+    area2List.clear();
+    partnerFieldList.clear();
+    partnerSkillList.clear();
+    imgList.clear();
+    imgPathList.clear();
+    notifyListeners();
+  }
 }
 
 class ImageData {

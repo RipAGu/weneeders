@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:winit/network/model/AreaModel.dart';
 import 'package:winit/view/project/Register/AddViewModel.dart';
 
 class CustomRegionSelectBtn extends StatelessWidget {
-  final RegionData region;
+  final AreaModel region;
   final VoidCallback onTap;
 
   const CustomRegionSelectBtn({
@@ -32,7 +33,7 @@ class CustomRegionSelectBtn extends StatelessWidget {
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            region.title,
+            region.name,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w400,

@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:winit/network/model/FieldModel.dart';
 
 class CustomCheckboxTile extends StatelessWidget {
-  final Item item;
+  final FieldModel item;
   final VoidCallback onTap;
 
   const CustomCheckboxTile({Key? key, required this.item, required this.onTap})
@@ -22,7 +23,7 @@ class CustomCheckboxTile extends StatelessWidget {
             ),
             const Padding(padding: EdgeInsets.only(left: 5)),
             Text(
-              item.title,
+              item.name,
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,

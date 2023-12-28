@@ -189,7 +189,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                               itemBuilder: (BuildContext context, int index) {
                                 return SizedBox(
                                   child: CustomCheckboxTile(
-                                    item: viewModel.methodList[index],
+                                    item: viewModel.partnerFieldList[index],
                                     onTap: () =>
                                         viewModel.toggleMethodBtn(index),
                                   ),
@@ -215,7 +215,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                           GridView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel.testList.length,
+                              itemCount: viewModel.partnerFieldList.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       childAspectRatio: 5 / 1,
@@ -224,7 +224,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                               itemBuilder: (BuildContext context, int index) {
                                 return SizedBox(
                                   child: CustomCheckboxTile(
-                                    item: viewModel.testList[index],
+                                    item: viewModel.partnerFieldList[index],
                                     onTap: () =>
                                         viewModel.toggleFieldCheckbox(index),
                                   ),
@@ -256,7 +256,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                       shrinkWrap: true,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
-                                      itemCount: viewModel.localList.length,
+                                      itemCount: viewModel.area1List.length,
                                       //아이템간의 간격을 조절하는 코드
                                       itemBuilder:
                                           (BuildContext context, int index) {
@@ -267,7 +267,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                                   .width *
                                               0.085,
                                           child: CustomLocalSelectBtn(
-                                            local: viewModel.localList[index],
+                                            local: viewModel.area1List[index],
                                             onTap: () =>
                                                 viewModel.toggleLocalBtn(index),
                                           ),
@@ -281,7 +281,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                       shrinkWrap: true,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
-                                      itemCount: viewModel.regionList.length,
+                                      itemCount: viewModel.area2List.length,
                                       //아이템간의 간격을 조절하는 코드
                                       itemBuilder:
                                           (BuildContext context, int index) {
@@ -292,7 +292,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                                   .width *
                                               0.085,
                                           child: CustomRegionSelectBtn(
-                                            region: viewModel.regionList[index],
+                                            region: viewModel.area2List[index],
                                             onTap: () => viewModel
                                                 .toggleRegionBtn(index),
                                           ),
@@ -398,7 +398,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                           GridView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel.testImg.length,
+                              itemCount: viewModel.imgList.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       childAspectRatio: 1 / 1,
@@ -412,7 +412,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                   height:
                                       MediaQuery.of(context).size.width * 0.1,
                                   child: UploadImageBox(
-                                    image: viewModel.testImg[index].image,
+                                    image: viewModel.imgList[index],
                                     onTap: () {
                                       if (index == 0) {
                                         viewModel.addImg();

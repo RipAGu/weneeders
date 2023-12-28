@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:winit/view/widget/CustomDialogConfirm.dart';
+import 'package:winit/view/widget/CustomDialogSelect.dart';
 import 'package:winit/view/widget/CustomLocalSelectBtn.dart';
 import 'package:winit/view/widget/CustomRegionSelectBtn.dart';
 import 'package:winit/view/widget/CustomTextFieldGray.dart';
@@ -24,16 +26,8 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
   final TextEditingController _workController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      Provider.of<AddViewModel>(context, listen: false).getProjectField();
-      Provider.of<AddViewModel>(context, listen: false).getArea1();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final mainContext = context;
     return ChangeNotifierProvider(
       create: (context) => AddViewModel(),
       child: Consumer<AddViewModel>(
@@ -95,7 +89,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                           GridView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel.testList.length,
+                              itemCount: viewModel.partnerFieldList.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       childAspectRatio: 5 / 1,
@@ -104,7 +98,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                               itemBuilder: (BuildContext context, int index) {
                                 return SizedBox(
                                   child: CustomCheckboxTile(
-                                    item: viewModel.testList[index],
+                                    item: viewModel.partnerFieldList[index],
                                     onTap: () =>
                                         viewModel.toggleFieldCheckbox(index),
                                   ),
@@ -130,7 +124,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                           GridView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel.testList2.length,
+                              itemCount: viewModel.partnerSkillList.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       childAspectRatio: 6 / 1,
@@ -138,7 +132,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                                       mainAxisSpacing: 5),
                               itemBuilder: (BuildContext context, int index) {
                                 return CustomCheckboxTile(
-                                  item: viewModel.testList2[index],
+                                  item: viewModel.partnerSkillList[index],
                                   onTap: () =>
                                       viewModel.toggleTechCheckbox(index),
                                 );
@@ -185,8 +179,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                             height: 1,
                             color: const Color(0xffECECEC),
                           ),
-                          const Padding(
-                              padding: const EdgeInsets.only(top: 13)),
+                          const Padding(padding: EdgeInsets.only(top: 13)),
                           Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -197,7 +190,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                                       shrinkWrap: true,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
-                                      itemCount: viewModel.localList.length,
+                                      itemCount: viewModel.area1List.length,
                                       //아이템간의 간격을 조절하는 코드
                                       itemBuilder:
                                           (BuildContext context, int index) {
@@ -208,7 +201,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                                                   .width *
                                               0.085,
                                           child: CustomLocalSelectBtn(
-                                            local: viewModel.localList[index],
+                                            local: viewModel.area1List[index],
                                             onTap: () =>
                                                 viewModel.toggleLocalBtn(index),
                                           ),
@@ -222,7 +215,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                                       shrinkWrap: true,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
-                                      itemCount: viewModel.regionList.length,
+                                      itemCount: viewModel.area2List.length,
                                       //아이템간의 간격을 조절하는 코드
                                       itemBuilder:
                                           (BuildContext context, int index) {
@@ -233,7 +226,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                                                   .width *
                                               0.085,
                                           child: CustomRegionSelectBtn(
-                                            region: viewModel.regionList[index],
+                                            region: viewModel.area2List[index],
                                             onTap: () => viewModel
                                                 .toggleRegionBtn(index),
                                           ),
@@ -261,7 +254,7 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                           GridView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel.testImg.length,
+                              itemCount: viewModel.imgList.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       childAspectRatio: 1 / 1,
@@ -275,10 +268,12 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                                   height:
                                       MediaQuery.of(context).size.width * 0.1,
                                   child: UploadImageBox(
-                                    image: viewModel.testImg[index].image,
+                                    image: viewModel.imgList[index],
                                     onTap: () {
                                       if (index == 0) {
                                         viewModel.addImg();
+                                      } else {
+                                        viewModel.removeImg(index);
                                       }
                                     },
                                   ),
@@ -315,7 +310,73 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                               height: 30,
                             )),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (_careerController.text.isEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "경력을 입력해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        }));
+                              } else if (viewModel.getSelectedField().isEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "전문분야를 선택해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        }));
+                              } else if (viewModel.getSelectedSkill().isEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "사용기술을 선택해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        }));
+                              } else if (_workController.text.isEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "업무방식을 입력해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        }));
+                              } else if (viewModel.getSelectedArea() == null) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "지역을 선택해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        }));
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogSelect(
+                                        title: "등록하기",
+                                        content: "등록 하시겠습니까?",
+                                        cancelText: "취소",
+                                        confirmText: "확인",
+                                        cancelPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        }));
+                              }
+                            },
                             icon: SvgPicture.asset(
                               "assets/icons/check.svg",
                               height: 30,

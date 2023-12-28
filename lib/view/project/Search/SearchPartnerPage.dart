@@ -18,6 +18,33 @@ class SearchPartnerPage extends StatefulWidget {
 }
 
 class _SearchPartnerPageState extends State<SearchPartnerPage> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      _onScroll();
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(() {
+      _onScroll();
+    });
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      print("bottom");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final mainContext = context;
@@ -71,6 +98,7 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
             child: Consumer<SearchViewModel>(
               builder: (context, viewModel, child) {
                 return ListView.builder(
+                    controller: _scrollController,
                     itemCount: viewModel.project.length,
                     itemBuilder: (context, index) {
                       return Container(

@@ -136,4 +136,71 @@ class ApiService {
       rethrow;
     }
   }
+
+  Future<Response> getArea2(int idx) {
+    print(idx);
+    try {
+      return dio.get('$baseUrl/area/depth-1/$idx/depth-2/all');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getProjectList() {
+    try {
+      return dio.get('$baseUrl/project/all');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> postProject(Map<String, dynamic> body) {
+    try {
+      return dio.post('$baseUrl/project', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> postPartner(Map<String, dynamic> body) {
+    try {
+      print(body);
+      return dio.post('$baseUrl/partner', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getPartnerField() {
+    try {
+      return dio.get('$baseUrl/field/partner/all');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getPartnerSkill() {
+    try {
+      return dio.get('$baseUrl/partner/skill/all');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> uploadImg(MultipartFile img) {
+    FormData formData = FormData.fromMap({
+      "img": img,
+    });
+    try {
+      return dio.post('$baseUrl/upload/img',
+          data: formData,
+          options: Options(
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          ));
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
 }

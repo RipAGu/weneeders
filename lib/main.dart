@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:winit/view/Main/MainPage.dart';
 import 'package:winit/view/Main/MainViewModel.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
 import 'package:winit/view/account/SignInPage.dart';
-import 'package:winit/view/account/register/RegisterViewModel.dart';
 import 'package:winit/view/chat/ChatViewModel.dart';
-import 'package:winit/view/project/Register/AddViewModel.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
   const storage = FlutterSecureStorage();
   String? token = await storage.read(key: "token");
 
@@ -34,9 +35,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SearchViewModel()),
         ChangeNotifierProvider(create: (context) => ChatViewModel()),
         ChangeNotifierProvider(create: (context) => MainViewModel()),
-        ChangeNotifierProvider(create: (context) => AddViewModel()),
       ],
       child: MaterialApp(
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('ko', 'KR'),
+        ],
         title: 'Flutter Demo',
         home: Scaffold(body: startPage),
       ),

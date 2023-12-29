@@ -381,7 +381,7 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                                         _userPassword.text,
                                         _userName.text,
                                         _userNickname.text,
-                                        2);
+                                        1);
                                     if (!mounted) return;
                                     if (viewModel.isRegisterSuccess) {
                                       Navigator.push(

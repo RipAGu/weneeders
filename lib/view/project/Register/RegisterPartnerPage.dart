@@ -376,8 +376,36 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                                           viewModel.registerPartner(
                                               _careerController.text,
                                               _workController.text);
-
                                           Navigator.pop(context);
+                                          if (viewModel.isRegisterSuccess) {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    CustomDialogConfirm(
+                                                        title: "등록완료",
+                                                        content:
+                                                            "파트너 등록이 완료되었습니다.",
+                                                        confirmText: "확인",
+                                                        confirmPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          Navigator.pop(
+                                                              context);
+                                                        }));
+                                          } else {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    CustomDialogConfirm(
+                                                        title: "등록실패",
+                                                        content:
+                                                            "파트너 등록에 실패하였습니다.",
+                                                        confirmText: "확인",
+                                                        confirmPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        }));
+                                          }
                                         }));
                               }
                             },

@@ -31,11 +31,11 @@ class MainViewModel extends ChangeNotifier {
     int count = 0;
     try {
       final response = await apiService.getProjectList(1);
+      print(response.data);
       for (var item in response.data) {
         if (count >= 3) break;
         projectList.add(ProjectListModel.fromJson(item));
       }
-      print(projectList);
       notifyListeners();
     } on DioException catch (e) {
       print(e.response!.statusCode);

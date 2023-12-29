@@ -1,4 +1,5 @@
 class PartnerListModel {
+  int type = 2;
   int idx;
   String method;
   String createdAt;

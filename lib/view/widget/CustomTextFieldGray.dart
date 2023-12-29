@@ -7,6 +7,7 @@ class CustomTextFieldGray extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType keyboardType;
   final double textFontSize;
+  final bool? readOnly;
 
   const CustomTextFieldGray({
     Key? key,
@@ -15,11 +16,13 @@ class CustomTextFieldGray extends StatelessWidget {
     required this.controller,
     required this.keyboardType,
     required this.textFontSize,
+    this.readOnly,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
+      readOnly: readOnly ?? false,
       style: TextStyle(
         fontSize: textFontSize,
         color: Colors.black,

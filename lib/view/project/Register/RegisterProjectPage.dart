@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/widget/CustomDialogConfirm.dart';
 import 'package:winit/view/widget/CustomLocalSelectBtn.dart';
@@ -10,6 +11,8 @@ import 'package:winit/view/widget/UploadImageBox.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
 import 'package:winit/view/widget/CustomCheckboxTile.dart';
 import 'package:winit/view/project/Register/AddViewModel.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 import '../../widget/CustomDialogSelect.dart';
 
@@ -31,6 +34,8 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
   final TextEditingController _endYearController = TextEditingController();
   final TextEditingController _endMonthController = TextEditingController();
   final TextEditingController _endDayController = TextEditingController();
+  late var startTimeUTC;
+  late var endTimeUTC;
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +86,20 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                         0.1),
                                 width: MediaQuery.of(context).size.width * 0.27,
                                 height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "년",
-                                    obscureText: false,
-                                    controller: _startYearController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () {
+                                    selectDateAndPrintTime(context, true);
+                                  },
+                                  child: IgnorePointer(
+                                    child: CustomTextFieldGray(
+                                        hintText: "년",
+                                        obscureText: false,
+                                        controller: _startYearController,
+                                        keyboardType: TextInputType.number,
+                                        textFontSize: 12),
+                                  ),
+                                ),
                               ),
                               Container(
                                 margin: EdgeInsets.only(
@@ -94,12 +107,20 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                         0.02),
                                 width: MediaQuery.of(context).size.width * 0.18,
                                 height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "월",
-                                    obscureText: false,
-                                    controller: _startMonthController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () {
+                                    selectDateAndPrintTime(context, true);
+                                  },
+                                  child: IgnorePointer(
+                                    child: CustomTextFieldGray(
+                                        hintText: "월",
+                                        obscureText: false,
+                                        controller: _startMonthController,
+                                        keyboardType: TextInputType.number,
+                                        textFontSize: 12),
+                                  ),
+                                ),
                               ),
                               Container(
                                 margin: EdgeInsets.only(
@@ -107,12 +128,20 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                         0.02),
                                 width: MediaQuery.of(context).size.width * 0.18,
                                 height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "일",
-                                    obscureText: false,
-                                    controller: _startDayController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () {
+                                    selectDateAndPrintTime(context, true);
+                                  },
+                                  child: IgnorePointer(
+                                    child: CustomTextFieldGray(
+                                        hintText: "일",
+                                        obscureText: false,
+                                        controller: _startDayController,
+                                        keyboardType: TextInputType.number,
+                                        textFontSize: 12),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -120,7 +149,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                           Row(
                             children: [
                               Padding(padding: const EdgeInsets.only(left: 10)),
-                              Text(
+                              const Text(
                                 "종료일",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w400,
@@ -133,12 +162,20 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                         0.1),
                                 width: MediaQuery.of(context).size.width * 0.27,
                                 height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "년",
-                                    obscureText: false,
-                                    controller: _endYearController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () {
+                                    selectDateAndPrintTime(context, false);
+                                  },
+                                  child: IgnorePointer(
+                                    child: CustomTextFieldGray(
+                                        hintText: "년",
+                                        obscureText: false,
+                                        controller: _endYearController,
+                                        keyboardType: TextInputType.number,
+                                        textFontSize: 12),
+                                  ),
+                                ),
                               ),
                               Container(
                                 margin: EdgeInsets.only(
@@ -146,12 +183,20 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                         0.02),
                                 width: MediaQuery.of(context).size.width * 0.18,
                                 height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "월",
-                                    obscureText: false,
-                                    controller: _endMonthController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () {
+                                    selectDateAndPrintTime(context, false);
+                                  },
+                                  child: IgnorePointer(
+                                    child: CustomTextFieldGray(
+                                        hintText: "월",
+                                        obscureText: false,
+                                        controller: _endMonthController,
+                                        keyboardType: TextInputType.number,
+                                        textFontSize: 12),
+                                  ),
+                                ),
                               ),
                               Container(
                                 margin: EdgeInsets.only(
@@ -159,12 +204,20 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                         0.02),
                                 width: MediaQuery.of(context).size.width * 0.18,
                                 height: 40,
-                                child: CustomTextFieldGray(
-                                    hintText: "일",
-                                    obscureText: false,
-                                    controller: _endDayController,
-                                    keyboardType: TextInputType.number,
-                                    textFontSize: 12),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () {
+                                    selectDateAndPrintTime(context, false);
+                                  },
+                                  child: IgnorePointer(
+                                    child: CustomTextFieldGray(
+                                        hintText: "일",
+                                        obscureText: false,
+                                        controller: _endDayController,
+                                        keyboardType: TextInputType.number,
+                                        textFontSize: 12),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -223,18 +276,18 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                           GridView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel.partnerFieldList.length,
+                              itemCount: viewModel.projectFieldList.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                       childAspectRatio: 5 / 1,
-                                      crossAxisCount: 3,
+                                      crossAxisCount: 2,
                                       mainAxisSpacing: 10),
                               itemBuilder: (BuildContext context, int index) {
                                 return SizedBox(
                                   child: CustomCheckboxTile(
-                                    item: viewModel.partnerFieldList[index],
-                                    onTap: () =>
-                                        viewModel.toggleFieldCheckbox(index),
+                                    item: viewModel.projectFieldList[index],
+                                    onTap: () => viewModel
+                                        .toggleProjectFieldCheckbox(index),
                                   ),
                                 );
                               }),
@@ -495,7 +548,9 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                         },
                                       );
                                     });
-                              } else if (viewModel.getSelectedField().isEmpty) {
+                              } else if (viewModel
+                                  .getSelectedProjectField()
+                                  .isEmpty) {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -573,13 +628,43 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                         },
                                         confirmPressed: () {
                                           viewModel.registerProject(
-                                              "${_startYearController.text} ${_startMonthController.text} ${_startDayController.text}",
-                                              "${_endYearController.text} ${_endMonthController.text} ${_endDayController.text}",
+                                              startTimeUTC,
+                                              endTimeUTC,
                                               _workController.text,
                                               _functionController.text,
                                               _amountController.text);
-
                                           Navigator.pop(context);
+
+                                          if (viewModel.isRegisterSuccess) {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return CustomDialogConfirm(
+                                                    title: "성공",
+                                                    content: "등록이 완료되었습니다.",
+                                                    confirmText: "확인",
+                                                    confirmPressed: () {
+                                                      Navigator.pop(context);
+                                                      Navigator.pop(context);
+                                                    },
+                                                  );
+                                                });
+                                          } else {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return CustomDialogConfirm(
+                                                    title: "실패",
+                                                    content: "등록에 실패하였습니다.",
+                                                    confirmText: "확인",
+                                                    confirmPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                  );
+                                                });
+                                          }
                                         }));
                               }
                             },
@@ -608,5 +693,44 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
         ),
       ),
     );
+  }
+
+  Future<void> selectDateAndPrintTime(
+      BuildContext context, bool isStart) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2030),
+    );
+
+    String convertToUTCString(DateTime date) {
+      tz.initializeTimeZones();
+      final location = tz.getLocation('Asia/Seoul');
+      final tz.TZDateTime tzDateTime =
+          tz.TZDateTime(location, date.year, date.month, date.day);
+
+      // 변환된 tz.TZDateTime을 UTC로 변환
+      DateTime utcDateTime = tzDateTime.toUtc();
+
+      // UTC 시간을 ISO 8601 형식으로 변환
+      return DateFormat("yyyy-MM-dd'T'HH:mm:ss'").format(utcDateTime);
+    }
+
+    if (pickedDate != null) {
+      final String formattedDateTime = convertToUTCString(pickedDate);
+      print(formattedDateTime);
+      if (isStart) {
+        startTimeUTC = formattedDateTime;
+        _startYearController.text = pickedDate.year.toString();
+        _startMonthController.text = pickedDate.month.toString();
+        _startDayController.text = pickedDate.day.toString();
+      } else {
+        endTimeUTC = formattedDateTime;
+        _endYearController.text = pickedDate.year.toString();
+        _endMonthController.text = pickedDate.month.toString();
+        _endDayController.text = pickedDate.day.toString();
+      }
+    }
   }
 }

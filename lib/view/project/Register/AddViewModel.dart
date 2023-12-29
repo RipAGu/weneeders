@@ -11,12 +11,16 @@ class AddViewModel extends ChangeNotifier {
   List<AreaModel> area1List = [];
   List<AreaModel> area2List = [];
   List<FieldModel> partnerFieldList = [];
+  List<FieldModel> projectFieldList = [];
   List<FieldModel> partnerSkillList = [];
   List<String?> imgList = [null];
   List<String> imgPathList = [];
+  bool _isRegisterSuccess = false;
+  bool get isRegisterSuccess => _isRegisterSuccess;
 
   AddViewModel() {
     getArea1();
+    getProjectField();
     getPartnerField();
     getPartnerSkill();
   }
@@ -34,6 +38,12 @@ class AddViewModel extends ChangeNotifier {
   void toggleFieldCheckbox(int index) {
     partnerFieldList[index].isChecked = !partnerFieldList[index].isChecked;
     print(partnerFieldList[index].isChecked);
+    notifyListeners();
+  }
+
+  void toggleProjectFieldCheckbox(int index) {
+    projectFieldList[index].isChecked = !projectFieldList[index].isChecked;
+    print(projectFieldList[index].isChecked);
     notifyListeners();
   }
 
@@ -105,17 +115,6 @@ class AddViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getProjectField() async {
-    try {
-      final response = await apiService.getProjectField();
-      print(response.data);
-      print(response.statusCode);
-    } catch (e) {
-      print(e);
-      throw e;
-    }
-  }
-
   Future<void> getPartnerField() async {
     try {
       final response = await apiService.getPartnerField();
@@ -126,6 +125,18 @@ class AddViewModel extends ChangeNotifier {
     } catch (e) {
       print(e);
       throw e;
+    }
+  }
+
+  Future<void> getProjectField() async {
+    try {
+      final response = await apiService.getProjectField();
+      projectFieldList = (response.data as List)
+          .map((item) => FieldModel.fromJson(item))
+          .toList();
+      notifyListeners();
+    } on DioException catch (e) {
+      print(e.response!.data);
     }
   }
 
@@ -182,7 +193,14 @@ class AddViewModel extends ChangeNotifier {
     };
     try {
       final response = await apiService.postPartner(body);
-      print(response.statusCode);
+      if (response.statusCode == 200) {
+        _isRegisterSuccess = true;
+        notifyListeners();
+      } else {
+        _isRegisterSuccess = false;
+        print(response.statusCode);
+        notifyListeners();
+      }
     } on DioException catch (e) {
       print(e.response!.data);
     }
@@ -194,7 +212,7 @@ class AddViewModel extends ChangeNotifier {
       "startDate": startDate,
       "endDate": endDate,
       "methodType": getSelectedMethod(),
-      "fieldIdxList": getSelectedField(),
+      "fieldIdxList": getSelectedProjectField(),
       "depth2Idx": getSelectedArea(),
       "method": method,
       "demandSkill": demandSkill,
@@ -205,6 +223,14 @@ class AddViewModel extends ChangeNotifier {
     try {
       final response = await apiService.postProject(body);
       print(response.statusCode);
+      if (response.statusCode == 200) {
+        _isRegisterSuccess = true;
+        notifyListeners();
+      } else {
+        _isRegisterSuccess = false;
+        print(response.statusCode);
+        notifyListeners();
+      }
     } on DioException catch (e) {
       print(e.response!.data);
     }
@@ -215,6 +241,16 @@ class AddViewModel extends ChangeNotifier {
     for (int i = 0; i < partnerFieldList.length; i++) {
       if (partnerFieldList[i].isChecked) {
         selectedField.add((partnerFieldList[i].idx));
+      }
+    }
+    return selectedField;
+  }
+
+  List<int> getSelectedProjectField() {
+    List<int> selectedField = [];
+    for (int i = 0; i < projectFieldList.length; i++) {
+      if (projectFieldList[i].isChecked) {
+        selectedField.add((projectFieldList[i].idx));
       }
     }
     return selectedField;
@@ -275,6 +311,15 @@ class AddViewModel extends ChangeNotifier {
     imgList.clear();
     imgPathList.clear();
     notifyListeners();
+  }
+
+  Future<void> getUserInfo() async {
+    try {
+      final response = await apiService.getUserInfo();
+      print(response.data);
+    } on DioException catch (e) {
+      print(e.response!.data);
+    }
   }
 }
 

@@ -121,14 +121,6 @@ class ApiService {
     }
   }
 
-  Future<Response> getProjectField() {
-    try {
-      return dio.get('$baseUrl/field/project/all');
-    } on DioException catch (e) {
-      rethrow;
-    }
-  }
-
   Future<Response> getArea1() {
     try {
       return dio.get('$baseUrl/area/depth-1/all');
@@ -171,6 +163,14 @@ class ApiService {
     }
   }
 
+  Future<Response> getProjectField() {
+    try {
+      return dio.get('$baseUrl/field/project/all');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
   Future<Response> getPartnerSkill() {
     try {
       return dio.get('$baseUrl/partner/skill/all');
@@ -208,6 +208,14 @@ class ApiService {
   Future<Response> getProjectList(int page) {
     try {
       return dio.get('$baseUrl/project/all', queryParameters: {"page": page});
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getUserInfo() {
+    try {
+      return dio.get('$baseUrl/user/my');
     } on DioException catch (e) {
       rethrow;
     }

@@ -1,12 +1,11 @@
 class ProjectListModel {
+  int type = 1;
   int idx;
   String method;
   String createdAt;
   Depth2RegionModel Depth2Region;
   UserModel User;
-  List<PartnerSkillModel> PartnerSkillMapping;
-  List<PartnerFieldModel> PartnerFieldMapping;
-  List<ImgPathModel> ImagePath;
+  List<ImgPathModel> ProjectImg;
 
   ProjectListModel({
     required this.idx,
@@ -14,9 +13,7 @@ class ProjectListModel {
     required this.createdAt,
     required this.Depth2Region,
     required this.User,
-    required this.PartnerSkillMapping,
-    required this.PartnerFieldMapping,
-    required this.ImagePath,
+    required this.ProjectImg,
   });
 
   factory ProjectListModel.fromJson(Map<String, dynamic> json) {
@@ -26,13 +23,7 @@ class ProjectListModel {
       createdAt: json['createdAt'],
       Depth2Region: Depth2RegionModel.fromJson(json['Depth2Region']),
       User: UserModel.fromJson(json['User']),
-      PartnerSkillMapping: (json['PartnerSkillMapping'] as List)
-          .map((i) => PartnerSkillModel.fromJson(i))
-          .toList(),
-      PartnerFieldMapping: (json['PartnerFieldMapping'] as List)
-          .map((i) => PartnerFieldModel.fromJson(i))
-          .toList(),
-      ImagePath: (json['ImagePath'] as List)
+      ProjectImg: (json['ProjectImg'] as List)
           .map((i) => ImgPathModel.fromJson(i))
           .toList(),
     );

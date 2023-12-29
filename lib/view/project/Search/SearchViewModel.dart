@@ -18,6 +18,7 @@ class SearchViewModel with ChangeNotifier {
     projectList = [];
     _isLoadEnd = false;
     getPartnerList();
+    getProjectList();
   }
 
   Future<void> getPartnerList() async {

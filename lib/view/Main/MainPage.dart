@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
 import 'package:winit/view/project/Detail/DetailProjectPage.dart';
+import 'package:winit/view/project/Detail/DetailViewModel.dart';
 import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/widget/BigGrayBtn.dart';
@@ -269,7 +270,10 @@ class _MainPageState extends State<MainPage> {
                                       mainContext,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const DetailProjectPage()));
+                                              DetailProjectPage(
+                                                idx: viewModel
+                                                    .projectList[index].idx,
+                                              )));
                                 },
                               ),
                             );
@@ -338,7 +342,9 @@ class _MainPageState extends State<MainPage> {
                                       mainContext,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const DetailProjectPage()));
+                                              const DetailProjectPage(
+                                                idx: 4,
+                                              )));
                                 },
                               ),
                             );

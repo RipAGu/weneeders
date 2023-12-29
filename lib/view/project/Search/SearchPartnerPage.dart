@@ -118,8 +118,9 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
                             Navigator.push(
                               mainContext,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const DetailProjectPage()),
+                                  builder: (context) => const DetailProjectPage(
+                                        idx: 4,
+                                      )),
                             );
                           },
                         ),

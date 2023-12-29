@@ -220,4 +220,23 @@ class ApiService {
       rethrow;
     }
   }
+
+  Future<Response> getProjectDetail(int idx) {
+    try {
+      return dio.get('$baseUrl/project/$idx');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getProjectComment(int idx) {
+    try {
+      //path에 idx 전달
+      return dio.get(
+        '$baseUrl/project/$idx/comment/all',
+      );
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
 }

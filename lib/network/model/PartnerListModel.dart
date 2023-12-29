@@ -90,7 +90,7 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       idx: json['idx'],
-      name: json['name'],
+      name: json['nickname'],
     );
   }
 }

@@ -33,7 +33,6 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
     const SearchProjectPage(),
     const SearchPartnerPage(),
     const RegisterPartnerPage(),
-    const DetailProjectPage(),
     const ChatListPage()
   ];
 

@@ -117,7 +117,9 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
                                 mainContext,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const DetailProjectPage()));
+                                        const DetailProjectPage(
+                                          idx: 4,
+                                        )));
                           },
                         ),
                       );

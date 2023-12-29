@@ -7,6 +7,7 @@ import 'package:winit/view/Main/MainViewModel.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
 import 'package:winit/view/account/SignInPage.dart';
 import 'package:winit/view/chat/ChatViewModel.dart';
+import 'package:winit/view/project/Detail/DetailViewModel.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SearchViewModel()),
         ChangeNotifierProvider(create: (context) => ChatViewModel()),
         ChangeNotifierProvider(create: (context) => MainViewModel()),
+        ChangeNotifierProvider(create: (context) => DetailViewModel()),
       ],
       child: MaterialApp(
         localizationsDelegates: const [

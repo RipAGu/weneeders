@@ -20,7 +20,6 @@ class ProjectData {
 
 class ProjectCard extends StatelessWidget {
   final String image;
-  final String title;
   final String writer;
   final String date;
   final String location;
@@ -30,7 +29,6 @@ class ProjectCard extends StatelessWidget {
   const ProjectCard({
     Key? key,
     required this.image,
-    required this.title,
     required this.writer,
     required this.date,
     required this.location,

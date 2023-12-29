@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:winit/view/project/DetailProjectPage.dart';
+import 'package:winit/view/project/Detail/DetailProjectPage.dart';
 import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
@@ -18,6 +18,35 @@ class SearchProjectPage extends StatefulWidget {
 }
 
 class _SearchProjectPageState extends State<SearchProjectPage> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<SearchViewModel>(context, listen: false).init();
+    _scrollController.addListener(() {
+      _onScroll();
+    });
+  }
+
+  void _onScroll() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      if (!Provider.of<SearchViewModel>(context, listen: false).isLoadEnd) {
+        Provider.of<SearchViewModel>(context, listen: false).getProjectList();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(() {
+      _onScroll();
+    });
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final mainContext = context;
@@ -71,18 +100,18 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
             child: Consumer<SearchViewModel>(
               builder: (context, viewModel, child) {
                 return ListView.builder(
-                    itemCount: viewModel.project.length,
+                    itemCount: viewModel.projectList.length,
                     itemBuilder: (context, index) {
                       return Container(
                         margin: const EdgeInsets.only(top: 10),
                         height: MediaQuery.of(context).size.height * 0.13,
                         child: ProjectCard(
-                          image: viewModel.project[index].image,
-                          title: viewModel.project[index].title,
-                          writer: viewModel.project[index].writer,
-                          date: viewModel.project[index].date,
-                          location: viewModel.project[index].location,
-                          content: viewModel.project[index].content,
+                          image: "assets/images/img.png",
+                          writer: viewModel.projectList[index].User.nickname,
+                          date: viewModel.projectList[index].createdAt,
+                          location: viewModel.projectList[index].Depth2Region
+                              .Depth1Region.name,
+                          content: viewModel.projectList[index].method,
                           onPressed: () {
                             Navigator.push(
                                 mainContext,

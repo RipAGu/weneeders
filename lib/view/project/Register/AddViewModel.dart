@@ -21,9 +21,9 @@ class AddViewModel extends ChangeNotifier {
     getPartnerSkill();
   }
 
-  List<Item> methodList = [
-    Item(title: "기간제", isChecked: false),
-    Item(title: "도급제", isChecked: false),
+  List<FieldModel> methodList = [
+    FieldModel(idx: 1, name: '기간제'),
+    FieldModel(idx: 2, name: '도급제'),
   ];
 
   bool _isLoading = false;
@@ -178,10 +178,32 @@ class AddViewModel extends ChangeNotifier {
       "method": method,
       "depth2Idx": getSelectedArea(),
       //imglist의 0번째 인덱스 제외하고 전송
-      "imgPathList": "",
+      "imgPathList": imgPathList,
     };
     try {
       final response = await apiService.postPartner(body);
+      print(response.statusCode);
+    } on DioException catch (e) {
+      print(e.response!.data);
+    }
+  }
+
+  Future<void> registerProject(String startDate, String endDate, String method,
+      String demandSkill, String amount) async {
+    final Map<String, dynamic> body = {
+      "startDate": startDate,
+      "endDate": endDate,
+      "methodType": getSelectedMethod(),
+      "fieldIdxList": getSelectedField(),
+      "depth2Idx": getSelectedArea(),
+      "method": method,
+      "demandSkill": demandSkill,
+      "amount": amount,
+      "imgPathList": imgPathList.isEmpty ? null : imgPathList,
+    };
+
+    try {
+      final response = await apiService.postProject(body);
       print(response.statusCode);
     } on DioException catch (e) {
       print(e.response!.data);
@@ -227,6 +249,16 @@ class AddViewModel extends ChangeNotifier {
       }
     }
     return selectedArea;
+  }
+
+  int? getSelectedMethod() {
+    int? selectedMethod;
+    for (int i = 0; i < methodList.length; i++) {
+      if (methodList[i].isChecked) {
+        selectedMethod = methodList[i].idx;
+      }
+    }
+    return selectedMethod;
   }
 
   void removeImg(int index) {

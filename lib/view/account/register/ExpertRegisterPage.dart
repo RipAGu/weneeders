@@ -273,10 +273,16 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                             child: CustomConfirmBtn(
                                               text: "인증요청",
                                               onPressed: () {
-                                                viewModel.isSendPhone
-                                                    ? null
-                                                    : viewModel.phoneVerify(
-                                                        _userPhone.text);
+                                                if (viewModel.isSendPhone) {
+                                                  return;
+                                                } else if (_verifyCode
+                                                    .text.isEmpty) {
+                                                  showSnackBar(
+                                                      context, "인증번호를 입력해주세요.");
+                                                } else {
+                                                  viewModel.phoneVerify(
+                                                      _userPhone.text);
+                                                }
                                               },
                                               backgroundColor:
                                                   viewModel.isSendPhone

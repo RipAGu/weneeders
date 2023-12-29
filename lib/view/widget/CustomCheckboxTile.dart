@@ -33,10 +33,3 @@ class CustomCheckboxTile extends StatelessWidget {
         ));
   }
 }
-
-class Item {
-  String title;
-  bool isChecked;
-
-  Item({required this.title, required this.isChecked});
-}

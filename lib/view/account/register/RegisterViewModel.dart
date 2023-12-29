@@ -100,9 +100,12 @@ class RegisterViewModel extends ChangeNotifier {
         _isEmailCheck = false;
         notifyListeners();
       }
-    } catch (e) {
-      print(e);
-      throw e;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 400) {
+        _isEmailCheck = false;
+        var severMessage = e.response!.data['message'];
+        print("emailDupleCheck: $severMessage");
+      }
     }
   }
 
@@ -122,9 +125,12 @@ class RegisterViewModel extends ChangeNotifier {
         print(response.statusCode);
         notifyListeners();
       }
-    } catch (e) {
-      print(e);
-      throw e;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 400) {
+        _nickNameCheck = false;
+        var severMessage = e.response!.data['message'];
+        print("nickNameDupleCheck: $severMessage");
+      }
     }
   }
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:winit/view/project/DetailViewModel.dart';
+import 'package:winit/view/project/Detail/DetailViewModel.dart';
 import 'package:winit/view/widget/CommentBox.dart';
 import 'package:winit/view/widget/ImageBox.dart';
 import 'package:winit/view/widget/MainAppBar.dart';
@@ -115,7 +115,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                               return FittedBox(
                                 fit: BoxFit.fitHeight,
                                 child: Container(
-                                  margin: const EdgeInsets.only(top: 10),
+                                  margin: const EdgeInsets.only(top: 15),
                                   child: CommentBox(
                                     name: viewModel.testCommentList[index].name,
                                     date: viewModel.testCommentList[index].date,

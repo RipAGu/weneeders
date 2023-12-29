@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/account/SignInPage.dart';
-import 'package:winit/view/project/DetailProjectPage.dart';
+import 'package:winit/view/project/Detail/DetailProjectPage.dart';
 import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
@@ -23,6 +23,7 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
   @override
   void initState() {
     super.initState();
+    Provider.of<SearchViewModel>(context, listen: false).init();
     _scrollController.addListener(() {
       _onScroll();
     });
@@ -41,7 +42,9 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
     if (_scrollController.offset >=
             _scrollController.position.maxScrollExtent &&
         !_scrollController.position.outOfRange) {
-      print("bottom");
+      if (!Provider.of<SearchViewModel>(context, listen: false).isLoadEnd) {
+        Provider.of<SearchViewModel>(context, listen: false).getPartnerList();
+      }
     }
   }
 
@@ -99,18 +102,18 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
               builder: (context, viewModel, child) {
                 return ListView.builder(
                     controller: _scrollController,
-                    itemCount: viewModel.project.length,
+                    itemCount: viewModel.partnerList.length,
                     itemBuilder: (context, index) {
                       return Container(
                         margin: const EdgeInsets.only(top: 10),
                         height: MediaQuery.of(context).size.height * 0.13,
                         child: ProjectCard(
-                          image: viewModel.project[index].image,
-                          title: viewModel.project[index].title,
-                          writer: viewModel.project[index].writer,
-                          date: viewModel.project[index].date,
-                          location: viewModel.project[index].location,
-                          content: viewModel.project[index].content,
+                          image: "assets/images/img.png",
+                          writer: viewModel.partnerList[index].User.name,
+                          date: viewModel.partnerList[index].createdAt,
+                          location: viewModel.partnerList[index].Depth2Region
+                              .Depth1Region.name,
+                          content: viewModel.partnerList[index].method,
                           onPressed: () {
                             Navigator.push(
                               mainContext,

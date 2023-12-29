@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:winit/view/Main/MainPage.dart';
 import 'package:winit/view/chat/ChatListPage.dart';
-import 'package:winit/view/project/DetailProjectPage.dart';
+import 'package:winit/view/project/Detail/DetailProjectPage.dart';
 import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/project/Search/SearchPartnerPage.dart';

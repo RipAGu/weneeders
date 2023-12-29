@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:winit/view/widget/CustomDialogConfirm.dart';
 import 'package:winit/view/widget/CustomLocalSelectBtn.dart';
 import 'package:winit/view/widget/CustomRegionSelectBtn.dart';
 import 'package:winit/view/widget/CustomTextFieldGray.dart';
@@ -9,6 +10,8 @@ import 'package:winit/view/widget/UploadImageBox.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
 import 'package:winit/view/widget/CustomCheckboxTile.dart';
 import 'package:winit/view/project/Register/AddViewModel.dart';
+
+import '../../widget/CustomDialogSelect.dart';
 
 class RegisterProjectPage extends StatefulWidget {
   const RegisterProjectPage({Key? key}) : super(key: key);
@@ -18,11 +21,16 @@ class RegisterProjectPage extends StatefulWidget {
 }
 
 class _RegisterProjectPageState extends State<RegisterProjectPage> {
-  final TextEditingController _periodController = TextEditingController();
   final TextEditingController _partnerAreaController = TextEditingController();
   final TextEditingController _workController = TextEditingController();
   final TextEditingController _functionController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _startYearController = TextEditingController();
+  final TextEditingController _startMonthController = TextEditingController();
+  final TextEditingController _startDayController = TextEditingController();
+  final TextEditingController _endYearController = TextEditingController();
+  final TextEditingController _endMonthController = TextEditingController();
+  final TextEditingController _endDayController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +84,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                 child: CustomTextFieldGray(
                                     hintText: "년",
                                     obscureText: false,
-                                    controller: _periodController,
+                                    controller: _startYearController,
                                     keyboardType: TextInputType.number,
                                     textFontSize: 12),
                               ),
@@ -89,7 +97,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                 child: CustomTextFieldGray(
                                     hintText: "월",
                                     obscureText: false,
-                                    controller: _periodController,
+                                    controller: _startMonthController,
                                     keyboardType: TextInputType.number,
                                     textFontSize: 12),
                               ),
@@ -102,7 +110,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                 child: CustomTextFieldGray(
                                     hintText: "일",
                                     obscureText: false,
-                                    controller: _periodController,
+                                    controller: _startDayController,
                                     keyboardType: TextInputType.number,
                                     textFontSize: 12),
                               ),
@@ -128,7 +136,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                 child: CustomTextFieldGray(
                                     hintText: "년",
                                     obscureText: false,
-                                    controller: _periodController,
+                                    controller: _endYearController,
                                     keyboardType: TextInputType.number,
                                     textFontSize: 12),
                               ),
@@ -141,7 +149,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                 child: CustomTextFieldGray(
                                     hintText: "월",
                                     obscureText: false,
-                                    controller: _periodController,
+                                    controller: _endMonthController,
                                     keyboardType: TextInputType.number,
                                     textFontSize: 12),
                               ),
@@ -154,7 +162,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                 child: CustomTextFieldGray(
                                     hintText: "일",
                                     obscureText: false,
-                                    controller: _periodController,
+                                    controller: _endDayController,
                                     keyboardType: TextInputType.number,
                                     textFontSize: 12),
                               ),
@@ -189,7 +197,7 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                               itemBuilder: (BuildContext context, int index) {
                                 return SizedBox(
                                   child: CustomCheckboxTile(
-                                    item: viewModel.partnerFieldList[index],
+                                    item: viewModel.methodList[index],
                                     onTap: () =>
                                         viewModel.toggleMethodBtn(index),
                                   ),
@@ -416,6 +424,8 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                     onTap: () {
                                       if (index == 0) {
                                         viewModel.addImg();
+                                      } else {
+                                        viewModel.removeImg(index);
                                       }
                                     },
                                   ),
@@ -452,7 +462,127 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                               height: 30,
                             )),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (_startYearController.text.isEmpty ||
+                                  _startMonthController.text.isEmpty ||
+                                  _startDayController.text.isEmpty ||
+                                  _endYearController.text.isEmpty ||
+                                  _endMonthController.text.isEmpty ||
+                                  _endDayController.text.isEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "작업기간을 입력해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      );
+                                    });
+                              } else if (viewModel.getSelectedMethod() ==
+                                  null) {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "방식을 선택해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      );
+                                    });
+                              } else if (viewModel.getSelectedField().isEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "파트너 분야를 선택해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      );
+                                    });
+                              } else if (viewModel.getSelectedArea() == null) {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "지역을 선택해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      );
+                                    });
+                              } else if (_workController.text.isEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "업무방식을 입력해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      );
+                                    });
+                              } else if (_functionController.text.isEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "요구기능을 입력해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      );
+                                    });
+                              } else if (_amountController.text.isEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogConfirm(
+                                        title: "주의",
+                                        content: "공사금액을 입력해주세요.",
+                                        confirmText: "확인",
+                                        confirmPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      );
+                                    });
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogSelect(
+                                        title: "등록하기",
+                                        content: "등록 하시겠습니까?",
+                                        cancelText: "취소",
+                                        confirmText: "확인",
+                                        cancelPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        confirmPressed: () {
+                                          viewModel.registerProject(
+                                              "${_startYearController.text} ${_startMonthController.text} ${_startDayController.text}",
+                                              "${_endYearController.text} ${_endMonthController.text} ${_endDayController.text}",
+                                              _workController.text,
+                                              _functionController.text,
+                                              _amountController.text);
+
+                                          Navigator.pop(context);
+                                        }));
+                              }
+                            },
                             icon: SvgPicture.asset(
                               "assets/icons/check.svg",
                               height: 30,

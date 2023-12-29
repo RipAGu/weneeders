@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
-import 'package:winit/view/project/DetailProjectPage.dart';
+import 'package:winit/view/project/Detail/DetailProjectPage.dart';
 import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/widget/BigGrayBtn.dart';
@@ -172,7 +172,7 @@ class _MainPageState extends State<MainPage> {
                       //   backgroundColor: Colors.grey[500],
                       // );
 
-                      viewModel.postPartner();
+                      viewModel.getPartnerList();
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.43,
@@ -242,30 +242,28 @@ class _MainPageState extends State<MainPage> {
                       child: ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: viewModel.mainDataList.length,
+                          itemCount: viewModel.partnerList.length,
                           itemBuilder: (context, index) {
                             return Container(
                               margin: const EdgeInsets.only(top: 10),
                               height: MediaQuery.of(context).size.height * 0.13,
                               child: ProjectCard(
-                                image: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .image,
-                                title: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .title,
+                                image: "assets/images/img.png",
                                 content: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .content,
+                                    .partnerList[index]
+                                    .method,
                                 writer: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .writer,
+                                    .partnerList[index]
+                                    .User
+                                    .name,
                                 location: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .location,
+                                    .partnerList[index]
+                                    .Depth2Region
+                                    .Depth1Region
+                                    .name,
                                 date: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .date,
+                                    .partnerList[index]
+                                    .createdAt,
                                 onPressed: () {
                                   Navigator.push(
                                       mainContext,
@@ -312,31 +310,29 @@ class _MainPageState extends State<MainPage> {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: Provider.of<MainViewModel>(context)
-                              .mainDataList
+                              .projectList
                               .length,
                           itemBuilder: (context, index) {
                             return Container(
                               margin: const EdgeInsets.only(top: 10),
                               height: MediaQuery.of(context).size.height * 0.13,
                               child: ProjectCard(
-                                image: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .image,
-                                title: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .title,
+                                image: "assets/images/img.png",
                                 content: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .content,
+                                    .projectList[index]
+                                    .method,
                                 writer: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .writer,
+                                    .projectList[index]
+                                    .User
+                                    .nickname,
                                 location: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .location,
+                                    .projectList[index]
+                                    .Depth2Region
+                                    .Depth1Region
+                                    .name,
                                 date: Provider.of<MainViewModel>(context)
-                                    .mainDataList[index]
-                                    .date,
+                                    .projectList[index]
+                                    .createdAt,
                                 onPressed: () {
                                   Navigator.push(
                                       mainContext,

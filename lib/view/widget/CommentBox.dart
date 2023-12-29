@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../project/DetailViewModel.dart';
+import 'package:winit/view/project/Detail/DetailViewModel.dart';
 
 class CommentBox extends StatelessWidget {
   final String? imageUrl;

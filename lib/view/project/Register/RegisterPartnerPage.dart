@@ -373,6 +373,10 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                                           Navigator.pop(context);
                                         },
                                         confirmPressed: () {
+                                          viewModel.registerPartner(
+                                              _careerController.text,
+                                              _workController.text);
+
                                           Navigator.pop(context);
                                         }));
                               }

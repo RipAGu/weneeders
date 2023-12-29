@@ -146,14 +146,6 @@ class ApiService {
     }
   }
 
-  Future<Response> getProjectList() {
-    try {
-      return dio.get('$baseUrl/project/all');
-    } on DioException catch (e) {
-      rethrow;
-    }
-  }
-
   Future<Response> postProject(Map<String, dynamic> body) {
     try {
       return dio.post('$baseUrl/project', data: body);
@@ -199,6 +191,23 @@ class ApiService {
               'Content-Type': 'multipart/form-data',
             },
           ));
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getPartnerList(int page) {
+    //query에 페이지 전달
+    try {
+      return dio.get('$baseUrl/partner/all', queryParameters: {"page": page});
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getProjectList(int page) {
+    try {
+      return dio.get('$baseUrl/project/all', queryParameters: {"page": page});
     } on DioException catch (e) {
       rethrow;
     }

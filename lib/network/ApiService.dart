@@ -239,4 +239,58 @@ class ApiService {
       rethrow;
     }
   }
+
+  Future<Response> postProjectComment(int idx, String comment) {
+    final Map<String, dynamic> body = {"contents": comment};
+    try {
+      return dio.post('$baseUrl/project/$idx/comment', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> postProjectRepleComment(int idx, String comment) {
+    final Map<String, dynamic> body = {"contents": comment};
+    try {
+      return dio.post('$baseUrl/project/comment/$idx/reply-comment',
+          data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getPartnerDetail(int idx) {
+    try {
+      return dio.get('$baseUrl/partner/$idx');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getPartnerComment(int idx) {
+    try {
+      return dio.get('$baseUrl/partner/$idx/comment/all');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> postPartnerComment(int idx, String comment) {
+    final Map<String, dynamic> body = {"contents": comment};
+    try {
+      return dio.post('$baseUrl/partner/$idx/comment', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> postPartnerRepleComment(int idx, String comment) {
+    final Map<String, dynamic> body = {"contents": comment};
+    try {
+      return dio.post('$baseUrl/partner/comment/$idx/reply-comment',
+          data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
 }

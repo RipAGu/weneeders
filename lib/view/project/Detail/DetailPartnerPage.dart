@@ -3,29 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:winit/view/project/Detail/DetailViewModel.dart';
-import 'package:winit/view/widget/CommentBox.dart';
-import 'package:winit/view/widget/ImageBox.dart';
-import 'package:winit/view/widget/MainAppBar.dart';
 
-class DetailProjectPage extends StatefulWidget {
+import '../../widget/CommentBox.dart';
+import '../../widget/ImageBox.dart';
+import '../../widget/MainAppBar.dart';
+import 'DetailViewModel.dart';
+
+class DetailPartnerPage extends StatefulWidget {
   final int idx;
-  const DetailProjectPage({required this.idx, Key? key}) : super(key: key);
+  const DetailPartnerPage({Key? key, required this.idx}) : super(key: key);
 
   @override
-  State<DetailProjectPage> createState() => _DetailProjectPageState();
+  State<DetailPartnerPage> createState() => _DetailPartnerPageState();
 }
 
-class _DetailProjectPageState extends State<DetailProjectPage> {
+class _DetailPartnerPageState extends State<DetailPartnerPage> {
   late int idx;
   final TextEditingController _commentController = TextEditingController();
   final FocusNode _commentFocusNode = FocusNode();
 
   Future<void> loadData() async {
     await Provider.of<DetailViewModel>(context, listen: false)
-        .getProjectDetail(idx);
+        .getPartnerDetail(idx);
     await Provider.of<DetailViewModel>(context, listen: false)
-        .getProjectComment(idx);
+        .getPartnerComment(idx);
   }
 
   @override
@@ -41,6 +42,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
   }
 
   final controller = PageController(viewportFraction: 1.0, keepPage: true);
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -74,51 +76,18 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                                         const TextSpan(text: "작성자: "),
                                         TextSpan(
                                             text: viewModel
-                                                .projectDetailData.User.name,
+                                                .partnerDetailData.User.name,
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 12)),
                                       ])),
                                   const Spacer(),
                                   Text(
-                                    viewModel.projectDetailData.createdAt,
+                                    viewModel.partnerDetailData.createdAt,
                                     style: const TextStyle(fontSize: 12),
                                   )
                                 ],
                               ),
-                            ),
-                            const Padding(padding: EdgeInsets.only(top: 5)),
-                            Row(
-                              children: [
-                                RichText(
-                                    text: TextSpan(
-                                        style: const TextStyle(
-                                            color: Colors.black, fontSize: 12),
-                                        children: <TextSpan>[
-                                      const TextSpan(text: "시작일: "),
-                                      TextSpan(
-                                          text: viewModel
-                                              .projectDetailData.startTime,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12)),
-                                    ])),
-                                const Padding(
-                                    padding: EdgeInsets.only(left: 10)),
-                                RichText(
-                                    text: TextSpan(
-                                        style: const TextStyle(
-                                            color: Colors.black, fontSize: 12),
-                                        children: <TextSpan>[
-                                      const TextSpan(text: "종료일: "),
-                                      TextSpan(
-                                          text: viewModel
-                                              .projectDetailData.endTime,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12)),
-                                    ])),
-                              ],
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 5),
@@ -130,24 +99,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                                       children: <TextSpan>[
                                     const TextSpan(text: "지역: "),
                                     TextSpan(
-                                        text: viewModel.projectRegion,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12)),
-                                  ])),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 5),
-                              alignment: Alignment.centerLeft,
-                              child: RichText(
-                                  text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black, fontSize: 12),
-                                      children: <TextSpan>[
-                                    const TextSpan(text: "요구 기능: "),
-                                    TextSpan(
-                                        text: viewModel
-                                            .projectDetailData.demandSkill,
+                                        text: viewModel.partnerRegion,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12)),
@@ -164,7 +116,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                                     const TextSpan(text: "업무 방식: "),
                                     TextSpan(
                                         text:
-                                            viewModel.projectDetailData.method,
+                                            viewModel.partnerDetailData.method,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12)),
@@ -178,13 +130,9 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                                       style: const TextStyle(
                                           color: Colors.black, fontSize: 12),
                                       children: <TextSpan>[
-                                    const TextSpan(text: "지급 방식: "),
+                                    const TextSpan(text: "전문 분야: "),
                                     TextSpan(
-                                        text: viewModel.projectDetailData
-                                                    .methodType ==
-                                                1
-                                            ? "기간제"
-                                            : "도급제",
+                                        text: viewModel.partnerField,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12)),
@@ -198,9 +146,9 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                                       style: const TextStyle(
                                           color: Colors.black, fontSize: 12),
                                       children: <TextSpan>[
-                                    const TextSpan(text: "분야: "),
+                                    const TextSpan(text: "사용 기술: "),
                                     TextSpan(
-                                        text: viewModel.projectField,
+                                        text: viewModel.partnerSkill,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12)),
@@ -250,25 +198,25 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel.projectCommentList.length,
+                              itemCount: viewModel.partnerCommentList.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return FittedBox(
                                   fit: BoxFit.fitHeight,
                                   child: Container(
                                     margin: const EdgeInsets.only(top: 15),
                                     child: CommentBox(
-                                      name: viewModel.projectCommentList[index]
+                                      name: viewModel.partnerCommentList[index]
                                           .User.nickname,
                                       date: viewModel
-                                          .projectCommentList[index].createdAt,
+                                          .partnerCommentList[index].createdAt,
                                       comment: viewModel
-                                          .projectCommentList[index].contents,
+                                          .partnerCommentList[index].contents,
                                       repleData: viewModel
-                                          .projectCommentList[index]
-                                          .ProjectReplyComment,
+                                          .partnerCommentList[index]
+                                          .PartnerReplyComment,
                                       repleOnTap: () {
                                         viewModel.setRepleOn(viewModel
-                                            .projectCommentList[index].idx);
+                                            .partnerCommentList[index].idx);
                                         FocusScope.of(context)
                                             .requestFocus(_commentFocusNode);
                                       },
@@ -326,12 +274,12 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                                     return;
                                   }
                                   if (viewModel.isRepleOn) {
-                                    viewModel.postProjectRepleComment(
+                                    viewModel.postPartnerRepleComment(
                                         idx, _commentController.text);
 
                                     viewModel.setRepleOff();
                                   } else {
-                                    viewModel.postProjectComment(
+                                    viewModel.postPartnerComment(
                                         idx, _commentController.text);
                                     viewModel.setRepleOff();
                                   }
@@ -348,7 +296,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                   ]),
                 ),
                 bottomNavigationBar: Visibility(
-                  visible: viewModel.projectDetailData.loginUserProjectState,
+                  visible: viewModel.partnerDetailData.loginUserPartnerState,
                   child: BottomAppBar(
                     //하단 바
                     padding: const EdgeInsets.all(0),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:winit/network/model/CommentModel.dart';
 import 'package:winit/view/project/Detail/DetailViewModel.dart';
 
 class CommentBox extends StatelessWidget {
@@ -6,7 +7,8 @@ class CommentBox extends StatelessWidget {
   final String name;
   final String date;
   final String comment;
-  final List<CommentData> repleData;
+  final List<ProjectReplyCommentModel> repleData;
+  final Function repleOnTap;
 
   const CommentBox({
     Key? key,
@@ -15,6 +17,7 @@ class CommentBox extends StatelessWidget {
     required this.date,
     required this.comment,
     required this.repleData,
+    required this.repleOnTap,
   }) : super(key: key);
 
   @override
@@ -79,7 +82,7 @@ class CommentBox extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        repleData[index].imageUrl != null
+                        repleData[index].User.profileImg != null
                             ? SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.07,
                                 height:
@@ -106,7 +109,7 @@ class CommentBox extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    repleData[index].name,
+                                    repleData[index].User.nickname,
                                     style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
@@ -115,7 +118,7 @@ class CommentBox extends StatelessWidget {
                                   const Padding(
                                       padding: EdgeInsets.only(left: 5)),
                                   Text(
-                                    repleData[index].date,
+                                    repleData[index].createdAt,
                                     style: const TextStyle(
                                       fontSize: 10,
                                       color: Color(0xFF7D8690),
@@ -124,7 +127,7 @@ class CommentBox extends StatelessWidget {
                                 ],
                               ),
                               Text(
-                                repleData[index].comment,
+                                repleData[index].contents,
                                 style: const TextStyle(
                                   fontSize: 12,
                                   color: Color(0xFF7D8690),
@@ -137,7 +140,10 @@ class CommentBox extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              repleOnTap();
+            },
             child: const Text(
               "답글 달기",
               style: TextStyle(

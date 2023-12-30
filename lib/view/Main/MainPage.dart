@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
+import 'package:winit/view/project/Detail/DetailPartnerPage.dart';
 import 'package:winit/view/project/Detail/DetailProjectPage.dart';
 import 'package:winit/view/project/Detail/DetailViewModel.dart';
 import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
@@ -165,15 +166,13 @@ class _MainPageState extends State<MainPage> {
                   GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      // Fluttertoast.showToast(
-                      //   msg: "준비중인 기능입니다.",
-                      //   toastLength: Toast.LENGTH_SHORT,
-                      //   gravity: ToastGravity.BOTTOM,
-                      //   timeInSecForIosWeb: 1,
-                      //   backgroundColor: Colors.grey[500],
-                      // );
-
-                      viewModel.getPartnerList();
+                      Fluttertoast.showToast(
+                        msg: "준비중인 기능입니다.",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey[500],
+                      );
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.43,
@@ -270,9 +269,9 @@ class _MainPageState extends State<MainPage> {
                                       mainContext,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              DetailProjectPage(
+                                              DetailPartnerPage(
                                                 idx: viewModel
-                                                    .projectList[index].idx,
+                                                    .partnerList[index].idx,
                                               )));
                                 },
                               ),
@@ -342,9 +341,10 @@ class _MainPageState extends State<MainPage> {
                                       mainContext,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const DetailProjectPage(
-                                                idx: 4,
-                                              )));
+                                              DetailProjectPage(
+                                                  idx: viewModel
+                                                      .projectList[index]
+                                                      .idx)));
                                 },
                               ),
                             );

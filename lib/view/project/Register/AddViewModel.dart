@@ -219,7 +219,6 @@ class AddViewModel extends ChangeNotifier {
       "amount": amount,
       "imgPathList": imgPathList.isEmpty ? null : imgPathList,
     };
-
     try {
       final response = await apiService.postProject(body);
       print(response.statusCode);

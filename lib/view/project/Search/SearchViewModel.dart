@@ -37,6 +37,9 @@ class SearchViewModel with ChangeNotifier {
             String formattedDate =
                 "${date.year}.${date.month}.${date.day} ${date.hour}:${date.minute}";
             item['createdAt'] = formattedDate;
+            for (var img in item['PartnerImg']) {
+              img['imgPath'] = "http://13.125.70.49" + img['imgPath'];
+            }
             partnerList.add(PartnerListModel.fromJson(item));
           }
           _page++;
@@ -64,6 +67,9 @@ class SearchViewModel with ChangeNotifier {
             String formattedDate =
                 "${date.year}.${date.month}.${date.day} ${date.hour}:${date.minute}";
             item['createdAt'] = formattedDate;
+            for (var img in item['ProjectImg']) {
+              img['imgPath'] = "http://13.125.70.49" + img['imgPath'];
+            }
             projectList.add(ProjectListModel.fromJson(item));
           }
           _page++;

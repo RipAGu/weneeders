@@ -4,8 +4,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CustomDrawer extends StatelessWidget {
   final Function onLogout;
+  final Function registerProject;
+  final Function registerPartner;
   final storage = const FlutterSecureStorage();
-  const CustomDrawer({super.key, required this.onLogout});
+  const CustomDrawer(
+      {super.key,
+      required this.onLogout,
+      required this.registerProject,
+      required this.registerPartner});
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -54,7 +60,9 @@ class CustomDrawer extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 )),
-            onTap: () {},
+            onTap: () {
+              registerProject();
+            },
           ),
           ListTile(
             title: const Text('마이 파트너 등록',
@@ -63,7 +71,9 @@ class CustomDrawer extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 )),
-            onTap: () {},
+            onTap: () {
+              registerPartner();
+            },
           ),
           ListTile(
             title: const Text('로그아웃',
@@ -74,7 +84,6 @@ class CustomDrawer extends StatelessWidget {
                 )),
             onTap: () async {
               onLogout();
-              await storage.delete(key: "token");
             },
           ),
         ],

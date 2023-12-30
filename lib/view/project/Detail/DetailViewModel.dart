@@ -20,19 +20,6 @@ class DetailViewModel with ChangeNotifier {
   bool isRepleOn = false;
   int repleIndex = 0;
 
-  final List<CommentData> testCommentList = [
-    CommentData(name: "홍길동", date: "2일전", comment: "너무 멋있어요!"),
-    CommentData(name: "홍길동", date: "3일전", comment: "최고에요!"),
-  ];
-
-  final List<List<CommentData>> testRepleData = [
-    [],
-    [
-      CommentData(name: "홍길동", date: "2일전", comment: "너무 멋있어요!"),
-      CommentData(name: "홍길동", date: "3일전", comment: "최고에요!")
-    ],
-  ];
-
   final List<String> images = [
     "assets/images/img.png",
     "assets/images/img.png",
@@ -46,6 +33,7 @@ class DetailViewModel with ChangeNotifier {
     try {
       final response = await ApiService().getProjectDetail(idx);
       projectDetailData = ProjectDetailModel.fromJson(response.data);
+      print(projectDetailData.ProjectImg);
       //2023-12-31T15:00:00.000Z 형식을 2023-12-31 형식으로 바꿔줌
       projectDetailData.createdAt = projectDetailData.createdAt.split("T")[0];
       projectDetailData.startTime = projectDetailData.startTime.split("T")[0];
@@ -56,6 +44,13 @@ class DetailViewModel with ChangeNotifier {
           projectField += ", ";
         }
       }
+      print(projectDetailData.ProjectImg.length);
+      for (int i = 0; i < projectDetailData.ProjectImg.length; i++) {
+        projectDetailData.ProjectImg[i].imgPath =
+            "http://13.125.70.49${projectDetailData.ProjectImg[i].imgPath}";
+        print(projectDetailData.ProjectImg[i].imgPath);
+      }
+
       projectRegion +=
           "${projectDetailData.Depth2Region!.Depth1Region!.name} - ${projectDetailData.Depth2Region!.name}";
       notifyListeners();
@@ -205,23 +200,22 @@ class DetailViewModel with ChangeNotifier {
     }
   }
 
-  void clearData() {
-    projectRegion = "";
-    projectField = "";
-    projectDetailData = ProjectDetailModel(
-        idx: 0,
-        startTime: '',
-        endTime: '',
-        demandSkill: '',
-        method: '',
-        methodType: 0,
-        createdAt: '',
-        User: partner.UserModel(idx: 1, name: ""),
-        ProjectFieldMapping: [],
-        Depth2Region: partner.Depth2RegionModel(
-            name: '', Depth1Region: partner.Depth1RegionModel(name: '')),
-        ProjectImg: [],
-        loginUserProjectState: false);
+  Future<void> deletePartner(int idx) async {
+    try {
+      final response = await ApiService().deletePartner(idx);
+      print(response.data);
+    } on DioException catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> deleteProject(int idx) async {
+    try {
+      final response = await ApiService().deleteProject(idx);
+      print(response.data);
+    } on DioException catch (e) {
+      print(e);
+    }
   }
 
   void setRepleOn(int idx) {
@@ -234,18 +228,4 @@ class DetailViewModel with ChangeNotifier {
     print("off");
     isRepleOn = false;
   }
-}
-
-class CommentData {
-  final String? imageUrl;
-  final String name;
-  final String date;
-  final String comment;
-
-  CommentData({
-    this.imageUrl,
-    required this.name,
-    required this.date,
-    required this.comment,
-  });
 }

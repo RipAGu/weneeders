@@ -6,6 +6,7 @@ class FieldModel {
   FieldModel({
     required this.idx,
     required this.name,
+    this.isChecked = false,
   });
 
   factory FieldModel.fromJson(Map<String, dynamic> json) {

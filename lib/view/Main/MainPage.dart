@@ -62,6 +62,18 @@ class _MainPageState extends State<MainPage> {
                             (route) => false);
                       }));
             },
+            registerProject: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RegisterProjectPage()));
+            },
+            registerPartner: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RegisterPartnerPage()));
+            },
           ),
           backgroundColor: Colors.white,
           appBar: const MainAppBar(),
@@ -248,7 +260,15 @@ class _MainPageState extends State<MainPage> {
                               margin: const EdgeInsets.only(top: 10),
                               height: MediaQuery.of(context).size.height * 0.13,
                               child: ProjectCard(
-                                image: "assets/images/img.png",
+                                image: Provider.of<MainViewModel>(context)
+                                        .partnerList[index]
+                                        .PartnerImg
+                                        .isEmpty
+                                    ? null
+                                    : Provider.of<MainViewModel>(context)
+                                        .partnerList[index]
+                                        .PartnerImg[0]
+                                        .img,
                                 content: Provider.of<MainViewModel>(context)
                                     .partnerList[index]
                                     .method,
@@ -272,7 +292,11 @@ class _MainPageState extends State<MainPage> {
                                               DetailPartnerPage(
                                                 idx: viewModel
                                                     .partnerList[index].idx,
-                                              )));
+                                              ))).then((value) {
+                                    if (value == true) {
+                                      viewModel.getPartnerList();
+                                    }
+                                  });
                                 },
                               ),
                             );
@@ -320,7 +344,10 @@ class _MainPageState extends State<MainPage> {
                               margin: const EdgeInsets.only(top: 10),
                               height: MediaQuery.of(context).size.height * 0.13,
                               child: ProjectCard(
-                                image: "assets/images/img.png",
+                                image: Provider.of<MainViewModel>(context)
+                                    .projectList[index]
+                                    .ProjectImg[0]
+                                    .imgPath,
                                 content: Provider.of<MainViewModel>(context)
                                     .projectList[index]
                                     .method,
@@ -344,7 +371,11 @@ class _MainPageState extends State<MainPage> {
                                               DetailProjectPage(
                                                   idx: viewModel
                                                       .projectList[index]
-                                                      .idx)));
+                                                      .idx))).then((value) {
+                                    if (value == true) {
+                                      viewModel.getProjectList();
+                                    }
+                                  });
                                 },
                               ),
                             );

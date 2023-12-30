@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 
 import '../../widget/CommentBox.dart';
+import '../../widget/CustomDialogSelect.dart';
 import '../../widget/ImageBox.dart';
 import '../../widget/MainAppBar.dart';
 import 'DetailViewModel.dart';
@@ -33,11 +35,12 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
   void initState() {
     super.initState();
     idx = widget.idx;
+    Provider.of<DetailViewModel>(context, listen: false).setRepleOff();
   }
 
   @override
   void deactivate() {
-    Provider.of<DetailViewModel>(context, listen: false).clearData();
+    _commentFocusNode.unfocus();
     super.deactivate();
   }
 
@@ -45,6 +48,7 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final mainContext = context;
     return FutureBuilder(
       future: loadData(),
       builder: (context, snapshot) {
@@ -113,10 +117,10 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
                                       style: const TextStyle(
                                           color: Colors.black, fontSize: 12),
                                       children: <TextSpan>[
-                                    const TextSpan(text: "업무 방식: "),
+                                    const TextSpan(text: "경력: "),
                                     TextSpan(
                                         text:
-                                            viewModel.partnerDetailData.method,
+                                            viewModel.partnerDetailData.career,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12)),
@@ -159,7 +163,7 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
                               //피드 내용
                               margin: const EdgeInsets.only(top: 10),
                               child: Text(
-                                viewModel.projectDetailData.method,
+                                viewModel.partnerDetailData.method,
                                 style: const TextStyle(fontSize: 12),
                               ),
                             ),
@@ -321,7 +325,29 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
                               Column(
                                 children: [
                                   IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CustomDialogSelect(
+                                                  title: "삭제하시겠습니까?",
+                                                  content:
+                                                      "삭제된 프로젝트는 복구할 수 없습니다.",
+                                                  cancelText: "취소",
+                                                  confirmText: "확인",
+                                                  cancelPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  confirmPressed: () async {
+                                                    await viewModel
+                                                        .deletePartner(idx);
+                                                    if (!mounted) return;
+                                                    Navigator.pop(context);
+                                                    Navigator.pop(
+                                                        mainContext, true);
+                                                  });
+                                            });
+                                      },
                                       icon: SvgPicture.asset(
                                         "assets/icons/trash.svg",
                                         height: 50,
@@ -329,7 +355,23 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
                                 ],
                               ),
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                RegisterPartnerPage(
+                                                  partnerIdx: viewModel
+                                                      .partnerDetailData.idx,
+                                                  previousData: viewModel
+                                                      .partnerDetailData,
+                                                ))).then((value) {
+                                      if (value == true) {
+                                        viewModel.getPartnerDetail(idx);
+                                        print("true");
+                                      }
+                                    });
+                                  },
                                   icon: SvgPicture.asset(
                                     "assets/icons/edit.svg",
                                     height: 50,

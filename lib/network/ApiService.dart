@@ -293,4 +293,36 @@ class ApiService {
       rethrow;
     }
   }
+
+  Future<Response> editProject(int idx, Map<String, dynamic> body) {
+    try {
+      return dio.put('$baseUrl/project/$idx', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> editPartner(int idx, Map<String, dynamic> body) {
+    try {
+      return dio.put('$baseUrl/partner/$idx', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> deletePartner(int idx) {
+    try {
+      return dio.delete('$baseUrl/partner/$idx');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> deleteProject(int idx) {
+    try {
+      return dio.delete('$baseUrl/project/$idx');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
 }

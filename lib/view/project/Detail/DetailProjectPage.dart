@@ -4,7 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:winit/view/project/Detail/DetailViewModel.dart';
+import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/widget/CommentBox.dart';
+import 'package:winit/view/widget/CustomDialogSelect.dart';
 import 'package:winit/view/widget/ImageBox.dart';
 import 'package:winit/view/widget/MainAppBar.dart';
 
@@ -32,17 +34,18 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
   void initState() {
     super.initState();
     idx = widget.idx;
+    Provider.of<DetailViewModel>(context, listen: false).setRepleOff();
   }
 
   @override
   void deactivate() {
-    Provider.of<DetailViewModel>(context, listen: false).clearData();
     super.deactivate();
   }
 
   final controller = PageController(viewportFraction: 1.0, keepPage: true);
   @override
   Widget build(BuildContext context) {
+    final mainContext = context;
     return FutureBuilder(
       future: loadData(),
       builder: (context, snapshot) {
@@ -215,36 +218,51 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                                 style: const TextStyle(fontSize: 12),
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 10),
-                              height: 240,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: PageView.builder(
-                                  itemCount: viewModel.images.length,
-                                  itemBuilder: (_, index) {
-                                    return ImageBox(
-                                        image: viewModel.images[index]);
-                                  },
-                                  controller: controller,
+                            Visibility(
+                              visible: viewModel
+                                  .projectDetailData.ProjectImg.isNotEmpty,
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 10),
+                                height: 240,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: PageView.builder(
+                                    itemCount: viewModel
+                                        .projectDetailData.ProjectImg.length,
+                                    itemBuilder: (_, index) {
+                                      return Image.network(
+                                          viewModel.projectDetailData
+                                              .ProjectImg[index].imgPath,
+                                          fit: BoxFit.cover);
+                                    },
+                                    controller: controller,
+                                  ),
                                 ),
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 10),
-                              alignment: Alignment.center,
-                              child: SmoothPageIndicator(
-                                  controller: controller,
-                                  count: viewModel.images.length,
-                                  effect: const ScrollingDotsEffect(
-                                    activeDotColor: Color(0xff2D8DF4),
-                                    activeStrokeWidth: 10,
-                                    activeDotScale: 1.7,
-                                    maxVisibleDots: 5,
-                                    radius: 8,
-                                    dotHeight: 5,
-                                    dotWidth: 5,
-                                  )),
+                            Visibility(
+                              visible: viewModel
+                                  .projectDetailData.ProjectImg.isNotEmpty,
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 10),
+                                alignment: Alignment.center,
+                                child: SmoothPageIndicator(
+                                    controller: controller,
+                                    count: viewModel.projectDetailData
+                                            .ProjectImg.isEmpty
+                                        ? 1
+                                        : viewModel.projectDetailData.ProjectImg
+                                            .length,
+                                    effect: const ScrollingDotsEffect(
+                                      activeDotColor: Color(0xff2D8DF4),
+                                      activeStrokeWidth: 10,
+                                      activeDotScale: 1.7,
+                                      maxVisibleDots: 5,
+                                      radius: 8,
+                                      dotHeight: 5,
+                                      dotWidth: 5,
+                                    )),
+                              ),
                             ),
                             const Padding(padding: EdgeInsets.only(top: 10)),
                             ListView.builder(
@@ -373,7 +391,28 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                               Column(
                                 children: [
                                   IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CustomDialogSelect(
+                                                  title: "프로젝트 삭제",
+                                                  content: "프로젝트를 삭제하시겠습니까?",
+                                                  cancelText: "아니오",
+                                                  confirmText: "예",
+                                                  cancelPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  confirmPressed: () async {
+                                                    await viewModel
+                                                        .deleteProject(idx);
+                                                    if (!mounted) return;
+                                                    Navigator.pop(context);
+                                                    Navigator.pop(
+                                                        mainContext, true);
+                                                  });
+                                            });
+                                      },
                                       icon: SvgPicture.asset(
                                         "assets/icons/trash.svg",
                                         height: 50,
@@ -381,7 +420,22 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                                 ],
                               ),
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                RegisterProjectPage(
+                                                  projectIdx: viewModel
+                                                      .projectDetailData.idx,
+                                                  previousData: viewModel
+                                                      .projectDetailData,
+                                                ))).then((value) {
+                                      if (value == true) {
+                                        viewModel.getProjectDetail(idx);
+                                      }
+                                    });
+                                  },
                                   icon: SvgPicture.asset(
                                     "assets/icons/edit.svg",
                                     height: 50,

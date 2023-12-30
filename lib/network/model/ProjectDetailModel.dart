@@ -8,10 +8,11 @@ class ProjectDetailModel {
   String method;
   int methodType;
   String createdAt;
+  String amount;
   UserModel User;
   List<ProjectFieldModel> ProjectFieldMapping;
   Depth2RegionModel Depth2Region;
-  List<String> ProjectImg;
+  List<ProjectImgModel> ProjectImg;
   bool loginUserProjectState;
 
   ProjectDetailModel({
@@ -21,6 +22,7 @@ class ProjectDetailModel {
     required this.demandSkill,
     required this.method,
     required this.methodType,
+    required this.amount,
     required this.createdAt,
     required this.User,
     required this.ProjectFieldMapping,
@@ -38,13 +40,15 @@ class ProjectDetailModel {
       method: json['method'],
       methodType: json['methodType'],
       createdAt: json['createdAt'],
+      amount: json['amount'],
       User: UserModel.fromJson(json['User']),
       ProjectFieldMapping: (json['ProjectFieldMapping'] as List)
           .map((i) => ProjectFieldModel.fromJson(i))
           .toList(),
       Depth2Region: Depth2RegionModel.fromJson(json['Depth2Region']),
-      ProjectImg:
-          (json['ProjectImg'] as List).map((i) => i.toString()).toList(),
+      ProjectImg: (json['ProjectImg'] as List)
+          .map((i) => ProjectImgModel.fromJson(i))
+          .toList(),
       loginUserProjectState: json['loginUserProjectState'],
     );
   }
@@ -60,6 +64,20 @@ class ProjectFieldModel {
   factory ProjectFieldModel.fromJson(Map<String, dynamic> json) {
     return ProjectFieldModel(
       name: json['ProjectField']['name'],
+    );
+  }
+}
+
+class ProjectImgModel {
+  String imgPath;
+
+  ProjectImgModel({
+    required this.imgPath,
+  });
+
+  factory ProjectImgModel.fromJson(Map<String, dynamic> json) {
+    return ProjectImgModel(
+      imgPath: json['imgPath'],
     );
   }
 }

@@ -19,7 +19,7 @@ class ProjectData {
 }
 
 class ProjectCard extends StatelessWidget {
-  final String image;
+  final String? image;
   final String writer;
   final String date;
   final String location;
@@ -45,12 +45,16 @@ class ProjectCard extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.55,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image(
-                image: AssetImage(image),
-                fit: BoxFit.cover,
-              ),
-            ),
+                borderRadius: BorderRadius.circular(10),
+                child: image == null
+                    ? const Image(
+                        image: AssetImage('assets/images/img.png'),
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        image!,
+                        fit: BoxFit.cover,
+                      )),
           ),
           const Padding(padding: EdgeInsets.only(left: 11)),
           Expanded(

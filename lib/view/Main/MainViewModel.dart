@@ -29,12 +29,27 @@ class MainViewModel extends ChangeNotifier {
 
   Future<void> getProjectList() async {
     int count = 0;
+    projectList = [];
     try {
       final response = await apiService.getProjectList(1);
       print(response.data);
       for (var item in response.data) {
         if (count >= 3) break;
+        DateTime date = DateTime.parse(item['createdAt']);
+        //date에 +9시간 해줘야함
+        date = date.add(const Duration(hours: 9));
+        String formattedDate =
+            "${date.year}.${date.month}.${date.day} ${date.hour}:${date.minute}";
+        item['createdAt'] = formattedDate;
+        // 이미지경로에 https://13.125.70.49 붙여줘야함
+        // print(item['ProjectImg'][0]['imgPath']);
+        for (var img in item['ProjectImg']) {
+          img['imgPath'] = "http://13.125.70.49" + img['imgPath'];
+          print(img['imgPath']);
+        }
+
         projectList.add(ProjectListModel.fromJson(item));
+        count++;
       }
       notifyListeners();
     } on DioException catch (e) {
@@ -82,15 +97,24 @@ class MainViewModel extends ChangeNotifier {
   }
 
   Future<void> getPartnerList() async {
+    partnerList = [];
     int count = 0;
     try {
       final response = await apiService.getPartnerList(1);
       for (var item in response.data) {
         if (count >= 3) break;
         DateTime date = DateTime.parse(item['createdAt']);
+        //date에 +9시간 해줘야함
+        date = date.add(const Duration(hours: 9));
         String formattedDate =
             "${date.year}.${date.month}.${date.day} ${date.hour}:${date.minute}";
         item['createdAt'] = formattedDate;
+
+        for (var img in item['PartnerImg']) {
+          img['imgPath'] = "http://13.125.70.49" + img['imgPath'];
+          print(img['imgPath']);
+        }
+
         partnerList.add(PartnerListModel.fromJson(item));
         count++;
       }

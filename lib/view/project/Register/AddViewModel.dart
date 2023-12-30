@@ -4,6 +4,8 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:winit/network/ApiService.dart';
 import 'package:winit/network/model/AreaModel.dart';
+import 'package:winit/network/model/PartnerDetailModel.dart';
+import 'package:winit/network/model/ProjectDetailModel.dart';
 import '../../../network/model/FieldModel.dart';
 import '../../widget/CustomCheckboxTile.dart';
 
@@ -18,11 +20,20 @@ class AddViewModel extends ChangeNotifier {
   bool _isRegisterSuccess = false;
   bool get isRegisterSuccess => _isRegisterSuccess;
 
-  AddViewModel() {
-    getArea1();
-    getProjectField();
-    getPartnerField();
-    getPartnerSkill();
+  void initData() {
+    area1List = [];
+    area2List = [];
+    partnerFieldList = [];
+    projectFieldList = [];
+    partnerSkillList = [];
+    imgList = [null];
+    imgPathList = [];
+    _isRegisterSuccess = false;
+    methodList = [
+      FieldModel(idx: 1, name: '기간제', isChecked: false),
+      FieldModel(idx: 2, name: '도급제', isChecked: false),
+    ];
+    notifyListeners();
   }
 
   List<FieldModel> methodList = [
@@ -103,7 +114,6 @@ class AddViewModel extends ChangeNotifier {
     for (int i = 0; i < images.length; i++) {
       imgList.add(images[i].path);
     }
-
     for (var image in images) {
       var multipartFile = await MultipartFile.fromFile(image.path,
           contentType: MediaType('image', 'jpg'));
@@ -115,7 +125,21 @@ class AddViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> uploadImg(MultipartFile img) async {
+    try {
+      final response = await apiService.uploadImg(img);
+      imgPathList.add(response.data['path']);
+      print(imgPathList);
+    } on DioException catch (e) {
+      print(e.response!.statusCode);
+      print(e.response!.data);
+    }
+  }
+
   Future<void> getPartnerField() async {
+    imgList = [null];
+    imgPathList = [];
+    partnerFieldList = [];
     try {
       final response = await apiService.getPartnerField();
       partnerFieldList = (response.data as List)
@@ -129,6 +153,7 @@ class AddViewModel extends ChangeNotifier {
   }
 
   Future<void> getProjectField() async {
+    projectFieldList = [];
     try {
       final response = await apiService.getProjectField();
       projectFieldList = (response.data as List)
@@ -141,6 +166,7 @@ class AddViewModel extends ChangeNotifier {
   }
 
   Future<void> getPartnerSkill() async {
+    partnerSkillList = [];
     try {
       final response = await apiService.getPartnerSkill();
       partnerSkillList = (response.data as List)
@@ -155,6 +181,7 @@ class AddViewModel extends ChangeNotifier {
   }
 
   Future<void> getArea1() async {
+    area1List = [];
     try {
       final response = await apiService.getArea1();
       area1List = (response.data as List)
@@ -170,6 +197,7 @@ class AddViewModel extends ChangeNotifier {
   }
 
   Future<void> getArea2(int area1Idx) async {
+    area2List = [];
     try {
       final response = await apiService.getArea2(area1Idx);
       area2List = (response.data as List)
@@ -189,7 +217,7 @@ class AddViewModel extends ChangeNotifier {
       "method": method,
       "depth2Idx": getSelectedArea(),
       //imglist의 0번째 인덱스 제외하고 전송
-      "imgPathList": imgPathList,
+      "imgPathList": imgPathList.isEmpty ? null : imgPathList,
     };
     try {
       final response = await apiService.postPartner(body);
@@ -219,10 +247,65 @@ class AddViewModel extends ChangeNotifier {
       "amount": amount,
       "imgPathList": imgPathList.isEmpty ? null : imgPathList,
     };
+    print("바디 $body");
     try {
       final response = await apiService.postProject(body);
       print(response.statusCode);
       if (response.statusCode == 200) {
+        _isRegisterSuccess = true;
+        notifyListeners();
+      } else {
+        _isRegisterSuccess = false;
+        print(response.statusCode);
+        notifyListeners();
+      }
+    } on DioException catch (e) {
+      print(e.response!.data);
+    }
+  }
+
+  Future<void> editProject(int projectIdx, String startDate, String endDate,
+      String method, String demandSkill, String amount) async {
+    final Map<String, dynamic> body = {
+      "startDate": startDate,
+      "endDate": endDate,
+      "methodType": getSelectedMethod(),
+      "fieldIdxList": getSelectedProjectField(),
+      "depth2Idx": getSelectedArea(),
+      "method": method,
+      "demandSkill": demandSkill,
+      "amount": amount,
+      "imgPathList": imgPathList.isEmpty ? null : imgPathList,
+    };
+    try {
+      final response = await apiService.editProject(projectIdx, body);
+      if (response.statusCode == 201) {
+        print("success");
+        _isRegisterSuccess = true;
+        notifyListeners();
+      } else {
+        _isRegisterSuccess = false;
+        print(response.statusCode);
+        notifyListeners();
+      }
+    } on DioException catch (e) {
+      print(e.response!.data);
+    }
+  }
+
+  Future<void> editPartner(int partnerIdx, String career, String method) async {
+    final Map<String, dynamic> body = {
+      "career": career,
+      "fieldIdxList": getSelectedField(),
+      "skillIdxList": getSelectedSkill(),
+      "method": method,
+      "depth2Idx": getSelectedArea(),
+      //imglist의 0번째 인덱스 제외하고 전송
+      "imgPathList": imgPathList.isEmpty ? null : imgPathList,
+    };
+    try {
+      final response = await apiService.editPartner(partnerIdx, body);
+      if (response.statusCode == 201) {
         _isRegisterSuccess = true;
         notifyListeners();
       } else {
@@ -253,17 +336,6 @@ class AddViewModel extends ChangeNotifier {
       }
     }
     return selectedField;
-  }
-
-  Future<void> uploadImg(MultipartFile img) async {
-    try {
-      final response = await apiService.uploadImg(img);
-      imgPathList.add(response.data['path']);
-      print(imgPathList);
-    } on DioException catch (e) {
-      print(e.response!.statusCode);
-      print(e.response!.data);
-    }
   }
 
   List<int> getSelectedSkill() {
@@ -302,28 +374,38 @@ class AddViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearData() {
-    area1List.clear();
-    area2List.clear();
-    partnerFieldList.clear();
-    partnerSkillList.clear();
-    imgList.clear();
-    imgPathList.clear();
-    notifyListeners();
-  }
-
-  Future<void> getUserInfo() async {
-    try {
-      final response = await apiService.getUserInfo();
-      print(response.data);
-    } on DioException catch (e) {
-      print(e.response!.data);
+  void setPreviousProjectData(ProjectDetailModel previousData) {
+    if (previousData.methodType == 1) {
+      methodList[0].isChecked = true;
+    } else {
+      methodList[1].isChecked = true;
+    }
+    for (int i = 0; i < previousData.ProjectFieldMapping.length; i++) {
+      for (int j = 0; j < projectFieldList.length; j++) {
+        if (previousData.ProjectFieldMapping[i].name ==
+            projectFieldList[j].name) {
+          projectFieldList[j].isChecked = true;
+        }
+      }
     }
   }
-}
 
-class ImageData {
-  final String? image;
-
-  ImageData({required this.image});
+  void setPreviousPartnerData(PartnerDetailModel previousData) {
+    for (int i = 0; i < previousData.PartnerFieldMapping.length; i++) {
+      for (int j = 0; j < partnerFieldList.length; j++) {
+        if (previousData.PartnerFieldMapping[i].name ==
+            partnerFieldList[j].name) {
+          partnerFieldList[j].isChecked = true;
+        }
+      }
+    }
+    for (int i = 0; i < previousData.PartnerSkillMapping.length; i++) {
+      for (int j = 0; j < partnerSkillList.length; j++) {
+        if (previousData.PartnerSkillMapping[i].name ==
+            partnerSkillList[j].name) {
+          partnerSkillList[j].isChecked = true;
+        }
+      }
+    }
+  }
 }

@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/project/Detail/DetailProjectPage.dart';
+import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
 
 import '../../account/SignInPage.dart';
+import '../../widget/CustomDialogSelect.dart';
 import '../../widget/ProjectCard.dart';
 
 class SearchProjectPage extends StatefulWidget {
@@ -19,6 +22,7 @@ class SearchProjectPage extends StatefulWidget {
 
 class _SearchProjectPageState extends State<SearchProjectPage> {
   final ScrollController _scrollController = ScrollController();
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
   @override
   void initState() {
     super.initState();
@@ -55,8 +59,39 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
       home: Scaffold(
         endDrawer: CustomDrawer(
           onLogout: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const SignInPage()));
+            showDialog(
+                context: context,
+                builder: (context) => CustomDialogSelect(
+                    title: "로그아웃",
+                    content: "로그아웃 하시겠습니까?",
+                    cancelText: "취소",
+                    confirmText: "확인",
+                    cancelPressed: () {
+                      Navigator.pop(context);
+                    },
+                    confirmPressed: () async {
+                      print("로그아웃");
+                      await storage.delete(key: "token");
+                      if (!mounted) return;
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const SignInPage()),
+                          (route) => false);
+                    }));
+          },
+          registerProject: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const RegisterProjectPage()));
+          },
+          registerPartner: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const RegisterPartnerPage()));
           },
         ),
         backgroundColor: Colors.white,
@@ -68,12 +103,15 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
           highlightElevation: 0,
           onPressed: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const RegisterProjectPage()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterProjectPage()))
+                .then((value) {
+              if (value == true) {
+                Provider.of<SearchViewModel>(context, listen: false).init();
+              }
+            });
           },
-          // shape:
-          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
           backgroundColor: Colors.transparent,
           elevation: 0,
           child: Container(
@@ -106,7 +144,10 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
                         margin: const EdgeInsets.only(top: 10),
                         height: MediaQuery.of(context).size.height * 0.13,
                         child: ProjectCard(
-                          image: "assets/images/img.png",
+                          image: viewModel.projectList[index].ProjectImg.isEmpty
+                              ? null
+                              : viewModel
+                                  .projectList[index].ProjectImg[0].imgPath,
                           writer: viewModel.projectList[index].User.nickname,
                           date: viewModel.projectList[index].createdAt,
                           location: viewModel.projectList[index].Depth2Region
@@ -116,10 +157,13 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
                             Navigator.push(
                                 mainContext,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const DetailProjectPage(
-                                          idx: 4,
-                                        )));
+                                    builder: (context) => DetailProjectPage(
+                                          idx: viewModel.projectList[index].idx,
+                                        ))).then((value) {
+                              if (value == true) {
+                                viewModel.init();
+                              }
+                            });
                           },
                         ),
                       );

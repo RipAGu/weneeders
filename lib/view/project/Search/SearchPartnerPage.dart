@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/account/SignInPage.dart';
+import 'package:winit/view/project/Detail/DetailPartnerPage.dart';
 import 'package:winit/view/project/Detail/DetailProjectPage.dart';
 import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
 
+import '../../widget/CustomDialogSelect.dart';
 import '../../widget/ProjectCard.dart';
 
 class SearchPartnerPage extends StatefulWidget {
@@ -19,6 +22,7 @@ class SearchPartnerPage extends StatefulWidget {
 
 class _SearchPartnerPageState extends State<SearchPartnerPage> {
   final ScrollController _scrollController = ScrollController();
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
 
   @override
   void initState() {
@@ -56,8 +60,38 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
       home: Scaffold(
         endDrawer: CustomDrawer(
           onLogout: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const SignInPage()));
+            showDialog(
+                context: context,
+                builder: (context) => CustomDialogSelect(
+                    title: "로그아웃",
+                    content: "로그아웃 하시겠습니까?",
+                    cancelText: "취소",
+                    confirmText: "확인",
+                    cancelPressed: () {
+                      Navigator.pop(context);
+                    },
+                    confirmPressed: () async {
+                      await storage.delete(key: "token");
+                      if (!mounted) return;
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const SignInPage()),
+                          (route) => false);
+                    }));
+          },
+          registerProject: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const RegisterPartnerPage()));
+          },
+          registerPartner: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const RegisterPartnerPage()));
           },
         ),
         backgroundColor: Colors.white,
@@ -69,9 +103,14 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
           highlightElevation: 0,
           onPressed: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const RegisterPartnerPage()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterPartnerPage()))
+                .then((value) {
+              if (value == true) {
+                Provider.of<SearchViewModel>(context, listen: false).init();
+              }
+            });
           },
           // shape:
           //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
@@ -108,7 +147,9 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
                         margin: const EdgeInsets.only(top: 10),
                         height: MediaQuery.of(context).size.height * 0.13,
                         child: ProjectCard(
-                          image: "assets/images/img.png",
+                          image: viewModel.partnerList[index].PartnerImg.isEmpty
+                              ? null
+                              : viewModel.partnerList[index].PartnerImg[0].img,
                           writer: viewModel.partnerList[index].User.name,
                           date: viewModel.partnerList[index].createdAt,
                           location: viewModel.partnerList[index].Depth2Region
@@ -118,10 +159,14 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
                             Navigator.push(
                               mainContext,
                               MaterialPageRoute(
-                                  builder: (context) => const DetailProjectPage(
-                                        idx: 4,
-                                      )),
-                            );
+                                  builder: (context) => DetailPartnerPage(
+                                      idx: viewModel.partnerList[index].idx)),
+                            ).then((value) {
+                              if (value == true) {
+                                viewModel.init();
+                                viewModel.getPartnerList();
+                              }
+                            });
                           },
                         ),
                       );

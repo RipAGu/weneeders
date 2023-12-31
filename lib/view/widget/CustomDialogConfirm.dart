@@ -18,6 +18,7 @@ class CustomDialogConfirm extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
       title: Text(title),
       content: Text(content),
       actions: [

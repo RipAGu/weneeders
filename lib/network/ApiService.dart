@@ -325,4 +325,26 @@ class ApiService {
       rethrow;
     }
   }
+
+  Future<Response> findEmail(String phoneToken) {
+    final Map<String, dynamic> body = {"phoneToken": phoneToken};
+    try {
+      return dio.post('$baseUrl/user/email/find', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> changePassword(String email, String phoneToken, String pw) {
+    final Map<String, dynamic> body = {
+      "email": email,
+      "phoneToken": phoneToken,
+      "pw": pw
+    };
+    try {
+      return dio.post('$baseUrl/user/pw/find', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
 }

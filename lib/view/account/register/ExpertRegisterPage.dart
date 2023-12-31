@@ -275,10 +275,10 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                               onPressed: () {
                                                 if (viewModel.isSendPhone) {
                                                   return;
-                                                } else if (_verifyCode
+                                                } else if (_userPhone
                                                     .text.isEmpty) {
                                                   showSnackBar(
-                                                      context, "인증번호를 입력해주세요.");
+                                                      context, "전화번호를 입력해주세요.");
                                                 } else {
                                                   viewModel.phoneVerify(
                                                       _userPhone.text);
@@ -336,7 +336,6 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                                               _userPhone.text,
                                                               _verifyCode.text);
                                                   if (!mounted) return;
-                                                  print(viewModel.isPhoneCheck);
                                                   if (viewModel.isPhoneCheck) {
                                                     showSnackBar(
                                                         context, "인증되었습니다.");

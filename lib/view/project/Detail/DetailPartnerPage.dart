@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
+import 'package:winit/view/widget/CustomDrawer.dart';
 
+import '../../account/SignInPage.dart';
 import '../../widget/CommentBox.dart';
 import '../../widget/CustomDialogSelect.dart';
 import '../../widget/ImageBox.dart';
 import '../../widget/MainAppBar.dart';
+import '../Register/RegisterProjectPage.dart';
 import 'DetailViewModel.dart';
 
 class DetailPartnerPage extends StatefulWidget {
@@ -23,6 +27,7 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
   late int idx;
   final TextEditingController _commentController = TextEditingController();
   final FocusNode _commentFocusNode = FocusNode();
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
 
   Future<void> loadData() async {
     await Provider.of<DetailViewModel>(context, listen: false)
@@ -56,6 +61,42 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
           return Consumer<DetailViewModel>(
             builder: (context, viewModel, child) => MaterialApp(
               home: Scaffold(
+                endDrawer: CustomDrawer(
+                  onLogout: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => CustomDialogSelect(
+                            title: "로그아웃",
+                            content: "로그아웃 하시겠습니까?",
+                            cancelText: "취소",
+                            confirmText: "확인",
+                            cancelPressed: () {
+                              Navigator.pop(context);
+                            },
+                            confirmPressed: () async {
+                              await storage.delete(key: "token");
+                              if (!mounted) return;
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const SignInPage()),
+                                  (route) => false);
+                            }));
+                  },
+                  registerPartner: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RegisterPartnerPage()));
+                  },
+                  registerProject: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RegisterProjectPage()));
+                  },
+                ),
                 backgroundColor: Colors.white,
                 appBar: const MainAppBar(),
                 body: SafeArea(
@@ -167,36 +208,51 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
                                 style: const TextStyle(fontSize: 12),
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 10),
-                              height: 240,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: PageView.builder(
-                                  itemCount: viewModel.images.length,
-                                  itemBuilder: (_, index) {
-                                    return ImageBox(
-                                        image: viewModel.images[index]);
-                                  },
-                                  controller: controller,
+                            Visibility(
+                              visible: viewModel
+                                  .partnerDetailData.PartnerImg.isNotEmpty,
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 10),
+                                height: 240,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: PageView.builder(
+                                    itemCount: viewModel
+                                        .partnerDetailData.PartnerImg.length,
+                                    itemBuilder: (_, index) {
+                                      return Image.network(
+                                          viewModel.partnerDetailData
+                                              .PartnerImg[index].img,
+                                          fit: BoxFit.cover);
+                                    },
+                                    controller: controller,
+                                  ),
                                 ),
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 10),
-                              alignment: Alignment.center,
-                              child: SmoothPageIndicator(
-                                  controller: controller,
-                                  count: viewModel.images.length,
-                                  effect: const ScrollingDotsEffect(
-                                    activeDotColor: Color(0xff2D8DF4),
-                                    activeStrokeWidth: 10,
-                                    activeDotScale: 1.7,
-                                    maxVisibleDots: 5,
-                                    radius: 8,
-                                    dotHeight: 5,
-                                    dotWidth: 5,
-                                  )),
+                            Visibility(
+                              visible: viewModel
+                                  .partnerDetailData.PartnerImg.isNotEmpty,
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 10),
+                                alignment: Alignment.center,
+                                child: SmoothPageIndicator(
+                                    controller: controller,
+                                    count: viewModel.partnerDetailData
+                                            .PartnerImg.isEmpty
+                                        ? 1
+                                        : viewModel.partnerDetailData.PartnerImg
+                                            .length,
+                                    effect: const ScrollingDotsEffect(
+                                      activeDotColor: Color(0xff2D8DF4),
+                                      activeStrokeWidth: 10,
+                                      activeDotScale: 1.7,
+                                      maxVisibleDots: 5,
+                                      radius: 8,
+                                      dotHeight: 5,
+                                      dotWidth: 5,
+                                    )),
+                              ),
                             ),
                             const Padding(padding: EdgeInsets.only(top: 10)),
                             ListView.builder(

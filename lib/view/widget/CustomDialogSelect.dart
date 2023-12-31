@@ -21,23 +21,24 @@ class CustomDialogSelect extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(title),
-      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
+      backgroundColor: const Color(0xffffffff),
       content: Text(content),
       actions: [
         TextButton(
           onPressed: cancelPressed,
-          child: Text(cancelText, style: const TextStyle(color: Colors.black)),
           style: TextButton.styleFrom(
             foregroundColor: Colors.black,
           ),
+          child: Text(cancelText, style: const TextStyle(color: Colors.black)),
         ),
         TextButton(
             onPressed: confirmPressed,
-            child:
-                Text(confirmText, style: const TextStyle(color: Colors.black)),
             style: TextButton.styleFrom(
               foregroundColor: Colors.black,
-            )),
+            ),
+            child:
+                Text(confirmText, style: const TextStyle(color: Colors.black))),
       ],
     );
   }

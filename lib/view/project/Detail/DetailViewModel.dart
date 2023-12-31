@@ -63,6 +63,7 @@ class DetailViewModel with ChangeNotifier {
     projectCommentList = [];
     try {
       final response = await ApiService().getProjectComment(idx);
+      print(response.data);
       projectCommentList = (response.data as List)
           .map((i) => ProjectCommentModel.fromJson(i))
           .toList();
@@ -138,6 +139,11 @@ class DetailViewModel with ChangeNotifier {
       }
       partnerRegion +=
           "${partnerDetailData.Depth2Region!.Depth1Region!.name} - ${partnerDetailData.Depth2Region!.name}";
+
+      for (int i = 0; i < partnerDetailData.PartnerImg.length; i++) {
+        partnerDetailData.PartnerImg[i].img =
+            "http://13.125.70.49${partnerDetailData.PartnerImg[i].img}";
+      }
       notifyListeners();
     } on DioException catch (e) {
       print(e);
@@ -148,6 +154,7 @@ class DetailViewModel with ChangeNotifier {
     partnerCommentList = [];
     try {
       final response = await ApiService().getPartnerComment(idx);
+      print(response.data);
       partnerCommentList = (response.data as List)
           .map((i) => PartnerCommentModel.fromJson(i))
           .toList();

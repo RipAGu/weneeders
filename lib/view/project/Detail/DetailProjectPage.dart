@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -7,8 +8,11 @@ import 'package:winit/view/project/Detail/DetailViewModel.dart';
 import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/widget/CommentBox.dart';
 import 'package:winit/view/widget/CustomDialogSelect.dart';
-import 'package:winit/view/widget/ImageBox.dart';
 import 'package:winit/view/widget/MainAppBar.dart';
+
+import '../../account/SignInPage.dart';
+import '../../widget/CustomDrawer.dart';
+import '../Register/RegisterPartnerPage.dart';
 
 class DetailProjectPage extends StatefulWidget {
   final int idx;
@@ -22,6 +26,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
   late int idx;
   final TextEditingController _commentController = TextEditingController();
   final FocusNode _commentFocusNode = FocusNode();
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
 
   Future<void> loadData() async {
     await Provider.of<DetailViewModel>(context, listen: false)
@@ -53,6 +58,42 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
           return Consumer<DetailViewModel>(
             builder: (context, viewModel, child) => MaterialApp(
               home: Scaffold(
+                endDrawer: CustomDrawer(
+                  onLogout: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => CustomDialogSelect(
+                            title: "로그아웃",
+                            content: "로그아웃 하시겠습니까?",
+                            cancelText: "취소",
+                            confirmText: "확인",
+                            cancelPressed: () {
+                              Navigator.pop(context);
+                            },
+                            confirmPressed: () async {
+                              await storage.delete(key: "token");
+                              if (!mounted) return;
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const SignInPage()),
+                                  (route) => false);
+                            }));
+                  },
+                  registerPartner: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RegisterPartnerPage()));
+                  },
+                  registerProject: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RegisterProjectPage()));
+                  },
+                ),
                 backgroundColor: Colors.white,
                 appBar: const MainAppBar(),
                 body: SafeArea(

@@ -166,7 +166,7 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                                     MediaQuery.of(context).size.height * 0.05,
                                 child: CustomTextField(
                                     hintText: "이름",
-                                    obscureText: true,
+                                    obscureText: false,
                                     controller: _userName,
                                     keyboardType: TextInputType.visiblePassword,
                                     textFontSize: 12),

@@ -38,6 +38,7 @@ class RegisterAgreePageBody extends StatelessWidget {
       create: (context) => RegisterViewModel(),
       child: Consumer<RegisterViewModel>(
         builder: (context, viewModel, child) => Scaffold(
+          backgroundColor: Colors.white,
           body: SafeArea(
             child: SizedBox(
                 child: Padding(
@@ -146,6 +147,7 @@ class RegisterAgreePageBody extends StatelessWidget {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return Dialog(
+                                        surfaceTintColor: Colors.white,
                                         backgroundColor: Colors.white,
                                         shape: RoundedRectangleBorder(
                                             borderRadius:

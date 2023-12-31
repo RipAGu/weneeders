@@ -19,6 +19,8 @@ class AddViewModel extends ChangeNotifier {
   List<String> imgPathList = [];
   bool _isRegisterSuccess = false;
   bool get isRegisterSuccess => _isRegisterSuccess;
+  bool _isImageUploadSuccess = false;
+  bool get isImageUploadSuccess => _isImageUploadSuccess;
 
   void initData() {
     area1List = [];
@@ -102,22 +104,18 @@ class AddViewModel extends ChangeNotifier {
   }
 
   void addImg() {
-    _pickImg();
+    pickImg();
   }
 
-  Future<void> _pickImg() async {
+  Future<void> pickImg() async {
     //이미지 선택 함수
     _isLoading = true;
     notifyListeners();
     final pickedFile = ImagePicker();
     final List<XFile> images = await pickedFile.pickMultiImage();
-    for (int i = 0; i < images.length; i++) {
-      imgList.add(images[i].path);
-    }
+
     for (var image in images) {
-      var multipartFile = await MultipartFile.fromFile(image.path,
-          contentType: MediaType('image', 'jpg'));
-      await uploadImg(multipartFile);
+      await uploadImg(image);
     }
     notifyListeners();
     //1초 기다림
@@ -125,15 +123,22 @@ class AddViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> uploadImg(MultipartFile img) async {
+  Future<void> uploadImg(XFile image) async {
+    var multipartFile = await MultipartFile.fromFile(image.path,
+        contentType: MediaType('image', 'jpg'));
     try {
-      final response = await apiService.uploadImg(img);
+      final response = await apiService.uploadImg(multipartFile);
       imgPathList.add(response.data['path']);
-      print(imgPathList);
+      imgList.add(image.path);
     } on DioException catch (e) {
-      print(e.response!.statusCode);
       print(e.response!.data);
+      _isImageUploadSuccess = false;
     }
+  }
+
+  void setIsImageUploadSuccess(bool value) {
+    _isImageUploadSuccess = value;
+    notifyListeners();
   }
 
   Future<void> getPartnerField() async {

@@ -79,7 +79,7 @@ class _SignInPageState extends State<SignInPage> {
                                       const FindAccountPage()));
                         },
                         child: const Text(
-                          "아이디 찾기",
+                          "이메일 찾기",
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               color: Colors.black,

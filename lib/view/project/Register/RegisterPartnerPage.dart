@@ -307,9 +307,28 @@ class _RegisterPartnerPageState extends State<RegisterPartnerPage> {
                                               0.1,
                                       child: UploadImageBox(
                                         image: viewModel.imgList[index],
-                                        onTap: () {
+                                        onTap: () async {
                                           if (index == 0) {
-                                            viewModel.addImg();
+                                            await viewModel.pickImg();
+                                            if (!mounted) return;
+                                            if (!viewModel
+                                                .isImageUploadSuccess) {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      CustomDialogConfirm(
+                                                          title: "주의",
+                                                          content:
+                                                              "이미지 용량이 너무 큽니다.",
+                                                          confirmText: "확인",
+                                                          confirmPressed: () {
+                                                            viewModel
+                                                                .setIsImageUploadSuccess(
+                                                                    true);
+                                                            Navigator.pop(
+                                                                context);
+                                                          }));
+                                            }
                                           } else {
                                             viewModel.removeImg(index);
                                           }

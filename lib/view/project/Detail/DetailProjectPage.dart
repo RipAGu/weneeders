@@ -409,6 +409,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                 bottomNavigationBar: Visibility(
                   visible: viewModel.projectDetailData.loginUserProjectState,
                   child: BottomAppBar(
+                    height: 45,
                     //하단 바
                     padding: const EdgeInsets.all(0),
                     color: const Color(0x00000000),
@@ -420,69 +421,59 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                             color: Color(0xFFA8B0B8),
                             width: 0.5,
                           ))),
-                      margin: const EdgeInsets.all(0),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 80, vertical: 5),
-                      height: 60,
-                      child: Column(
+                          horizontal: 80, vertical: 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return CustomDialogSelect(
-                                                  title: "프로젝트 삭제",
-                                                  content: "프로젝트를 삭제하시겠습니까?",
-                                                  cancelText: "아니오",
-                                                  confirmText: "예",
-                                                  cancelPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  confirmPressed: () async {
-                                                    await viewModel
-                                                        .deleteProject(idx);
-                                                    if (!mounted) return;
-                                                    Navigator.pop(context);
-                                                    Navigator.pop(
-                                                        mainContext, true);
-                                                  });
-                                            });
-                                      },
-                                      icon: SvgPicture.asset(
-                                        "assets/icons/trash.svg",
-                                        height: 50,
-                                      )),
-                                ],
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                RegisterProjectPage(
-                                                  projectIdx: viewModel
-                                                      .projectDetailData.idx,
-                                                  previousData: viewModel
-                                                      .projectDetailData,
-                                                ))).then((value) {
-                                      if (value == true) {
-                                        viewModel.getProjectDetail(idx);
-                                      }
+                          IconButton(
+                              iconSize: 45,
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogSelect(
+                                          title: "프로젝트 삭제",
+                                          content: "삭제된 프로젝트는 복구할 수 없습니다.",
+                                          cancelText: "아니오",
+                                          confirmText: "예",
+                                          cancelPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          confirmPressed: () async {
+                                            await viewModel.deleteProject(idx);
+                                            if (!mounted) return;
+                                            Navigator.pop(context);
+                                            Navigator.pop(mainContext, true);
+                                          });
                                     });
-                                  },
-                                  icon: SvgPicture.asset(
-                                    "assets/icons/edit.svg",
-                                    height: 50,
-                                  )),
-                            ],
-                          ),
+                              },
+                              icon: SvgPicture.asset(
+                                "assets/icons/trash.svg",
+                                height: 45,
+                              )),
+                          IconButton(
+                              iconSize: 45,
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RegisterProjectPage(
+                                              projectIdx: viewModel
+                                                  .projectDetailData.idx,
+                                              previousData:
+                                                  viewModel.projectDetailData,
+                                            ))).then((value) {
+                                  if (value == true) {
+                                    viewModel.getProjectDetail(idx);
+                                  }
+                                });
+                              },
+                              icon: SvgPicture.asset(
+                                "assets/icons/edit.svg",
+                                height: 45,
+                              )),
                         ],
                       ),
                     ),

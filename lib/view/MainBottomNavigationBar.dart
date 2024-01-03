@@ -32,8 +32,6 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
     const MainPage(),
     const SearchProjectPage(),
     const SearchPartnerPage(),
-    const RegisterPartnerPage(),
-    const RegisterProjectPage(),
     const ChatListPage()
   ];
 
@@ -71,21 +69,9 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
               unselectedFontSize: 10,
               currentIndex: currentPageIndex,
               onTap: (int index) {
-                if (index == 3) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RegisterPartnerPage()));
-                } else if (index == 4) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RegisterProjectPage()));
-                } else {
-                  setState(() {
-                    currentPageIndex = index;
-                  });
-                }
+                setState(() {
+                  currentPageIndex = index;
+                });
               },
               items: [
                 BottomNavigationBarItem(
@@ -114,24 +100,6 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
                           : const ColorFilter.mode(
                               Color(0xff7D8791), BlendMode.srcIn)),
                   label: '파트너 검색',
-                ),
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset("assets/icons/partner_register.svg",
-                      colorFilter: currentPageIndex == 3
-                          ? const ColorFilter.mode(
-                              Color(0xff2D8DF4), BlendMode.srcIn)
-                          : const ColorFilter.mode(
-                              Color(0xff7D8791), BlendMode.srcIn)),
-                  label: '파트너등록',
-                ),
-                BottomNavigationBarItem(
-                  icon: SvgPicture.asset("assets/icons/project_register.svg",
-                      colorFilter: currentPageIndex == 4
-                          ? const ColorFilter.mode(
-                              Color(0xff2D8DF4), BlendMode.srcIn)
-                          : const ColorFilter.mode(
-                              Color(0xff7D8791), BlendMode.srcIn)),
-                  label: '프로젝트 등록',
                 ),
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset("assets/icons/chat.svg",

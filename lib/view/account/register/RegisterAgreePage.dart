@@ -167,7 +167,6 @@ class RegisterAgreePageBody extends StatelessWidget {
                                             )),
                                       );
                                     });
-                                viewModel.getTest();
                               },
                               child: SvgPicture.asset(
                                 'assets/icons/arrow_right.svg',

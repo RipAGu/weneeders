@@ -4,7 +4,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/account/SignInPage.dart';
 import 'package:winit/view/project/Detail/DetailPartnerPage.dart';
-import 'package:winit/view/project/Detail/DetailProjectPage.dart';
 import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
@@ -98,36 +97,41 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
         appBar: const SearchAppBar(
           title: "파트너 검색",
         ),
-        floatingActionButton: FloatingActionButton(
-          splashColor: Colors.transparent,
-          highlightElevation: 0,
-          onPressed: () {
-            Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const RegisterPartnerPage()))
-                .then((value) {
-              if (value == true) {
-                Provider.of<SearchViewModel>(context, listen: false).init();
-              }
-            });
-          },
-          // shape:
-          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          child: Container(
-            width: 60,
-            height: 60,
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                    begin: Alignment(-0.59, 0.81),
-                    end: Alignment(0.59, -0.81),
-                    colors: [Color(0xFF3F9AFE), Color(0xFF52C0FF)])),
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
+        floatingActionButton: Visibility(
+          visible: Provider.of<SearchViewModel>(context).userType == 2
+              ? true
+              : false,
+          child: FloatingActionButton(
+            splashColor: Colors.transparent,
+            highlightElevation: 0,
+            onPressed: () {
+              Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RegisterPartnerPage()))
+                  .then((value) {
+                if (value == true) {
+                  Provider.of<SearchViewModel>(context, listen: false).init();
+                }
+              });
+            },
+            // shape:
+            //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                      begin: Alignment(-0.59, 0.81),
+                      end: Alignment(0.59, -0.81),
+                      colors: [Color(0xFF3F9AFE), Color(0xFF52C0FF)])),
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

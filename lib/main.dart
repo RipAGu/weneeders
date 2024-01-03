@@ -7,6 +7,7 @@ import 'package:winit/view/Main/MainViewModel.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
 import 'package:winit/view/account/SignInPage.dart';
 import 'package:winit/view/chat/ChatViewModel.dart';
+import 'package:winit/view/chat/ChattingPage.dart';
 import 'package:winit/view/project/Detail/DetailViewModel.dart';
 import 'package:winit/view/project/Register/AddViewModel.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';

@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:winit/network/model/TestModel.dart';
 
 class ApiService {
   Dio dio = Dio(BaseOptions(
@@ -30,17 +29,6 @@ class ApiService {
         },
       ),
     );
-  }
-  Future<List<TestModel>> getTest() async {
-    try {
-      Response response = await dio.get('$baseUrl/tos/all');
-      List<TestModel> testModels =
-          (response.data as List).map((i) => TestModel.fromJson(i)).toList();
-      return testModels;
-    } catch (e) {
-      print(e);
-      throw e;
-    }
   }
 
   Future<Response> emailDuplicateCheck(String email) async {

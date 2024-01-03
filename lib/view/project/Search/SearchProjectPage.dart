@@ -98,34 +98,37 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
         appBar: const SearchAppBar(
           title: "프로젝트 검색",
         ),
-        floatingActionButton: FloatingActionButton(
-          splashColor: Colors.transparent,
-          highlightElevation: 0,
-          onPressed: () {
-            Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const RegisterProjectPage()))
-                .then((value) {
-              if (value == true) {
-                Provider.of<SearchViewModel>(context, listen: false).init();
-              }
-            });
-          },
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          child: Container(
-            width: 60,
-            height: 60,
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                    begin: Alignment(-0.59, 0.81),
-                    end: Alignment(0.59, -0.81),
-                    colors: [Color(0xFF3F9AFE), Color(0xFF52C0FF)])),
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
+        floatingActionButton: Visibility(
+          visible: Provider.of<SearchViewModel>(context).userType == 1,
+          child: FloatingActionButton(
+            splashColor: Colors.transparent,
+            highlightElevation: 0,
+            onPressed: () {
+              Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RegisterProjectPage()))
+                  .then((value) {
+                if (value == true) {
+                  Provider.of<SearchViewModel>(context, listen: false).init();
+                }
+              });
+            },
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                      begin: Alignment(-0.59, 0.81),
+                      end: Alignment(0.59, -0.81),
+                      colors: [Color(0xFF3F9AFE), Color(0xFF52C0FF)])),
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

@@ -358,6 +358,7 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
                 bottomNavigationBar: Visibility(
                   visible: viewModel.partnerDetailData.loginUserPartnerState,
                   child: BottomAppBar(
+                    height: 45,
                     //하단 바
                     padding: const EdgeInsets.all(0),
                     color: const Color(0x00000000),
@@ -372,68 +373,57 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
                       margin: const EdgeInsets.all(0),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 80, vertical: 5),
-                      height: 60,
-                      child: Column(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return CustomDialogSelect(
-                                                  title: "삭제하시겠습니까?",
-                                                  content:
-                                                      "삭제된 프로젝트는 복구할 수 없습니다.",
-                                                  cancelText: "취소",
-                                                  confirmText: "확인",
-                                                  cancelPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  confirmPressed: () async {
-                                                    await viewModel
-                                                        .deletePartner(idx);
-                                                    if (!mounted) return;
-                                                    Navigator.pop(context);
-                                                    Navigator.pop(
-                                                        mainContext, true);
-                                                  });
-                                            });
-                                      },
-                                      icon: SvgPicture.asset(
-                                        "assets/icons/trash.svg",
-                                        height: 50,
-                                      )),
-                                ],
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                RegisterPartnerPage(
-                                                  partnerIdx: viewModel
-                                                      .partnerDetailData.idx,
-                                                  previousData: viewModel
-                                                      .partnerDetailData,
-                                                ))).then((value) {
-                                      if (value == true) {
-                                        viewModel.getPartnerDetail(idx);
-                                        print("true");
-                                      }
+                          IconButton(
+                              iconSize: 55,
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomDialogSelect(
+                                          title: "삭제하시겠습니까?",
+                                          content: "삭제된 프로젝트는 복구할 수 없습니다.",
+                                          cancelText: "취소",
+                                          confirmText: "확인",
+                                          cancelPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          confirmPressed: () async {
+                                            await viewModel.deletePartner(idx);
+                                            if (!mounted) return;
+                                            Navigator.pop(context);
+                                            Navigator.pop(mainContext, true);
+                                          });
                                     });
-                                  },
-                                  icon: SvgPicture.asset(
-                                    "assets/icons/edit.svg",
-                                    height: 50,
-                                  )),
-                            ],
-                          ),
+                              },
+                              icon: SvgPicture.asset(
+                                "assets/icons/trash.svg",
+                                height: 55,
+                              )),
+                          IconButton(
+                              iconSize: 45,
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RegisterPartnerPage(
+                                              partnerIdx: viewModel
+                                                  .partnerDetailData.idx,
+                                              previousData:
+                                                  viewModel.partnerDetailData,
+                                            ))).then((value) {
+                                  if (value == true) {
+                                    viewModel.getPartnerDetail(idx);
+                                  }
+                                });
+                              },
+                              icon: SvgPicture.asset(
+                                "assets/icons/edit.svg",
+                                height: 45,
+                              )),
                         ],
                       ),
                     ),

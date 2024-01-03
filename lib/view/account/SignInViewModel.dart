@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -19,7 +22,7 @@ class SignInViewModel extends ChangeNotifier {
       token = response.data['token'];
       await storage.write(key: "token", value: token);
       notifyListeners();
-    } catch (e) {
+    } on DioException catch (e) {
       _isLoginSuccess = false;
       notifyListeners();
     }

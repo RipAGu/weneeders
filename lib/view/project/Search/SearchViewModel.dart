@@ -11,6 +11,7 @@ class SearchViewModel with ChangeNotifier {
   bool _isLoadEnd = false;
   bool get isLoadEnd => _isLoadEnd;
   int _page = 1;
+  late int userType; // 1: 업체, 2: 파트너, 3: 관리자
 
   void init() {
     _page = 1;
@@ -19,6 +20,17 @@ class SearchViewModel with ChangeNotifier {
     _isLoadEnd = false;
     getPartnerList();
     getProjectList();
+    getUserInfo();
+  }
+
+  Future<void> getUserInfo() async {
+    try {
+      final response = await apiService.getUserInfo();
+      userType = response.data['type'];
+      print("userType : $userType");
+    } on DioException catch (e) {
+      print(e.response!.data);
+    }
   }
 
   Future<void> getPartnerList() async {
@@ -31,7 +43,6 @@ class SearchViewModel with ChangeNotifier {
           _isLoadEnd = true;
         } else {
           print('데이터 있음');
-          print(response.data as List);
           for (var item in response.data) {
             DateTime date = DateTime.parse(item['createdAt']);
             String formattedDate =
@@ -61,7 +72,6 @@ class SearchViewModel with ChangeNotifier {
           _isLoadEnd = true;
         } else {
           print('데이터 있음');
-          print(response.data as List);
           for (var item in response.data) {
             DateTime date = DateTime.parse(item['createdAt']);
             String formattedDate =

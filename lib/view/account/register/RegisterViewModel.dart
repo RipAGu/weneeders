@@ -80,16 +80,6 @@ class RegisterViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getTest() async {
-    try {
-      _testModel = await apiService.getTest();
-      print(_testModel);
-    } catch (e) {
-      print(e);
-      throw e;
-    }
-  }
-
   Future<void> emailDupleCheck(String email) async {
     try {
       final response = await apiService.emailDuplicateCheck(email);

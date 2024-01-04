@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:winit/view/Main/MainPage.dart';
 import 'package:winit/view/chat/ChatListPage.dart';
-import 'package:winit/view/project/Detail/DetailProjectPage.dart';
-import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
-import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/project/Search/SearchPartnerPage.dart';
 import 'package:winit/view/project/Search/SearchProjectPage.dart';
 
@@ -103,7 +100,7 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
                 ),
                 BottomNavigationBarItem(
                   icon: SvgPicture.asset("assets/icons/chat.svg",
-                      colorFilter: currentPageIndex == 5
+                      colorFilter: currentPageIndex == 3
                           ? const ColorFilter.mode(
                               Color(0xff2D8DF4), BlendMode.srcIn)
                           : const ColorFilter.mode(

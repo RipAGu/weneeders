@@ -26,10 +26,13 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<SearchViewModel>(context, listen: false).init();
     _scrollController.addListener(() {
       _onScroll();
     });
+  }
+
+  Future<void> loadData() async {
+    await Provider.of<SearchViewModel>(context, listen: false).init();
   }
 
   void _onScroll() {
@@ -55,127 +58,150 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
   Widget build(BuildContext context) {
     final mainContext = context;
     // final viewModel = Provider.of<SearchProjectViewModel>(context);
-    return MaterialApp(
-      home: Scaffold(
-        endDrawer: CustomDrawer(
-          onLogout: () {
-            showDialog(
-                context: context,
-                builder: (context) => CustomDialogSelect(
-                    title: "로그아웃",
-                    content: "로그아웃 하시겠습니까?",
-                    cancelText: "취소",
-                    confirmText: "확인",
-                    cancelPressed: () {
-                      Navigator.pop(context);
+    return FutureBuilder(
+        future: loadData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Consumer<SearchViewModel>(
+              builder: (context, viewModel, child) => MaterialApp(
+                home: Scaffold(
+                  endDrawer: CustomDrawer(
+                    onLogout: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => CustomDialogSelect(
+                              title: "로그아웃",
+                              content: "로그아웃 하시겠습니까?",
+                              cancelText: "취소",
+                              confirmText: "확인",
+                              cancelPressed: () {
+                                Navigator.pop(context);
+                              },
+                              confirmPressed: () async {
+                                print("로그아웃");
+                                await storage.delete(key: "token");
+                                if (!mounted) return;
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const SignInPage()),
+                                    (route) => false);
+                              }));
                     },
-                    confirmPressed: () async {
-                      print("로그아웃");
-                      await storage.delete(key: "token");
-                      if (!mounted) return;
-                      Navigator.pushAndRemoveUntil(
+                    registerProject: () {
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const SignInPage()),
-                          (route) => false);
-                    }));
-          },
-          registerProject: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const RegisterProjectPage()));
-          },
-          registerPartner: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const RegisterPartnerPage()));
-          },
-        ),
-        backgroundColor: Colors.white,
-        appBar: const SearchAppBar(
-          title: "프로젝트 검색",
-        ),
-        floatingActionButton: Visibility(
-          visible: Provider.of<SearchViewModel>(context).userType == 1,
-          child: FloatingActionButton(
-            splashColor: Colors.transparent,
-            highlightElevation: 0,
-            onPressed: () {
-              Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RegisterProjectPage()))
-                  .then((value) {
-                if (value == true) {
-                  Provider.of<SearchViewModel>(context, listen: false).init();
-                }
-              });
-            },
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            child: Container(
-              width: 60,
-              height: 60,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                      begin: Alignment(-0.59, 0.81),
-                      end: Alignment(0.59, -0.81),
-                      colors: [Color(0xFF3F9AFE), Color(0xFF52C0FF)])),
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-        body: SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: SafeArea(
-              child: Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            child: Consumer<SearchViewModel>(
-              builder: (context, viewModel, child) {
-                return ListView.builder(
-                    itemCount: viewModel.projectList.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.only(top: 10),
-                        height: MediaQuery.of(context).size.height * 0.13,
-                        child: ProjectCard(
-                          image: viewModel.projectList[index].ProjectImg.isEmpty
-                              ? null
-                              : viewModel
-                                  .projectList[index].ProjectImg[0].imgPath,
-                          writer: viewModel.projectList[index].User.nickname,
-                          date: viewModel.projectList[index].createdAt,
-                          location: viewModel.projectList[index].Depth2Region
-                              .Depth1Region.name,
-                          content: viewModel.projectList[index].method,
-                          onPressed: () {
-                            Navigator.push(
-                                mainContext,
-                                MaterialPageRoute(
-                                    builder: (context) => DetailProjectPage(
-                                          idx: viewModel.projectList[index].idx,
-                                        ))).then((value) {
-                              if (value == true) {
-                                viewModel.init();
-                              }
-                            });
-                          },
+                              builder: (context) =>
+                                  const RegisterProjectPage()));
+                    },
+                    registerPartner: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const RegisterPartnerPage()));
+                    },
+                  ),
+                  backgroundColor: Colors.white,
+                  appBar: const SearchAppBar(
+                    title: "프로젝트 검색",
+                  ),
+                  floatingActionButton: Visibility(
+                    visible: viewModel.userType == 1,
+                    child: FloatingActionButton(
+                      splashColor: Colors.transparent,
+                      highlightElevation: 0,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const RegisterProjectPage())).then((value) {
+                          if (value == true) {
+                            Provider.of<SearchViewModel>(context, listen: false)
+                                .init();
+                          }
+                        });
+                      },
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                                begin: Alignment(-0.59, 0.81),
+                                end: Alignment(0.59, -0.81),
+                                colors: [
+                                  Color(0xFF3F9AFE),
+                                  Color(0xFF52C0FF)
+                                ])),
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
                         ),
-                      );
-                    });
-              },
-            ),
-          )),
-        ),
-      ),
-    );
+                      ),
+                    ),
+                  ),
+                  body: SizedBox(
+                    child: SafeArea(
+                        child: Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16),
+                      child: Consumer<SearchViewModel>(
+                        builder: (context, viewModel, child) {
+                          return ListView.builder(
+                              itemCount: viewModel.projectList.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: const EdgeInsets.only(top: 10),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.13,
+                                  child: ProjectCard(
+                                    image: viewModel.projectList[index]
+                                            .ProjectImg.isEmpty
+                                        ? null
+                                        : viewModel.projectList[index]
+                                            .ProjectImg[0].imgPath,
+                                    writer: viewModel
+                                        .projectList[index].User.nickname,
+                                    date:
+                                        viewModel.projectList[index].createdAt,
+                                    location: viewModel.projectList[index]
+                                        .Depth2Region.Depth1Region.name,
+                                    content:
+                                        viewModel.projectList[index].method,
+                                    onPressed: () {
+                                      Navigator.push(
+                                          mainContext,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailProjectPage(
+                                                    idx: viewModel
+                                                        .projectList[index].idx,
+                                                  ))).then((value) {
+                                        if (value == true) {
+                                          viewModel.init();
+                                        }
+                                      });
+                                    },
+                                  ),
+                                );
+                              });
+                        },
+                      ),
+                    )),
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 }

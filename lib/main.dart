@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ChatViewModel()),
         ChangeNotifierProvider(create: (context) => MainViewModel()),
         ChangeNotifierProvider(create: (context) => DetailViewModel()),
-        ChangeNotifierProvider(create: (context) => AddViewModel())
+        ChangeNotifierProvider(create: (context) => AddViewModel()),
+        ChangeNotifierProvider(create: (context) => ChatViewModel()),
       ],
       child: MaterialApp(
         localizationsDelegates: const [

@@ -28,6 +28,7 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
   final TextEditingController _commentController = TextEditingController();
   final FocusNode _commentFocusNode = FocusNode();
   final FlutterSecureStorage storage = const FlutterSecureStorage();
+  late Future<void> _loadDataFuture;
 
   Future<void> loadData() async {
     await Provider.of<DetailViewModel>(context, listen: false)
@@ -41,6 +42,7 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
     super.initState();
     idx = widget.idx;
     Provider.of<DetailViewModel>(context, listen: false).setRepleOff();
+    _loadDataFuture = loadData();
   }
 
   @override
@@ -55,7 +57,7 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
   Widget build(BuildContext context) {
     final mainContext = context;
     return FutureBuilder(
-      future: loadData(),
+      future: _loadDataFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Consumer<DetailViewModel>(

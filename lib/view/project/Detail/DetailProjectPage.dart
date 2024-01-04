@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:winit/view/chat/ChattingPage.dart';
 import 'package:winit/view/project/Detail/DetailViewModel.dart';
 import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/widget/CommentBox.dart';
@@ -27,6 +28,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
   final TextEditingController _commentController = TextEditingController();
   final FocusNode _commentFocusNode = FocusNode();
   final FlutterSecureStorage storage = const FlutterSecureStorage();
+  late Future<void> _loadDataFuture;
 
   Future<void> loadData() async {
     await Provider.of<DetailViewModel>(context, listen: false)
@@ -40,6 +42,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
     super.initState();
     idx = widget.idx;
     Provider.of<DetailViewModel>(context, listen: false).setRepleOff();
+    _loadDataFuture = loadData();
   }
 
   @override
@@ -52,7 +55,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
   Widget build(BuildContext context) {
     final mainContext = context;
     return FutureBuilder(
-      future: loadData(),
+      future: _loadDataFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Consumer<DetailViewModel>(
@@ -303,6 +306,35 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                                       dotHeight: 5,
                                       dotWidth: 5,
                                     )),
+                              ),
+                            ),
+                            GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ChattingPage()));
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/icons/chat.svg",
+                                    height: 20,
+                                    color: const Color(0xFF000000),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 5),
+                                    padding: const EdgeInsets.only(bottom: 2),
+                                    child: const Text("채팅하기",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFF000000))),
+                                  ),
+                                ],
                               ),
                             ),
                             const Padding(padding: EdgeInsets.only(top: 10)),

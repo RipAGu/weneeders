@@ -335,4 +335,24 @@ class ApiService {
       rethrow;
     }
   }
+
+  Future<Response> postChatMessage(int toUserIdx, String message) {
+    final Map<String, dynamic> body = {
+      "toUserIdx": toUserIdx,
+      "message": message
+    };
+    try {
+      return dio.post('$baseUrl/chatting', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getChatMessage(int roomIdx) {
+    try {
+      return dio.get('$baseUrl/chatting/room/$roomIdx/all');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
 }

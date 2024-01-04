@@ -13,14 +13,14 @@ class SearchViewModel with ChangeNotifier {
   int _page = 1;
   late int userType; // 1: 업체, 2: 파트너, 3: 관리자
 
-  void init() {
+  Future<void> init() async {
     _page = 1;
     partnerList = [];
     projectList = [];
     _isLoadEnd = false;
     getPartnerList();
     getProjectList();
-    getUserInfo();
+    await getUserInfo();
   }
 
   Future<void> getUserInfo() async {

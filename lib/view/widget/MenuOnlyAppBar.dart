@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const SearchAppBar({Key? key, required this.title}) : super(key: key);
+class MenuOnlyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const MenuOnlyAppBar({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -22,7 +22,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       elevation: 0,
       surfaceTintColor: Colors.transparent,
-      leadingWidth: 100,
+      leadingWidth: 65,
       leading:
           Padding(padding: const EdgeInsets.only(left: 10), child: Container()),
       title: Center(
@@ -33,11 +33,6 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
                 fontWeight: FontWeight.w700,
               ))),
       actions: [
-        Padding(
-            padding: const EdgeInsets.only(right: 0),
-            child: IconButton(
-                onPressed: () {},
-                icon: SvgPicture.asset("assets/icons/filter.svg"))),
         Padding(
             padding: const EdgeInsets.only(right: 16),
             child: IconButton(

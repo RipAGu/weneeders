@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/chat/ChatViewModel.dart';
 import 'package:winit/view/widget/ChatCard.dart';
+import 'package:winit/view/widget/MenuOnlyAppBar.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
 
 class ChatListPage extends StatefulWidget {
@@ -21,7 +22,7 @@ class _ChatListPageState extends State<ChatListPage> {
         child: MaterialApp(
           home: Scaffold(
             backgroundColor: Colors.white,
-            appBar: const SearchAppBar(title: "채팅"),
+            appBar: const MenuOnlyAppBar(title: "채팅"),
             body: SizedBox(
               width: double.infinity,
               child: SafeArea(

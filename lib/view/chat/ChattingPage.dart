@@ -7,9 +7,11 @@ import 'package:winit/view/widget/ChatBubbleDate.dart';
 import 'package:winit/view/widget/ChatBubbleRecieve.dart';
 import 'package:winit/view/widget/ChatBubbleSend.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
+import 'package:winit/view/widget/TitleOnlyAppBar.dart';
 
 class ChattingPage extends StatefulWidget {
-  const ChattingPage({Key? key}) : super(key: key);
+  final int? roomIdx;
+  const ChattingPage({Key? key, this.roomIdx}) : super(key: key);
   @override
   State<ChattingPage> createState() => _ChattingPageState();
 }
@@ -23,7 +25,7 @@ class _ChattingPageState extends State<ChattingPage> {
           builder: (context, viewModel, child) => SafeArea(
                   child: Scaffold(
                 backgroundColor: Colors.white,
-                appBar: SearchAppBar(title: "채팅"),
+                appBar: const TitleOnlyAppBar(title: "채팅"),
                 body: Stack(
                   children: [
                     SingleChildScrollView(
@@ -44,7 +46,6 @@ class _ChattingPageState extends State<ChattingPage> {
                             ),
                           ),
                         ),
-                        width: double.infinity,
                         height: 50,
                         child: Row(
                           children: [

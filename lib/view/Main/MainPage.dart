@@ -9,6 +9,7 @@ import 'package:winit/view/project/Detail/DetailProjectPage.dart';
 import 'package:winit/view/project/Detail/DetailViewModel.dart';
 import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 import 'package:winit/view/project/Register/RegisterProjectPage.dart';
+import 'package:winit/view/skillData/SkillDataListPage.dart';
 import 'package:winit/view/widget/BigGrayBtn.dart';
 import 'package:winit/view/widget/CustomDialogSelect.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
@@ -39,42 +40,6 @@ class _MainPageState extends State<MainPage> {
       create: (context) => MainViewModel(),
       child: Consumer<MainViewModel>(
         builder: (context, viewModel, child) => Scaffold(
-          endDrawer: CustomDrawer(
-            onLogout: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => CustomDialogSelect(
-                      title: "로그아웃",
-                      content: "로그아웃 하시겠습니까?",
-                      cancelText: "취소",
-                      confirmText: "확인",
-                      cancelPressed: () {
-                        Navigator.pop(context);
-                      },
-                      confirmPressed: () async {
-                        await storage.delete(key: "token");
-                        if (!mounted) return;
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const SignInPage()),
-                            (route) => false);
-                      }));
-            },
-            registerProject: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const RegisterProjectPage()));
-            },
-            registerPartner: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const RegisterPartnerPage()));
-            },
-          ),
           backgroundColor: Colors.white,
           appBar: const MainAppBar(),
           body: Padding(
@@ -167,7 +132,7 @@ class _MainPageState extends State<MainPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const RegisterProjectPage()));
+                                      const SkillDataListPage()));
                         },
                         textColor: Colors.black,
                         fontSize: 12,

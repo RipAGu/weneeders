@@ -35,6 +35,7 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
         .getProjectDetail(idx);
     await Provider.of<DetailViewModel>(context, listen: false)
         .getProjectComment(idx);
+    await Provider.of<DetailViewModel>(context, listen: false).getUserInfo();
   }
 
   @override
@@ -43,11 +44,6 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
     idx = widget.idx;
     Provider.of<DetailViewModel>(context, listen: false).setRepleOff();
     _loadDataFuture = loadData();
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
   }
 
   final controller = PageController(viewportFraction: 1.0, keepPage: true);
@@ -308,33 +304,38 @@ class _DetailProjectPageState extends State<DetailProjectPage> {
                                     )),
                               ),
                             ),
-                            GestureDetector(
-                              behavior: HitTestBehavior.translucent,
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ChattingPage()));
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/icons/chat.svg",
-                                    height: 20,
-                                    color: const Color(0xFF000000),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 5),
-                                    padding: const EdgeInsets.only(bottom: 2),
-                                    child: const Text("채팅하기",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF000000))),
-                                  ),
-                                ],
+                            Visibility(
+                              visible: viewModel.userType != 1,
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ChattingPage(
+                                                userIdx: viewModel
+                                                    .projectDetailData.User.idx,
+                                              )));
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/icons/chat.svg",
+                                      height: 20,
+                                      color: const Color(0xFF000000),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 5),
+                                      padding: const EdgeInsets.only(bottom: 2),
+                                      child: const Text("채팅하기",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFF000000))),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             const Padding(padding: EdgeInsets.only(top: 10)),

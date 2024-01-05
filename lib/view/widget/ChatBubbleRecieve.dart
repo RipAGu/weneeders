@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:winit/network/model/ChatMessageModel.dart';
 
 class ChatBubbleReceive extends StatelessWidget {
-  const ChatBubbleReceive({Key? key}) : super(key: key);
+  final ChatMessageModel message;
+  const ChatBubbleReceive({Key? key, required this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,8 @@ class ChatBubbleReceive extends StatelessWidget {
                   bottomRight: Radius.circular(10),
                   bottomLeft: Radius.circular(10)),
             ),
-            child: const Text(
-              "안녕하세요. 상담원하시는 시간 말씀해주시면 상담일정 변경하겠습니다.",
+            child: Text(
+              message.message,
               style: TextStyle(
                 fontSize: 12,
                 color: Color(0xff333333),
@@ -32,7 +34,7 @@ class ChatBubbleReceive extends StatelessWidget {
           ),
           const Padding(padding: EdgeInsets.only(left: 10)),
           Text(
-            "오후 4:16",
+            message.createdAt,
             style: const TextStyle(fontSize: 10, color: Color(0xff7D8791)),
           ),
         ],

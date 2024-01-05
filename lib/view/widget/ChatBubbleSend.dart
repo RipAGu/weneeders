@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:winit/network/model/ChatMessageModel.dart';
 
 class ChatBubbleSend extends StatelessWidget {
-  const ChatBubbleSend({Key? key}) : super(key: key);
+  final ChatMessageModel message;
+  const ChatBubbleSend({Key? key, required this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class ChatBubbleSend extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            "오후 4:16",
+            message.createdAt,
             style: const TextStyle(fontSize: 10),
           ),
           Container(
@@ -26,8 +28,8 @@ class ChatBubbleSend extends StatelessWidget {
                   bottomRight: Radius.circular(10),
                   bottomLeft: Radius.circular(10)),
             ),
-            child: const Text(
-              "testsdfsdf",
+            child: Text(
+              message.message,
               style: TextStyle(
                 fontSize: 12,
                 color: Color(0xff333333),

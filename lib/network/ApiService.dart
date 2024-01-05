@@ -118,7 +118,6 @@ class ApiService {
   }
 
   Future<Response> getArea2(int idx) {
-    print(idx);
     try {
       return dio.get('$baseUrl/area/depth-1/$idx/depth-2/all');
     } on DioException catch (e) {
@@ -348,9 +347,34 @@ class ApiService {
     }
   }
 
-  Future<Response> getChatMessage(int roomIdx) {
+  Future<Response> getChatMessage(int roomIdx, int lastChattingIdx) {
     try {
-      return dio.get('$baseUrl/chatting/room/$roomIdx/all');
+      return dio.get('$baseUrl/chatting/room/$roomIdx/all',
+          queryParameters: {"last-chatting-idx": lastChattingIdx});
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getChattingRoomList() {
+    try {
+      return dio.get('$baseUrl/chatting/room/all');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getSkillDataList(int page) {
+    try {
+      return dio.get('$baseUrl/techpost/all', queryParameters: {"page": page});
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getSkillDataDetail(int idx) {
+    try {
+      return dio.get('$baseUrl/techpost/$idx');
     } on DioException catch (e) {
       rethrow;
     }

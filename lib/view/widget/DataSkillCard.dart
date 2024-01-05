@@ -1,19 +1,17 @@
 import 'package:flutter/cupertino.dart';
 
-class ProjectCard extends StatelessWidget {
+class DataSkillCard extends StatelessWidget {
   final String? image;
   final String writer;
   final String date;
-  final String location;
   final String content;
   final VoidCallback? onPressed;
 
-  const ProjectCard({
+  const DataSkillCard({
     Key? key,
     required this.image,
     required this.writer,
     required this.date,
-    required this.location,
     required this.content,
     required this.onPressed,
   }) : super(key: key);
@@ -57,18 +55,6 @@ class ProjectCard extends StatelessWidget {
                             color: Color(0xff000000),
                             fontSize: 10,
                             fontWeight: FontWeight.w700)),
-                    const TextSpan(
-                        text: "지역: ",
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Color(0xff000000),
-                        )),
-                    TextSpan(
-                        text: location,
-                        style: const TextStyle(
-                            color: Color(0xff000000),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700))
                   ]),
                   overflow: TextOverflow.ellipsis,
                 ),

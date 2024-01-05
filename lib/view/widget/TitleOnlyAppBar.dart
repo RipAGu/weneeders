@@ -21,6 +21,10 @@ class TitleOnlyAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       elevation: 0,
+      leading: const Padding(
+        padding: EdgeInsets.only(left: 0),
+      ),
+      leadingWidth: 0,
       surfaceTintColor: Colors.transparent,
       title: Center(
           child: Text(title,

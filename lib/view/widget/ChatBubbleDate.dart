@@ -9,6 +9,7 @@ class ChatBubbleDate extends StatelessWidget {
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
+        margin: const EdgeInsets.only(top: 10),
         padding: const EdgeInsets.only(top: 7, bottom: 7, left: 15, right: 15),
         decoration: const BoxDecoration(
           color: Color(0xffA9B0B8),

@@ -18,6 +18,7 @@ class SearchViewModel with ChangeNotifier {
     partnerList = [];
     projectList = [];
     _isLoadEnd = false;
+    userType = 0;
     getPartnerList();
     getProjectList();
     await getUserInfo();

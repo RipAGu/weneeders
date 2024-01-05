@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/Main/MainViewModel.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
+import 'package:winit/view/SkillData/SkillDataViewModel.dart';
 import 'package:winit/view/account/SignInPage.dart';
 import 'package:winit/view/chat/ChatViewModel.dart';
 import 'package:winit/view/chat/ChattingPage.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => DetailViewModel()),
         ChangeNotifierProvider(create: (context) => AddViewModel()),
         ChangeNotifierProvider(create: (context) => ChatViewModel()),
+        ChangeNotifierProvider(create: (context) => SkillDataViewModel()),
       ],
       child: MaterialApp(
         localizationsDelegates: const [

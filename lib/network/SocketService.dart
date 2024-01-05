@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -22,8 +20,13 @@ class SocketService {
           idx: data["chattingRoomIdx"],
           message: data["message"],
           createdAt: data["createdAt"],
-          myMessageState: false));
+          myMessageState: false,
+          type: "receive"));
     });
+
+    socket.onConnect(
+      (data) => {print("connect")},
+    );
 
     socket.onDisconnect((_) => print('disconnect'));
   }

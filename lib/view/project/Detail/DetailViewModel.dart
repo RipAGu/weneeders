@@ -19,6 +19,7 @@ class DetailViewModel with ChangeNotifier {
   String partnerRegion = "";
   bool isRepleOn = false;
   int repleIndex = 0;
+  late int userType; // 1: 업체, 2: 파트너, 3: 관리자
 
   final List<String> images = [
     "assets/images/img.png",
@@ -26,6 +27,15 @@ class DetailViewModel with ChangeNotifier {
     "assets/images/img.png",
     "assets/images/img.png",
   ];
+
+  Future<void> getUserInfo() async {
+    try {
+      final response = await apiService.getUserInfo();
+      userType = response.data['type'];
+    } on DioException catch (e) {
+      print(e.response!.data);
+    }
+  }
 
   Future<void> getProjectDetail(int idx) async {
     projectRegion = "";

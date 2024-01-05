@@ -3,18 +3,19 @@ class ChatMessageModel {
   String message;
   bool myMessageState;
   String createdAt;
-  String type = "receive"; //1. receive 2. send 3. date
+  String? type; //1. receive 2. send 3. date
 
-  ChatMessageModel({
-    required this.idx,
-    required this.message,
-    required this.myMessageState,
-    required this.createdAt,
-  });
+  ChatMessageModel(
+      {required this.idx,
+      required this.message,
+      required this.myMessageState,
+      required this.createdAt,
+      this.type});
 
   ChatMessageModel.fromJson(Map<String, dynamic> json)
       : idx = json['idx'],
         message = json['message'],
         myMessageState = json['myMessageState'],
-        createdAt = json['createdAt'];
+        createdAt = json['createdAt'],
+        type = json['type'];
 }

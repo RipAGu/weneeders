@@ -19,7 +19,7 @@ class AddViewModel extends ChangeNotifier {
   List<String> imgPathList = [];
   bool _isRegisterSuccess = false;
   bool get isRegisterSuccess => _isRegisterSuccess;
-  bool _isImageUploadSuccess = false;
+  bool _isImageUploadSuccess = true;
   bool get isImageUploadSuccess => _isImageUploadSuccess;
 
   void initData() {
@@ -30,7 +30,7 @@ class AddViewModel extends ChangeNotifier {
     partnerSkillList = [];
     imgList = [null];
     imgPathList = [];
-    _isRegisterSuccess = false;
+    _isRegisterSuccess = true;
     methodList = [
       FieldModel(idx: 1, name: '기간제', isChecked: false),
       FieldModel(idx: 2, name: '도급제', isChecked: false),

@@ -8,6 +8,7 @@ import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
 
 import '../../account/SignInPage.dart';
+import '../../chat/ChattingPage.dart';
 import '../../widget/CommentBox.dart';
 import '../../widget/CustomDialogSelect.dart';
 import '../../widget/ImageBox.dart';
@@ -35,6 +36,7 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
         .getPartnerDetail(idx);
     await Provider.of<DetailViewModel>(context, listen: false)
         .getPartnerComment(idx);
+    await Provider.of<DetailViewModel>(context, listen: false).getUserInfo();
   }
 
   @override
@@ -254,6 +256,40 @@ class _DetailPartnerPageState extends State<DetailPartnerPage> {
                                       dotHeight: 5,
                                       dotWidth: 5,
                                     )),
+                              ),
+                            ),
+                            Visibility(
+                              visible: viewModel.userType != 2,
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ChattingPage(
+                                                userIdx: viewModel
+                                                    .partnerDetailData.User.idx,
+                                              )));
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/icons/chat.svg",
+                                      height: 20,
+                                      color: const Color(0xFF000000),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 5),
+                                      padding: const EdgeInsets.only(bottom: 2),
+                                      child: const Text("채팅하기",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFF000000))),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             const Padding(padding: EdgeInsets.only(top: 10)),

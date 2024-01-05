@@ -1,12 +1,20 @@
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:winit/network/model/ChatMessageModel.dart';
 
 class ChatBubbleSend extends StatelessWidget {
   final ChatMessageModel message;
   const ChatBubbleSend({Key? key, required this.message}) : super(key: key);
 
+  //2024.1.5 15:10 형식을 15:10 형식으로 바꿔주는 함수
+
   @override
   Widget build(BuildContext context) {
+    String createdAt = message.createdAt;
+    DateTime parsedDate;
+    parsedDate = DateFormat('yyyy.M.d H:mm').parse(createdAt);
+    String formattedDate = DateFormat('HH:mm').format(parsedDate);
+
     return Container(
       margin: const EdgeInsets.only(top: 10, right: 16),
       child: Row(
@@ -14,7 +22,7 @@ class ChatBubbleSend extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            message.createdAt,
+            formattedDate,
             style: const TextStyle(fontSize: 10),
           ),
           Container(

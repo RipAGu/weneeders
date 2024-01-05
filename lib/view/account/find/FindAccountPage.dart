@@ -81,6 +81,8 @@ class _FindAccountPageState extends State<FindAccountPage> {
                                 SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * 0.63,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.05,
                                   child: CustomTextField(
                                       hintText: "연락처",
                                       obscureText: false,
@@ -132,6 +134,8 @@ class _FindAccountPageState extends State<FindAccountPage> {
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width *
                                         0.63,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
                                     child: CustomTextField(
                                       hintText: "인증번호",
                                       obscureText: false,

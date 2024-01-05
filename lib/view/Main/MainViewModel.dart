@@ -100,7 +100,7 @@ class MainViewModel extends ChangeNotifier {
     partnerList = [];
     int count = 0;
     try {
-      final response = await apiService.getPartnerList(1);
+      final response = await apiService.getPartnerList(1, null, null);
       for (var item in response.data) {
         if (count >= 3) break;
         DateTime date = DateTime.parse(item['createdAt']);

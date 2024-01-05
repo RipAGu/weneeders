@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const SearchAppBar({Key? key, required this.title}) : super(key: key);
+  SearchAppBar({Key? key, required this.title, required this.onFilterTap})
+      : super(key: key);
   final String title;
+  Function onFilterTap;
 
   @override
   Size get preferredSize => const Size.fromHeight(50);
@@ -36,7 +38,9 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
             padding: const EdgeInsets.only(right: 0),
             child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  onFilterTap();
+                },
                 icon: SvgPicture.asset("assets/icons/filter.svg"))),
         Padding(
             padding: const EdgeInsets.only(right: 16),

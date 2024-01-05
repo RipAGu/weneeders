@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:winit/network/model/ChatMessageModel.dart';
 
 class ChatBubbleReceive extends StatelessWidget {
@@ -7,6 +8,30 @@ class ChatBubbleReceive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String createdAt = message.createdAt;
+    DateTime parsedDate;
+
+// ISO 8601 형식 확인 (예: 2024-01-05T17:11:52.931Z)
+    bool isISO8601 = createdAt.contains('T') && createdAt.contains('Z');
+    if (isISO8601) {
+      // ISO 8601 형식의 날짜 처리
+      parsedDate = DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ')
+          .parse(createdAt, true)
+          .toLocal();
+    } else {
+      // 사용자 정의 형식 (예: 2024.1.5 17:11)의 날짜 처리
+      try {
+        parsedDate = DateFormat('yyyy.M.d H:mm').parse(createdAt);
+      } catch (e) {
+        print('날짜 파싱 오류: $e');
+        // 오류 발생시 현재 날짜로 대체
+        parsedDate = DateTime.now();
+      }
+    }
+
+// 원하는 형식으로 날짜 포맷팅
+    String formattedDate = DateFormat('HH:mm').format(parsedDate);
+
     return Container(
       margin: const EdgeInsets.only(top: 10, left: 16),
       child: Row(
@@ -26,7 +51,7 @@ class ChatBubbleReceive extends StatelessWidget {
             ),
             child: Text(
               message.message,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
                 color: Color(0xff333333),
               ),
@@ -34,7 +59,7 @@ class ChatBubbleReceive extends StatelessWidget {
           ),
           const Padding(padding: EdgeInsets.only(left: 10)),
           Text(
-            message.createdAt,
+            formattedDate,
             style: const TextStyle(fontSize: 10, color: Color(0xff7D8791)),
           ),
         ],

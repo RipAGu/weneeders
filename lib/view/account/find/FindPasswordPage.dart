@@ -81,6 +81,7 @@ class _FindPasswordPageState extends State<FindPasswordPage> {
                             height: MediaQuery.of(context).size.height * 0.05,
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width * 0.9,
+                              height: MediaQuery.of(context).size.height * 0.05,
                               child: CustomTextField(
                                   hintText: "이메일",
                                   obscureText: false,
@@ -104,6 +105,8 @@ class _FindPasswordPageState extends State<FindPasswordPage> {
                                 SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * 0.63,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.05,
                                   child: CustomTextField(
                                       hintText: "연락처",
                                       obscureText: false,

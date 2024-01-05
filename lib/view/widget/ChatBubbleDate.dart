@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChatBubbleDate extends StatelessWidget {
-  const ChatBubbleDate({Key? key}) : super(key: key);
+  final String date;
+  const ChatBubbleDate({Key? key, required this.date}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class ChatBubbleDate extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(999)),
         ),
         child: Text(
-          "2021년 10월 10일 금요일",
+          date,
           style: const TextStyle(fontSize: 10, color: Colors.white),
           textAlign: TextAlign.center,
         ),

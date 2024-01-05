@@ -251,6 +251,10 @@ class _ExpertRegisterPageState extends State<ExpertRegisterPage> {
                                                   .size
                                                   .width *
                                               0.63,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.05,
                                           child: CustomTextField(
                                               hintText: "연락처",
                                               obscureText: false,

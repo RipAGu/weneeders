@@ -18,4 +18,9 @@ class ChatMessageModel {
         myMessageState = json['myMessageState'],
         createdAt = json['createdAt'],
         type = json['type'];
+
+  @override
+  String toString() {
+    return 'ChatMessageModel{idx: $idx, message: $message, myMessageState: $myMessageState, createdAt: $createdAt, type: $type}';
+  }
 }

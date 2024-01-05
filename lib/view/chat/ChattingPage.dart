@@ -20,16 +20,43 @@ class ChattingPage extends StatefulWidget {
 }
 
 class _ChattingPageState extends State<ChattingPage> {
+  late SocketService socketService;
   late int? roomIdx;
   late int? userIdx;
   late Future<void> _loadDataFuture;
   final TextEditingController _chatController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
+    socketService = SocketService();
+    socketService.init(Provider.of<ChatViewModel>(context, listen: false));
+    socketService.createSocketConnection(context);
     roomIdx = widget.roomIdx;
     userIdx = widget.userIdx;
     _loadDataFuture = loadData();
+    _scrollController.addListener(_scrollListener);
+    Provider.of<ChatViewModel>(context, listen: false).onMessageAdded =
+        _scrollToBottom;
+  }
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    }
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.atEdge) {
+      print(Provider.of<ChatViewModel>(context, listen: false).isLastMessage);
+      if (_scrollController.position.pixels == 0 &&
+          roomIdx != null &&
+          !Provider.of<ChatViewModel>(context, listen: false).isLastMessage) {
+        Provider.of<ChatViewModel>(context, listen: false)
+            .getChatMessage(roomIdx!);
+        print("top");
+      }
+    }
   }
 
   Future<void> loadData() async {
@@ -40,16 +67,25 @@ class _ChattingPageState extends State<ChattingPage> {
     }
     await Provider.of<ChatViewModel>(context, listen: false)
         .setUserIdx(userIdx!);
+    _scrollToBottom();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    socketService.closeSocketConnection();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final socketService = SocketService();
-    socketService.createSocketConnection(context);
     return FutureBuilder(
       future: _loadDataFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollToBottom();
+          });
           return Consumer<ChatViewModel>(
               builder: (context, viewModel, child) => Scaffold(
                     backgroundColor: Colors.white,
@@ -57,15 +93,19 @@ class _ChattingPageState extends State<ChattingPage> {
                     body: SafeArea(
                       child: Stack(
                         children: [
-                          SingleChildScrollView(
+                          Container(
+                            padding: const EdgeInsets.only(bottom: 60),
                             child: ListView.builder(
+                                controller: _scrollController,
                                 shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount: viewModel.chatMessageList.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   if (viewModel.chatMessageList[index].type ==
                                       "date") {
-                                    return ChatBubbleDate();
+                                    return ChatBubbleDate(
+                                      date: viewModel
+                                          .chatMessageList[index].message,
+                                    );
                                   } else if (viewModel
                                           .chatMessageList[index].type ==
                                       "send") {

@@ -105,8 +105,9 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
                     },
                   ),
                   backgroundColor: Colors.white,
-                  appBar: const SearchAppBar(
+                  appBar: SearchAppBar(
                     title: "프로젝트 검색",
+                    onFilterTap: () {},
                   ),
                   floatingActionButton: Visibility(
                     visible: viewModel.userType == 1,

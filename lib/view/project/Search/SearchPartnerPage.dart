@@ -9,6 +9,7 @@ import 'package:winit/view/project/Search/SearchViewModel.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
 
+import '../../widget/CustomDialogPartnerFilter.dart';
 import '../../widget/CustomDialogSelect.dart';
 import '../../widget/ProjectCard.dart';
 
@@ -102,9 +103,26 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
                   },
                 ),
                 backgroundColor: Colors.white,
-                appBar: const SearchAppBar(
-                  title: "파트너 검색",
-                ),
+                appBar: SearchAppBar(
+                    title: "파트너 검색",
+                    onFilterTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              surfaceTintColor: Colors.white,
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.4,
+                                  child: CustomDialogPartnerFilter()),
+                            );
+                          });
+                    }),
                 floatingActionButton: Visibility(
                   visible: Provider.of<SearchViewModel>(context).userType == 2
                       ? true

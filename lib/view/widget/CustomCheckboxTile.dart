@@ -22,11 +22,14 @@ class CustomCheckboxTile extends StatelessWidget {
                   : 'assets/icons/unchecked_gray.svg',
             ),
             const Padding(padding: EdgeInsets.only(left: 5)),
-            Text(
-              item.name,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
+            Expanded(
+              child: Text(
+                item.name,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

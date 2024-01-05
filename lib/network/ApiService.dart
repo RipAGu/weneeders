@@ -183,10 +183,18 @@ class ApiService {
     }
   }
 
-  Future<Response> getPartnerList(int page) {
+  Future<Response> getPartnerList(int page, int? filter, String? filterby) {
     //query에 페이지 전달
     try {
-      return dio.get('$baseUrl/partner/all', queryParameters: {"page": page});
+      if (filter != null) {
+        return dio.get('$baseUrl/partner/all', queryParameters: {
+          "page": page,
+          "filter": filter,
+          "filterby": filterby
+        });
+      } else {
+        return dio.get('$baseUrl/partner/all', queryParameters: {"page": page});
+      }
     } on DioException catch (e) {
       rethrow;
     }

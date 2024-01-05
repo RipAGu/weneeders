@@ -95,6 +95,9 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.63,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
                                         child: CustomTextField(
                                             isEditable: !viewModel.isEmailCheck,
                                             hintText: "이메일",
@@ -183,6 +186,9 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.63,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
                                         child: CustomTextField(
                                             hintText: "닉네임 최대12글자",
                                             obscureText: false,
@@ -245,6 +251,9 @@ class _CustomerRegisterPageState extends State<CustomerRegisterPage> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.63,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
                                         child: CustomTextField(
                                             hintText: "연락처",
                                             isEditable: !viewModel.isSendPhone,

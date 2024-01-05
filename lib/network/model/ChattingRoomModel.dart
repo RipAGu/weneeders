@@ -21,6 +21,11 @@ class ChattingRoomModel {
       messageCount: json['messageCount'],
     );
   }
+
+  @override
+  String toString() {
+    return 'ChattingRoomModel{idx: $idx, user: $user, curMessage: $curMessage, curMessageTime: $curMessageTime, messageCount: $messageCount}';
+  }
 }
 
 class UserModel {

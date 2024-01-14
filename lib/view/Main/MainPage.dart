@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
+import 'package:winit/view/feed/FeedListPage.dart';
 import 'package:winit/view/project/Detail/DetailPartnerPage.dart';
 import 'package:winit/view/project/Detail/DetailProjectPage.dart';
 import 'package:winit/view/project/Detail/DetailViewModel.dart';
@@ -147,16 +148,13 @@ class _MainPageState extends State<MainPage> {
                         fontSize: 12,
                       ),
                       BigGrayBtn(
-                        text: '일상 공유',
+                        text: '기술 공유',
                         image: "assets/icons/share.svg",
                         onPressed: () {
-                          Fluttertoast.showToast(
-                            msg: "준비중인 기능입니다.",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.grey[500],
-                          );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const FeedListPage()));
                         },
                         textColor: Colors.black,
                         fontSize: 12,

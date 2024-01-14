@@ -6,6 +6,7 @@ import 'package:winit/view/project/Detail/DetailProjectPage.dart';
 import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 import 'package:winit/view/project/Register/RegisterProjectPage.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
+import 'package:winit/view/widget/CustomDialogProjectFilter.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
 
@@ -107,7 +108,24 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
                   backgroundColor: Colors.white,
                   appBar: SearchAppBar(
                     title: "프로젝트 검색",
-                    onFilterTap: () {},
+                    onFilterTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              surfaceTintColor: Colors.white,
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.4,
+                                  child: const CustomDialogProjectFilter()),
+                            );
+                          });
+                    },
                   ),
                   floatingActionButton: Visibility(
                     visible: viewModel.userType == 1,
@@ -154,6 +172,7 @@ class _SearchProjectPageState extends State<SearchProjectPage> {
                       child: Consumer<SearchViewModel>(
                         builder: (context, viewModel, child) {
                           return ListView.builder(
+                              controller: _scrollController,
                               itemCount: viewModel.projectList.length,
                               itemBuilder: (context, index) {
                                 return Container(

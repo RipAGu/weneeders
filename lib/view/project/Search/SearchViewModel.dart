@@ -11,7 +11,10 @@ class SearchViewModel with ChangeNotifier {
   List<PartnerListModel> partnerList = [];
   List<ProjectListModel> projectList = [];
   List<FieldModel> projectFieldList = [];
-
+  List<FieldModel> methodList = [
+    FieldModel(idx: 1, name: "기간제", isChecked: false),
+    FieldModel(idx: 2, name: "도급제", isChecked: false),
+  ];
   List<FieldModel> partnerFieldList = [];
   List<FieldModel> partnerSkillList = [];
   List<AreaModel> area1List = [];
@@ -28,6 +31,7 @@ class SearchViewModel with ChangeNotifier {
     page = 1;
     partnerList = [];
     projectList = [];
+    area2List = [];
     filterIdx = null;
     filterName = null;
     _isLoadEnd = false;
@@ -38,6 +42,7 @@ class SearchViewModel with ChangeNotifier {
     await getPartnerField();
     await getPartnerSkill();
     await getArea1();
+    await getProjectField();
   }
 
   Future<void> getUserInfo() async {
@@ -59,6 +64,7 @@ class SearchViewModel with ChangeNotifier {
         if ((response.data as List).isEmpty) {
           print('데이터 없음');
           _isLoadEnd = true;
+          notifyListeners();
         } else {
           print('데이터 있음');
           for (var item in response.data) {
@@ -83,11 +89,13 @@ class SearchViewModel with ChangeNotifier {
 
   Future<void> getProjectList() async {
     try {
-      final response = await apiService.getProjectList(page);
+      final response =
+          await apiService.getProjectList(page, filterIdx, filterName);
       if (response.statusCode == 200) {
         if ((response.data as List).isEmpty) {
           print('데이터 없음');
           _isLoadEnd = true;
+          notifyListeners();
         } else {
           print('데이터 있음');
           for (var item in response.data) {
@@ -233,6 +241,81 @@ class SearchViewModel with ChangeNotifier {
     }
     if (currentCategory != 'skill') {
       for (var skill in partnerSkillList) {
+        skill.isChecked = false;
+      }
+    }
+    if (currentCategory != 'area') {
+      for (var area in area2List) {
+        area.isChecked = false;
+      }
+    }
+  }
+
+  Future<void> getProjectField() async {
+    projectFieldList = [];
+    try {
+      final response = await apiService.getProjectField();
+      projectFieldList = (response.data as List)
+          .map((item) => FieldModel.fromJson(item))
+          .toList();
+      notifyListeners();
+    } on DioException catch (e) {
+      print(e.response!.data);
+    }
+  }
+
+  void toggleProjectFilterCheckBox(int idx, String category) {
+    switch (category) {
+      case 'field':
+        filterIdx = idx;
+        filterName = "field";
+        _toggleProjectField(idx);
+        break;
+      case 'method':
+        filterIdx = idx;
+        filterName = "method";
+        _toggleProjectMethod(idx);
+        break;
+      case 'area':
+        filterIdx = idx;
+        filterName = "area";
+        _toggleProjectArea(idx);
+        break;
+      default:
+        break;
+    }
+    notifyListeners();
+  }
+
+  void _toggleProjectField(int idx) {
+    for (var field in projectFieldList) {
+      field.isChecked = field.idx == idx ? !field.isChecked : false;
+    }
+    _resetOtherProjectCategories('field');
+  }
+
+  void _toggleProjectMethod(int idx) {
+    for (var method in methodList) {
+      method.isChecked = method.idx == idx ? !method.isChecked : false;
+    }
+    _resetOtherProjectCategories('method');
+  }
+
+  void _toggleProjectArea(int idx) {
+    for (var area in area2List) {
+      area.isChecked = area.idx == idx ? !area.isChecked : false;
+    }
+    _resetOtherProjectCategories('area');
+  }
+
+  void _resetOtherProjectCategories(String currentCategory) {
+    if (currentCategory != 'field') {
+      for (var field in projectFieldList) {
+        field.isChecked = false;
+      }
+    }
+    if (currentCategory != 'method') {
+      for (var skill in methodList) {
         skill.isChecked = false;
       }
     }

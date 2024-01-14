@@ -200,9 +200,17 @@ class ApiService {
     }
   }
 
-  Future<Response> getProjectList(int page) {
+  Future<Response> getProjectList(int page, int? filter, String? filterby) {
     try {
-      return dio.get('$baseUrl/project/all', queryParameters: {"page": page});
+      if (filter != null) {
+        return dio.get('$baseUrl/project/all', queryParameters: {
+          "page": page,
+          "filter": filter,
+          "filterby": filterby
+        });
+      } else {
+        return dio.get('$baseUrl/project/all', queryParameters: {"page": page});
+      }
     } on DioException catch (e) {
       rethrow;
     }
@@ -383,6 +391,72 @@ class ApiService {
   Future<Response> getSkillDataDetail(int idx) {
     try {
       return dio.get('$baseUrl/techpost/$idx');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getFeedList(int page) {
+    try {
+      return dio.get('$baseUrl/feed/all', queryParameters: {"page": page});
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getFeedDetail(int idx) {
+    try {
+      return dio.get('$baseUrl/feed/$idx');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> getFeedComment(int idx) {
+    try {
+      return dio.get('$baseUrl/feed/$idx/comment/all');
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> postFeedComment(int idx, String comment) {
+    final Map<String, dynamic> body = {"contents": comment};
+    try {
+      return dio.post('$baseUrl/feed/$idx/comment', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> postFeedRepleComment(int idx, String comment) {
+    final Map<String, dynamic> body = {"contents": comment};
+    try {
+      return dio.post('$baseUrl/feed/comment/$idx/reply-comment', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> postFeed(Map<String, dynamic> body) {
+    try {
+      return dio.post('$baseUrl/feed', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> editFeed(int idx, Map<String, dynamic> body) {
+    try {
+      return dio.put('$baseUrl/feed/$idx', data: body);
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> deleteFeed(int idx) {
+    try {
+      return dio.delete('$baseUrl/feed/$idx');
     } on DioException catch (e) {
       rethrow;
     }

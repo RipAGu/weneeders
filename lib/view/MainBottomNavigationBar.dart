@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:winit/view/Main/MainPage.dart';
+import 'package:winit/view/SkillData/SkillDataListPage.dart';
 import 'package:winit/view/chat/ChatListPage.dart';
+import 'package:winit/view/feed/FeedListPage.dart';
 import 'package:winit/view/project/Search/SearchPartnerPage.dart';
 import 'package:winit/view/project/Search/SearchProjectPage.dart';
 
@@ -29,7 +31,9 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
     const MainPage(),
     const SearchProjectPage(),
     const SearchPartnerPage(),
-    const ChatListPage()
+    const FeedListPage(),
+    const SkillDataListPage(),
+    const ChatListPage(),
   ];
 
   bool isFirstPage() {
@@ -99,8 +103,26 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
                   label: '파트너 검색',
                 ),
                 BottomNavigationBarItem(
-                  icon: SvgPicture.asset("assets/icons/chat.svg",
+                  icon: SvgPicture.asset("assets/icons/share.svg",
                       colorFilter: currentPageIndex == 3
+                          ? const ColorFilter.mode(
+                              Color(0xff2D8DF4), BlendMode.srcIn)
+                          : const ColorFilter.mode(
+                              Color(0xff7D8791), BlendMode.srcIn)),
+                  label: '기술 공유',
+                ),
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset("assets/icons/tech.svg",
+                      colorFilter: currentPageIndex == 4
+                          ? const ColorFilter.mode(
+                              Color(0xff2D8DF4), BlendMode.srcIn)
+                          : const ColorFilter.mode(
+                              Color(0xff7D8791), BlendMode.srcIn)),
+                  label: '기술자료',
+                ),
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset("assets/icons/chat.svg",
+                      colorFilter: currentPageIndex == 5
                           ? const ColorFilter.mode(
                               Color(0xff2D8DF4), BlendMode.srcIn)
                           : const ColorFilter.mode(

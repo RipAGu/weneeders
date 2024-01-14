@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +7,6 @@ import 'package:winit/view/project/Register/RegisterPartnerPage.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
 import 'package:winit/view/widget/SearchAppBar.dart';
-
 import '../../widget/CustomDialogPartnerFilter.dart';
 import '../../widget/CustomDialogSelect.dart';
 import '../../widget/ProjectCard.dart';
@@ -119,7 +117,7 @@ class _SearchPartnerPageState extends State<SearchPartnerPage> {
                                       MediaQuery.of(context).size.width * 0.8,
                                   height:
                                       MediaQuery.of(context).size.height * 0.4,
-                                  child: CustomDialogPartnerFilter()),
+                                  child: const CustomDialogPartnerFilter()),
                             );
                           });
                     }),

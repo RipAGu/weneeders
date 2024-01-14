@@ -73,7 +73,6 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
   @override
   void initState() {
     super.initState();
-    print("RegisterProjectPage");
     projectIdx = widget.projectIdx;
     previousData = widget.previousData;
   }

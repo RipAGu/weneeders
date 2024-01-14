@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:winit/network/model/ProjectListModel.dart';
 import '../../network/ApiService.dart';
@@ -28,11 +29,12 @@ class MainViewModel extends ChangeNotifier {
   }
 
   Future<void> getProjectList() async {
+    String? _fcmToken = await FirebaseMessaging.instance.getToken();
+    print("_fcmToken : $_fcmToken");
     int count = 0;
     projectList = [];
     try {
-      final response = await apiService.getProjectList(1);
-      print(response.data);
+      final response = await apiService.getProjectList(1, null, null);
       for (var item in response.data) {
         if (count >= 3) break;
         DateTime date = DateTime.parse(item['createdAt']);
@@ -45,7 +47,6 @@ class MainViewModel extends ChangeNotifier {
         // print(item['ProjectImg'][0]['imgPath']);
         for (var img in item['ProjectImg']) {
           img['imgPath'] = "http://13.125.70.49" + img['imgPath'];
-          print(img['imgPath']);
         }
 
         projectList.add(ProjectListModel.fromJson(item));

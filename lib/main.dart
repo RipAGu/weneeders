@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/view/Main/MainViewModel.dart';
 import 'package:winit/view/MainBottomNavigationBar.dart';
+import 'package:winit/view/Recomend/RecommendViewModel.dart';
 import 'package:winit/view/SkillData/SkillDataViewModel.dart';
 import 'package:winit/view/account/SignInPage.dart';
 import 'package:winit/view/chat/ChatViewModel.dart';
@@ -75,6 +76,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ChatViewModel()),
         ChangeNotifierProvider(create: (context) => SkillDataViewModel()),
         ChangeNotifierProvider(create: (context) => FeedViewModel()),
+        ChangeNotifierProvider(create: (context) => RecommendViewModel()),
       ],
       child: MaterialApp(
         localizationsDelegates: const [

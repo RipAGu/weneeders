@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:winit/network/model/ProjectDetailModel.dart';
+import 'package:winit/view/Recomend/RecommendPartnerPage.dart';
 import 'package:winit/view/widget/CustomDialogConfirm.dart';
 import 'package:winit/view/widget/CustomLocalSelectBtn.dart';
 import 'package:winit/view/widget/CustomRegionSelectBtn.dart';
@@ -754,6 +755,12 @@ class _RegisterProjectPageState extends State<RegisterProjectPage> {
                                                               Navigator.pop(
                                                                   mainContext,
                                                                   true);
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          RecommendPartnerPage(
+                                                                              region: viewModel.getSelectedArea()!)));
                                                             },
                                                           );
                                                         });

@@ -208,6 +208,7 @@ class AddViewModel extends ChangeNotifier {
       area2List = (response.data as List)
           .map((item) => AreaModel.fromJson(item))
           .toList();
+      print(area2List);
       notifyListeners();
     } on DioException catch (e) {
       print(e.response!.data);

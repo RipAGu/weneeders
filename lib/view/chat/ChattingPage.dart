@@ -7,7 +7,6 @@ import 'package:winit/view/chat/ChatViewModel.dart';
 import 'package:winit/view/widget/ChatBubbleDate.dart';
 import 'package:winit/view/widget/ChatBubbleRecieve.dart';
 import 'package:winit/view/widget/ChatBubbleSend.dart';
-import 'package:winit/view/widget/SearchAppBar.dart';
 import 'package:winit/view/widget/TitleOnlyAppBar.dart';
 
 class ChattingPage extends StatefulWidget {
@@ -141,7 +140,7 @@ class _ChattingPageState extends State<ChattingPage> {
                                     margin: const EdgeInsets.only(left: 40),
                                     alignment: Alignment.center,
                                     width:
-                                        MediaQuery.of(context).size.width * 0.7,
+                                        MediaQuery.of(context).size.width * 0.6,
                                     height: double.infinity,
                                     child: CupertinoTextField(
                                       controller: _chatController,
@@ -157,6 +156,20 @@ class _ChattingPageState extends State<ChattingPage> {
                                     ),
                                   ),
                                   const Spacer(),
+                                  SizedBox(
+                                    width: 30,
+                                    height: 40,
+                                    child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        color: const Color(0xffA9B0B8),
+                                        onPressed: () {},
+                                        icon: SvgPicture.asset(
+                                          "assets/icons/payment.svg",
+                                          colorFilter: const ColorFilter.mode(
+                                              Color(0xff2D8DF4),
+                                              BlendMode.srcIn),
+                                        )),
+                                  ),
                                   IconButton(
                                       color: const Color(0xffA9B0B8),
                                       padding: EdgeInsets.zero,

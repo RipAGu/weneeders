@@ -461,4 +461,13 @@ class ApiService {
       rethrow;
     }
   }
+
+  Future<Response> getRecommendList(int region) {
+    try {
+      return dio.get('$baseUrl/partner/recommend/all',
+          queryParameters: {"region": region});
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
 }

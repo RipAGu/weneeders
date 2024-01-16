@@ -78,8 +78,8 @@ class _ChatListPageState extends State<ChatListPage> {
                                           .chattingRoomList[index].curMessage,
                                       date: viewModel.chattingRoomList[index]
                                           .curMessageTime,
-                                      onPressed: () {
-                                        Navigator.push(
+                                      onPressed: () async {
+                                        await Navigator.push(
                                           mainContext,
                                           MaterialPageRoute(
                                             builder: (context) => ChattingPage(
@@ -92,6 +92,8 @@ class _ChatListPageState extends State<ChatListPage> {
                                             ),
                                           ),
                                         );
+                                        await viewModel.getChattingRoomList();
+                                        print("채팅방 리스트 갱신 완료");
                                       },
                                     ),
                                   );

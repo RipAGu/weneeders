@@ -12,6 +12,8 @@ import 'package:winit/view/SkillData/SkillDataViewModel.dart';
 import 'package:winit/view/account/SignInPage.dart';
 import 'package:winit/view/chat/ChatViewModel.dart';
 import 'package:winit/view/feed/FeedViewModel.dart';
+import 'package:winit/view/payment/PaymentSuccessPage.dart';
+import 'package:winit/view/payment/PaymentViewModel.dart';
 import 'package:winit/view/project/Detail/DetailViewModel.dart';
 import 'package:winit/view/project/Register/AddViewModel.dart';
 import 'package:winit/view/project/Search/SearchViewModel.dart';
@@ -56,6 +58,9 @@ void main() async {
   runApp(MyApp(
     startPage:
         token == null ? const SignInPage() : const MainBottomNavigationBar(),
+    //     startPage: PaymentSuccessPage(
+    //   amount: 1000,
+    //   orderId: "test",
   ));
 }
 
@@ -77,6 +82,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SkillDataViewModel()),
         ChangeNotifierProvider(create: (context) => FeedViewModel()),
         ChangeNotifierProvider(create: (context) => RecommendViewModel()),
+        ChangeNotifierProvider(create: (context) => PaymentViewModel()),
       ],
       child: MaterialApp(
         localizationsDelegates: const [

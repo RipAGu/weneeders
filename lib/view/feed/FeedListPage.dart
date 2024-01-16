@@ -8,8 +8,6 @@ import 'package:winit/view/feed/FeedViewModel.dart';
 import 'package:winit/view/widget/CustomDrawer.dart';
 import 'package:winit/view/widget/FeedCard.dart';
 import 'package:winit/view/widget/MenuOnlyAppBar.dart';
-import 'package:winit/view/widget/TitleOnlyAppBar.dart';
-
 import '../account/SignInPage.dart';
 import '../project/Register/RegisterPartnerPage.dart';
 import '../project/Register/RegisterProjectPage.dart';
@@ -110,7 +108,7 @@ class _FeedListPageState extends State<FeedListPage> {
                         },
                       ),
                       appBar: const MenuOnlyAppBar(
-                        title: "피드",
+                        title: "기술 공유",
                       ),
                       floatingActionButton: FloatingActionButton(
                         splashColor: Colors.transparent,

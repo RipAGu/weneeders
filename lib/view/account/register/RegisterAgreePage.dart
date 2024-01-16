@@ -161,7 +161,7 @@ class RegisterAgreePageBody extends StatelessWidget {
                                                     .size
                                                     .height *
                                                 0.4,
-                                            child: CustomDialogInform(
+                                            child: const CustomDialogInform(
                                               title: "서비스 이용 약관",
                                               content: "서비스 이용 약관입니다.",
                                             )),

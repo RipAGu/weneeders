@@ -2,12 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:tosspayments_widget_sdk_flutter/model/paymentData.dart';
+import 'package:tosspayments_widget_sdk_flutter/model/payment_info.dart';
+import 'package:tosspayments_widget_sdk_flutter/model/payment_widget_options.dart';
+import 'package:tosspayments_widget_sdk_flutter/payment_widget.dart';
+import 'package:tosspayments_widget_sdk_flutter/widgets/agreement.dart';
+import 'package:tosspayments_widget_sdk_flutter/widgets/payment_method.dart';
 import 'package:winit/network/SocketService.dart';
 import 'package:winit/view/chat/ChatViewModel.dart';
+import 'package:winit/view/payment/PaymentTestPage.dart';
 import 'package:winit/view/widget/ChatBubbleDate.dart';
 import 'package:winit/view/widget/ChatBubbleRecieve.dart';
 import 'package:winit/view/widget/ChatBubbleSend.dart';
+import 'package:winit/view/widget/CustomDialogPayment.dart';
 import 'package:winit/view/widget/TitleOnlyAppBar.dart';
+
+import '../payment/PaymentPage.dart';
 
 class ChattingPage extends StatefulWidget {
   final int? roomIdx;
@@ -25,10 +35,15 @@ class _ChattingPageState extends State<ChattingPage> {
   late Future<void> _loadDataFuture;
   final TextEditingController _chatController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final TextEditingController _paymentController = TextEditingController();
+  late PaymentWidget _paymentWidget;
+  PaymentMethodWidgetControl? _paymentMethodWidgetControl;
+  AgreementWidgetControl? _agreementWidgetControl;
   @override
   void initState() {
     super.initState();
     socketService = SocketService();
+
     socketService.init(Provider.of<ChatViewModel>(context, listen: false));
     socketService.createSocketConnection(context);
     roomIdx = widget.roomIdx;
@@ -37,6 +52,22 @@ class _ChattingPageState extends State<ChattingPage> {
     _scrollController.addListener(_scrollListener);
     Provider.of<ChatViewModel>(context, listen: false).onMessageAdded =
         _scrollToBottom;
+
+    // 페이먼트 테스트
+    _paymentWidget = PaymentWidget(
+        clientKey: "test_ck_Poxy1XQL8RwZBgJjGzlk37nO5Wml",
+        customerKey: "-9-6SiquogiXqJ6unZsfA");
+    _paymentWidget
+        .renderPaymentMethods(
+            selector: 'methods',
+            amount: Amount(value: 300, currency: Currency.KRW, country: "KR"),
+            options: RenderPaymentMethodsOptions(variantKey: "DEFAULT"))
+        .then((control) {
+      _paymentMethodWidgetControl = control;
+    });
+    _paymentWidget.renderAgreement(selector: 'agreement').then((control) {
+      _agreementWidgetControl = control;
+    });
   }
 
   void _scrollToBottom() {
@@ -47,13 +78,11 @@ class _ChattingPageState extends State<ChattingPage> {
 
   void _scrollListener() {
     if (_scrollController.position.atEdge) {
-      print(Provider.of<ChatViewModel>(context, listen: false).isLastMessage);
       if (_scrollController.position.pixels == 0 &&
           roomIdx != null &&
           !Provider.of<ChatViewModel>(context, listen: false).isLastMessage) {
         Provider.of<ChatViewModel>(context, listen: false)
             .getChatMessage(roomIdx!);
-        print("top");
       }
     }
   }
@@ -66,13 +95,13 @@ class _ChattingPageState extends State<ChattingPage> {
     }
     await Provider.of<ChatViewModel>(context, listen: false)
         .setUserIdx(userIdx!);
-    _scrollToBottom();
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
     socketService.closeSocketConnection();
+    print("dispose");
     super.dispose();
   }
 
@@ -93,30 +122,28 @@ class _ChattingPageState extends State<ChattingPage> {
                       child: Stack(
                         children: [
                           Container(
-                            padding: const EdgeInsets.only(bottom: 60),
-                            child: ListView.builder(
-                                controller: _scrollController,
-                                shrinkWrap: true,
-                                itemCount: viewModel.chatMessageList.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  if (viewModel.chatMessageList[index].type ==
-                                      "date") {
-                                    return ChatBubbleDate(
-                                      date: viewModel
-                                          .chatMessageList[index].message,
-                                    );
-                                  } else if (viewModel
-                                          .chatMessageList[index].type ==
-                                      "send") {
-                                    return ChatBubbleSend(
-                                      message: viewModel.chatMessageList[index],
-                                    );
-                                  } else {
-                                    return ChatBubbleReceive(
-                                      message: viewModel.chatMessageList[index],
-                                    );
-                                  }
-                                }),
+                            margin: const EdgeInsets.only(bottom: 70),
+                            child: SingleChildScrollView(
+                              controller: _scrollController,
+                              child: Column(
+                                children: List.generate(
+                                  viewModel.chatMessageList.length,
+                                  (index) {
+                                    var message =
+                                        viewModel.chatMessageList[index];
+                                    if (message.type == "date") {
+                                      return ChatBubbleDate(
+                                          date: message.message);
+                                    } else if (message.type == "send") {
+                                      return ChatBubbleSend(message: message);
+                                    } else {
+                                      return ChatBubbleReceive(
+                                          message: message);
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
                           ),
                           Align(
                             alignment: Alignment.bottomCenter,
@@ -162,7 +189,54 @@ class _ChattingPageState extends State<ChattingPage> {
                                     child: IconButton(
                                         padding: EdgeInsets.zero,
                                         color: const Color(0xffA9B0B8),
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          _paymentController.clear();
+                                          showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return Dialog(
+                                                  surfaceTintColor:
+                                                      Colors.white,
+                                                  backgroundColor: Colors.white,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.8,
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.5,
+                                                      child:
+                                                          CustomDialogPayment(
+                                                        controller:
+                                                            _paymentController,
+                                                      )),
+                                                );
+                                              }).then((value) async => {
+                                                if (value != null &&
+                                                    value.isNotEmpty)
+                                                  {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              PaymentTestPage(
+                                                                amount:
+                                                                    int.parse(
+                                                                        value),
+                                                              )),
+                                                    )
+                                                  }
+                                              });
+                                        },
                                         icon: SvgPicture.asset(
                                           "assets/icons/payment.svg",
                                           colorFilter: const ColorFilter.mode(

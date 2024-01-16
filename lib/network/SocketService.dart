@@ -8,10 +8,14 @@ import 'package:winit/network/model/ChatMessageModel.dart';
 import 'package:winit/view/chat/ChatViewModel.dart';
 
 class SocketService {
-  late IO.Socket socket;
+  IO.Socket? socket;
   final FlutterSecureStorage storage = const FlutterSecureStorage();
   ChatViewModel? chatViewModel;
-
+  SocketService._privateConstructor();
+  static final SocketService _instance = SocketService._privateConstructor();
+  factory SocketService() {
+    return _instance;
+  }
   void init(ChatViewModel viewModel) {
     chatViewModel = viewModel;
   }
@@ -19,14 +23,21 @@ class SocketService {
   void createSocketConnection(BuildContext context) async {
     var token = await storage.read(key: "token");
     print("token : $token");
+    if (socket != null && socket!.connected) {
+      print("Socket is already connected.");
+      return;
+    }
+    socket?.disconnect();
+    socket?.clearListeners();
+
     socket = IO.io('http://13.125.70.49:3001', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
       'extraHeaders': {'Authorization': 'Bearer ${token}'}
     });
-    socket.connect();
+    socket?.connect();
 
-    socket.on("message", (data) {
+    socket?.on("message", (data) {
       print(data);
       chatViewModel?.addMessage(ChatMessageModel(
           idx: data["chattingRoomIdx"],
@@ -36,18 +47,18 @@ class SocketService {
           type: "receive"));
     });
 
-    socket.on("unauthorized", (data) {
+    socket?.on("unauthorized", (data) {
       print(data);
     });
 
-    socket.onConnect(
+    socket?.onConnect(
       (data) => {print("connect")},
     );
 
-    socket.onDisconnect((_) => print('disconnect'));
+    socket?.onDisconnect((_) => print('disconnect'));
   }
 
   void closeSocketConnection() {
-    socket.disconnect();
+    socket?.disconnect();
   }
 }

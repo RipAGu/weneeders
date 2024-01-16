@@ -45,6 +45,7 @@ class ChatViewModel with ChangeNotifier {
           print(e);
         }
       }
+      notifyListeners();
     } on DioException catch (e) {
       print(e);
     }
@@ -53,8 +54,11 @@ class ChatViewModel with ChangeNotifier {
   void addMessage(ChatMessageModel message) {
     chatMessageList.add(message);
     notifyListeners();
+
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      onMessageAdded?.call();
+      Future.delayed(Duration(milliseconds: 100), () {
+        onMessageAdded?.call();
+      });
     });
     notifyListeners();
   }
